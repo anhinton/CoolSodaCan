@@ -2,7 +2,8 @@
 
   + Replace animal superhit sprites with smiling sprite
       - ~~No violence!~~
-      - Animal-Hit can explosion should be soda coloured
+      - ~~Animal-Hit can explosion should be soda coloured~~
+      - Give Animal a little shake on hit
       
   + Title screen
       - New game
