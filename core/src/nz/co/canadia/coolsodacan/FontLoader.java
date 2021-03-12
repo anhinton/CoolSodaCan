@@ -7,4 +7,8 @@ public interface FontLoader {
     void loadGameUiFont(AssetManager manager);
 
     BitmapFont getGameUiFont(AssetManager manager);
+
+    void loadTitleMenuFont(AssetManager manager);
+
+    BitmapFont getTitleMenuFont(AssetManager manager);
 }

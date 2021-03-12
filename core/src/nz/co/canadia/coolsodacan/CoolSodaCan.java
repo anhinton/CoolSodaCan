@@ -64,6 +64,7 @@ public class CoolSodaCan extends Game {
 		manager.load("banner/banner_left.jpg", Texture.class, param);
 		manager.load("banner/banner_right.jpg", Texture.class, param);
 		fontLoader.loadGameUiFont(manager);
+		fontLoader.loadTitleMenuFont(manager);
 		manager.load("skin/uiskin.atlas", TextureAtlas.class);
 		manager.finishLoading();
 
@@ -71,6 +72,7 @@ public class CoolSodaCan extends Game {
 		skin = new Skin();
 		// Manually load fonts with dynamic sizes
 		skin.add("default-font", fontLoader.getGameUiFont(manager), BitmapFont.class);
+		skin.add("titlemenu-font", fontLoader.getTitleMenuFont(manager), BitmapFont.class);
 		// Load Texture atlas and skinFile
 		skin.addRegions(manager.get("skin/uiskin.atlas", TextureAtlas.class));
 		// Note skinFile does *not* contain a BitmapFont `default-font`, this must be loaded previously
@@ -81,6 +83,7 @@ public class CoolSodaCan extends Game {
 		// DEBUG hitboxes
 		shapeRenderer = new ShapeRenderer();
 		this.setScreen(new GameScreen(this));
+//		this.setScreen(new TitleScreen(this));
 	}
 
 	int getGameHeight() {
