@@ -1,9 +1,4 @@
 # todo.md
-
-  + Replace animal superhit sprites with smiling sprite
-      - ~~No violence!~~
-      - ~~Animal-Hit can explosion should be soda coloured~~
-      - Give Animal a little shake on hit
       
   + Title screen
       - New game
@@ -75,6 +70,11 @@
         implement a loading screens, menu screens, etc
 
 ## Done
+
+  + ~~Replace animal superhit sprites with smiling sprite~~
+      - ~~No violence!~~
+      - ~~Animal-Hit can explosion should be soda coloured~~
+      - ~~Give Animal a little shake on hit~~
       
   + ~~Implement Statistics class~~
       - ~~Use Preferences~~

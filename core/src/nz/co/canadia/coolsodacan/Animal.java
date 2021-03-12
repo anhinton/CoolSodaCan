@@ -23,6 +23,9 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
 
     private State hitState;
     private Sprite currentSprite;
+    private boolean isWiggling;
+    private boolean isShaking;
+    private float shakeElapsed;
 
     private enum AnimalType {
         COCO    ("coco",    "coco_smile"),
@@ -41,6 +44,9 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     Animal(int y, TextureAtlas atlas, Color explosionColor) {
         hitCount = 0;
         hitState = State.NORMAL;
+        isWiggling = true;
+        isShaking = false;
+        shakeElapsed = 0;
 
         // Give us a random set of AnimalTextures
         animalType = AnimalType.values()[MathUtils.random(AnimalType.values().length - 1)];
@@ -76,24 +82,51 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     // Wiggle!
     void wiggle(float delta) {
         rot = (rot + delta * Constants.DEGREES_PER_SECOND) % 360;
-        float shake = MathUtils.sin(rot) * Constants.SHAKE_AMPLITUDE_IN_DEGREES;
+        float shake = MathUtils.sin(rot) * Constants.WIGGLE_AMPLITUDE_IN_DEGREES;
         currentSprite.setRotation(shake);
     }
 
     @Override
     public void update(float delta) {
-        if (hitState != State.SUPER_HIT) {
-            wiggle(delta);
-        } else {
-            explosion.update(delta);
+
+        switch(hitState) {
+            case NORMAL:
+            case HIT:
+                if (isWiggling) {
+                    wiggle(delta);
+                }
+                break;
+            case SUPER_HIT:
+                explosion.update(delta);
+                break;
         }
+
+        if (isShaking) {
+            if (shakeElapsed < Constants.ANIMAL_SHAKE_DURATION) {
+                shakeElapsed += delta;
+            } else {
+                isShaking = false;
+                isWiggling = true;
+            }
+        }
+
         currentSprite.setY(currentSprite.getY() - Constants.WORLD_MOVEMENT_SPEED * delta);
         hitSprite.setPosition(currentSprite.getX(), currentSprite.getY());
         explosion.setPosition(currentSprite.getX() + currentSprite.getWidth() / 2, currentSprite.getY() + currentSprite.getHeight() / 2);
     }
 
     public void draw(SpriteBatch batch) {
-        currentSprite.draw(batch);
+
+        if (isShaking) {
+            float xShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
+            float yShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
+            currentSprite.translate(xShake, yShake);
+            currentSprite.draw(batch);
+            currentSprite.translate(-xShake, -yShake);
+        } else {
+            currentSprite.draw(batch);
+        }
+
         if (hitState == State.SUPER_HIT & !explosion.isComplete()) {
             explosion.draw(batch);
         }
@@ -143,6 +176,7 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     @Override
     public void hit() {
         hitCount += 1;
+        shake();
         if (hitCount < 3) {
             hitState = State.HIT;
             currentSprite = hitSprite;
@@ -150,8 +184,15 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
         } else if (hitCount == 3) {
             currentSprite.flip(false, true);
             hitState = State.SUPER_HIT;
+            isWiggling = false;
             explosion.start();
         }
+    }
+
+    private void shake() {
+        isWiggling = false;
+        isShaking = true;
+        shakeElapsed = 0;
     }
 
     @Override
