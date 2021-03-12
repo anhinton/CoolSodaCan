@@ -16,6 +16,8 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     private final Sprite normalSprite;
     private final Sprite hitSprite;
     private final ParticleEffect explosion;
+    private final float x;
+    private float y;
 
     private final AnimalType animalType;
     private float rot;
@@ -42,6 +44,7 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     }
 
     Animal(int y, TextureAtlas atlas, Color explosionColor) {
+        this.y = y;
         hitCount = 0;
         hitState = State.NORMAL;
         isWiggling = true;
@@ -52,14 +55,14 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
         animalType = AnimalType.values()[MathUtils.random(AnimalType.values().length - 1)];
         normalSprite = atlas.createSprite(animalType.textureName);
         hitSprite = atlas.createSprite(animalType.hitTextureName);
+        x = MathUtils.random(0, Constants.GAME_WIDTH - normalSprite.getWidth());
 
         boolean flipSprite = MathUtils.randomBoolean();
         normalSprite.flip(flipSprite, false);
         hitSprite.flip(flipSprite, false);
 
         currentSprite = normalSprite;
-        currentSprite.setCenterX(MathUtils.random(0 + normalSprite.getWidth() / 2, Constants.GAME_WIDTH - normalSprite.getWidth() / 2));
-        currentSprite.setY(y);
+        currentSprite.setPosition(x, y);
         rot = MathUtils.random(0, 360f);
         wiggle(0);
 
@@ -88,6 +91,10 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
 
     @Override
     public void update(float delta) {
+        y -= Constants.WORLD_MOVEMENT_SPEED * delta;
+        currentSprite.setPosition(x, y);
+        hitSprite.setPosition(currentSprite.getX(), currentSprite.getY());
+        explosion.setPosition(currentSprite.getX() + currentSprite.getWidth() / 2, currentSprite.getY() + currentSprite.getHeight() / 2);
 
         switch(hitState) {
             case NORMAL:
@@ -103,29 +110,20 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
 
         if (isShaking) {
             if (shakeElapsed < Constants.ANIMAL_SHAKE_DURATION) {
+                float xShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
+                float yShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
+                currentSprite.translate(xShake, yShake);
                 shakeElapsed += delta;
             } else {
                 isShaking = false;
                 isWiggling = true;
             }
         }
-
-        currentSprite.setY(currentSprite.getY() - Constants.WORLD_MOVEMENT_SPEED * delta);
-        hitSprite.setPosition(currentSprite.getX(), currentSprite.getY());
-        explosion.setPosition(currentSprite.getX() + currentSprite.getWidth() / 2, currentSprite.getY() + currentSprite.getHeight() / 2);
     }
 
     public void draw(SpriteBatch batch) {
 
-        if (isShaking) {
-            float xShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
-            float yShake = MathUtils.randomTriangular(-Constants.ANIMAL_SHAKE_MAGNITUDE, Constants.ANIMAL_SHAKE_MAGNITUDE);
-            currentSprite.translate(xShake, yShake);
-            currentSprite.draw(batch);
-            currentSprite.translate(-xShake, -yShake);
-        } else {
-            currentSprite.draw(batch);
-        }
+        currentSprite.draw(batch);
 
         if (hitState == State.SUPER_HIT & !explosion.isComplete()) {
             explosion.draw(batch);
