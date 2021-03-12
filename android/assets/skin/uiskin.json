@@ -54,6 +54,12 @@
       "font": "default-font",
       "fontColor": "white"
     },
+    "titlemenu": {
+      "down": "default-round-down",
+      "up": "default-round",
+      "font": "titlemenu-font",
+      "fontColor": "white"
+    },
     "toggle": {
       "down": "default-round-down",
       "up": "default-round",

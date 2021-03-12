@@ -82,8 +82,8 @@ public class CoolSodaCan extends Game {
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);
 		// DEBUG hitboxes
 		shapeRenderer = new ShapeRenderer();
-		this.setScreen(new GameScreen(this));
-//		this.setScreen(new TitleScreen(this));
+//		this.setScreen(new GameScreen(this));
+		this.setScreen(new TitleScreen(this));
 	}
 
 	int getGameHeight() {

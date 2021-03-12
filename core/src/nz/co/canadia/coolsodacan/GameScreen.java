@@ -300,7 +300,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     private void exit() {
         game.statistics.save();
-        Gdx.app.exit();
+        game.setScreen(new TitleScreen(game));
     }
 
     private void goBack() {
