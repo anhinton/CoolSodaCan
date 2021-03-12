@@ -1,6 +1,7 @@
 package nz.co.canadia.coolsodacan;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,7 +38,7 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
         }
     }
 
-    Animal(int y, TextureAtlas atlas) {
+    Animal(int y, TextureAtlas atlas, Color explosionColor) {
         hitCount = 0;
         hitState = State.NORMAL;
 
@@ -64,6 +65,12 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
         // Increase scale of particle to match half sprite size (not so big as Plants)
         explosion.getEmitters().first().getXScale().setHigh(
                 Math.min(currentSprite.getWidth(), currentSprite.getHeight()) * Constants.ANIMAL_PARTICLE_SCALE);
+        // Set explosion to can colour
+        float[] tint = new float[3];
+        tint[0] = explosionColor.r;
+        tint[1] = explosionColor.g;
+        tint[2] = explosionColor.b;
+        explosion.getEmitters().first().getTint().setColors(tint);
     }
 
     // Wiggle!
@@ -87,7 +94,7 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
 
     public void draw(SpriteBatch batch) {
         currentSprite.draw(batch);
-        if (hitState == State.HIT) {
+        if (hitState == State.SUPER_HIT & !explosion.isComplete()) {
             explosion.draw(batch);
         }
     }

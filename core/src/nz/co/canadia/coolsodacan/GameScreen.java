@@ -102,7 +102,7 @@ public class GameScreen implements Screen, InputProcessor {
         int nAnimal = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_ANIMAL_START, Constants.MAX_ANIMAL_START));
         for (int i = 0; i < nAnimal; i++) {
-            Animal animal = new Animal(MathUtils.random(0, game.getGameHeight()), atlas);
+            Animal animal = new Animal(MathUtils.random(0, game.getGameHeight()), atlas, player.getPlayerType().getExplosionColor());
             gameObjectArray.add(animal);
             hittableArray.add(animal);
         }
@@ -280,7 +280,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void spawnAnimal() {
-        Animal animal = new Animal(game.getGameHeight(), atlas);
+        Animal animal = new Animal(game.getGameHeight(), atlas, player.getPlayerType().getExplosionColor());
         gameObjectArray.add(animal);
         hittableArray.add(animal);
         nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;

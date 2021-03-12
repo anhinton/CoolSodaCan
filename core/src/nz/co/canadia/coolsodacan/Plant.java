@@ -70,7 +70,7 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
 
     public void draw(SpriteBatch batch) {
         currentSprite.draw(batch);
-        if (hitState == State.HIT) {
+        if (hitState == State.SUPER_HIT & !explosion.isComplete()) {
             explosion.draw(batch);
         }
     }
