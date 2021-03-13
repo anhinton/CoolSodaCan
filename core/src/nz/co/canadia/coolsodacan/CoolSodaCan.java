@@ -55,7 +55,6 @@ public class CoolSodaCan extends Game {
 		}
 		gameUiPadding = MathUtils.round((float) Constants.GAMEUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
 		menuUiPadding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
-		fontCharacters = FreeTypeFontGenerator.DEFAULT_CHARS + "\u2022";
 
 		// Load assets
 		manager = new AssetManager();
@@ -66,8 +65,8 @@ public class CoolSodaCan extends Game {
 		param.magFilter = Texture.TextureFilter.Linear;
 		manager.load("banner/banner_left.jpg", Texture.class, param);
 		manager.load("banner/banner_right.jpg", Texture.class, param);
-		fontLoader.loadGameUiFont(manager, fontCharacters);
-		fontLoader.loadTitleMenuFont(manager, fontCharacters);
+		fontLoader.loadGameUiFont(manager);
+		fontLoader.loadTitleMenuFont(manager);
 		manager.load("skin/uiskin.atlas", TextureAtlas.class);
 		manager.finishLoading();
 

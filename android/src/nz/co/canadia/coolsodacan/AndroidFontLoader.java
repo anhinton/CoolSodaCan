@@ -23,12 +23,12 @@ public class AndroidFontLoader implements FontLoader {
     }
 
     @Override
-    public void loadGameUiFont(AssetManager manager, String characters) {
+    public void loadGameUiFont(AssetManager manager) {
         setLoader(manager);
 
         FreetypeFontLoader.FreeTypeFontLoaderParameter gameUiFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         gameUiFont.fontFileName = "fonts/Podkova-VariableFont_wght.ttf";
-        gameUiFont.fontParameters.characters = characters;
+        gameUiFont.fontParameters.characters = Constants.FONT_CHARACTERS;
         gameUiFont.fontParameters.size = MathUtils.round((float) Constants.GAMEUI_FONT_SIZE / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
         gameUiFont.fontParameters.color = Constants.FONT_COLOR;
         gameUiFont.fontParameters.shadowColor = Constants.FONT_SHADOW_COLOR;
@@ -43,12 +43,12 @@ public class AndroidFontLoader implements FontLoader {
     }
 
     @Override
-    public void loadTitleMenuFont(AssetManager manager, String characters) {
+    public void loadTitleMenuFont(AssetManager manager) {
         setLoader(manager);
 
         FreetypeFontLoader.FreeTypeFontLoaderParameter titleMenuFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         titleMenuFont.fontFileName = "fonts/Podkova-VariableFont_wght.ttf";
-        titleMenuFont.fontParameters.characters = characters;
+        titleMenuFont.fontParameters.characters = Constants.FONT_CHARACTERS;
         titleMenuFont.fontParameters.size = MathUtils.round((float) Constants.TITLEMENU_FONT_SIZE / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
         titleMenuFont.fontParameters.color = Constants.FONT_COLOR;
         titleMenuFont.fontParameters.shadowColor = Constants.FONT_SHADOW_COLOR;
@@ -61,5 +61,4 @@ public class AndroidFontLoader implements FontLoader {
     public BitmapFont getTitleMenuFont(AssetManager manager) {
         return manager.get("fonts/Podkova-VariableFont_wghtTitleMenu.ttf", BitmapFont.class);
     }
-
 }

@@ -9,7 +9,7 @@ import nz.co.canadia.coolsodacan.FontLoader;
 public class HtmlFontLoader implements FontLoader {
 
     @Override
-    public void loadGameUiFont(AssetManager manager, String characters) {
+    public void loadGameUiFont(AssetManager manager) {
         manager.load("fonts/Podkova18.fnt", BitmapFont.class);
     }
 
@@ -19,7 +19,7 @@ public class HtmlFontLoader implements FontLoader {
     }
 
     @Override
-    public void loadTitleMenuFont(AssetManager manager, String characters) {
+    public void loadTitleMenuFont(AssetManager manager) {
         manager.load("fonts/Podkova36.fnt", BitmapFont.class);
     }
 

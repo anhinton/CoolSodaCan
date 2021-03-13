@@ -1,6 +1,7 @@
 package nz.co.canadia.coolsodacan;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 
 /**
@@ -33,6 +34,7 @@ public class Constants {
     public static final float CURSOR_START_Y = 1 / 2f;
 
     // Font constants
+    public static final String FONT_CHARACTERS = FreeTypeFontGenerator.DEFAULT_CHARS + "\u2022";
     public static final Color FONT_COLOR = Color.WHITE;
     public static final Color FONT_SHADOW_COLOR = Color.BLACK;
     public static final int GAMEUI_FONT_SIZE = 32;
