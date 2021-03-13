@@ -11,4 +11,8 @@ public interface FontLoader {
     void loadTitleMenuFont(AssetManager manager);
 
     BitmapFont getTitleMenuFont(AssetManager manager);
+
+    void loadStatisticsFont(AssetManager manager);
+
+    BitmapFont getStatisticsFont(AssetManager manager);
 }

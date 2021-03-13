@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -46,7 +48,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showMainMenu() {
         currentMenu = CurrentMenu.MAIN;
-        table.clear();
+        table.clearChildren();
         table.center();
         table.pad(padding);
 
@@ -104,22 +106,46 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showStatistics() {
         currentMenu = CurrentMenu.STATISTICS;
-        table.clear();
-        table.center();
+        table.clearChildren();
         table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
 
         String bp = game.bundle.get("bulletPoint") + " ";
-        String statisticsString =
-                bp + game.bundle.get("statisticsThrown") + ": " + game.statistics.getTotalCansThrown() + "\n" +
-                bp + FreeTypeFontGenerator.DEFAULT_CHARS;
-        Label statisticsLabel = new Label(statisticsString, game.skin, "titlemenu");
+        String nl = "\n";
+        String statisticsString = bp + game.bundle.get("statisticsThrown") + ": " + game.statistics.getTotalCansThrown() + nl +
+                bp + game.bundle.get("statisticsDrunk") + ": " + game.statistics.getTotalCansDelivered() + nl
+                + bp + game.bundle.get("statisticsHighScore") + ": " + game.formatter.printScore(game.statistics.getHighScore()) + nl
+                + bp + game.bundle.get("statisticsPoints") + ": " + game.formatter.printScore(game.statistics.getTotalPointsScored()) + nl
+                + bp + game.bundle.get("statisticsAnimalsQuenched") + ": " + game.statistics.getAnimalsSuperhit() + nl
+                + bp + game.bundle.get("statisticsPlantsDestroyed") + ": " + game.statistics.getPlantsSuperHit() + nl
+                + bp + game.bundle.get("statisticsLongestSession") + ": " + game.displayTime(game.statistics.getLongestSession()) + nl
+                + bp + game.bundle.get("statisticsTime") + ": " + game.displayTime(game.statistics.getTotalTimePlayed()) + nl
+                + bp + game.bundle.get("statisticsUnlocked") + ": ";
+        Label statisticsLabel = new Label(statisticsString, game.skin, "statistics");
         statisticsLabel.setWrap(true);
+        statisticsLabel.setAlignment(Align.top);
 
-        table.add(headingLabel).space(padding).left();
+        TextButton backButton = new TextButton(game.bundle.get("backButton"), game.skin, "titlemenu");
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                goBack();
+            }
+        });
+
+        TextButton resetStatisticsButton = new TextButton(game.bundle.get("statisticsResetButton"), game.skin, "titlemenu");
+
+        table.setSize(Gdx.graphics.getBackBufferHeight(), Gdx.graphics.getBackBufferHeight());
+        table.add(headingLabel).space(padding);
         table.row();
-        table.add(statisticsLabel).prefWidth(Gdx.graphics.getBackBufferWidth());
+        table.add(statisticsLabel)
+                .prefWidth(Gdx.graphics.getBackBufferWidth())
+                .top();
+        table.row();
+        table.add(backButton).space(padding).prefSize(Value.percentWidth(1.5f), Value.percentHeight(1.25f));
+        table.row();
+        table.add(resetStatisticsButton).space(padding).prefSize(Value.percentWidth(1.1f), Value.percentHeight(1.25f));
     }
 
     private void goBack() {

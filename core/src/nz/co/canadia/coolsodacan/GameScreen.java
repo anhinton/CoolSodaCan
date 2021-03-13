@@ -354,11 +354,8 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void setTimeLabel() {
-        int minutes = (int) (timeElapsed / 60);
-        int seconds = (int) (timeElapsed % 60);
         timeLabel.setText(game.bundle.get("gameUiTimeLabel") + ": "
-                + game.formatter.zeroPadTime(minutes, game.bundle.getLocale())
-                + ":" + game.formatter.zeroPadTime(seconds, game.bundle.getLocale()));
+                + game.displayTime(timeElapsed));
     }
 
     private void throwCan() {

@@ -66,6 +66,7 @@ public class CoolSodaCan extends Game {
 		manager.load("banner/banner_right.jpg", Texture.class, param);
 		fontLoader.loadGameUiFont(manager);
 		fontLoader.loadTitleMenuFont(manager);
+		fontLoader.loadStatisticsFont(manager);
 		manager.load("skin/uiskin.atlas", TextureAtlas.class);
 		manager.finishLoading();
 
@@ -74,6 +75,7 @@ public class CoolSodaCan extends Game {
 		// Manually load fonts with dynamic sizes
 		skin.add("default-font", fontLoader.getGameUiFont(manager), BitmapFont.class);
 		skin.add("titlemenu-font", fontLoader.getTitleMenuFont(manager), BitmapFont.class);
+		skin.add("statistics-font", fontLoader.getStatisticsFont(manager), BitmapFont.class);
 		// Load Texture atlas and skinFile
 		skin.addRegions(manager.get("skin/uiskin.atlas", TextureAtlas.class));
 		// Note skinFile does *not* contain a BitmapFont `default-font`, this must be loaded previously
@@ -100,6 +102,12 @@ public class CoolSodaCan extends Game {
 	}
 
 	public int getMenuUiPadding() { return menuUiPadding; }
+
+	public String displayTime(float timeElapsed) {
+		int minutes = (int) (timeElapsed / 60);
+		int seconds = (int) (timeElapsed % 60);
+		return formatter.zeroPadTime(minutes, bundle.getLocale()) + ":" + formatter.zeroPadTime(seconds, bundle.getLocale());
+	}
 
 	@Override
 	public void render () {

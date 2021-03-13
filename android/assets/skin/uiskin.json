@@ -139,6 +139,10 @@
     "titlemenu": {
       "font": "titlemenu-font",
       "fontColor": "white"
+    },
+    "statistics": {
+      "font": "statistics-font",
+      "fontColor": "white"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle": {

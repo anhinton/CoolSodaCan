@@ -41,6 +41,8 @@ public class Constants {
     public static final int GAMEUI_FONT_SHADOW_OFFSET = 2;
     public static final int TITLEMENU_FONT_SIZE = 64;
     public static final int TITLEMENU_FONT_SHADOW_OFFSET = 4;
+    public static final int STATISTICS_FONT_SIZE = 48;
+    public static final int STATISTICS_FONT_SHADOW_OFFSET = 3;
 
     // UI constants
     public static final int GAMEUI_PADDING = 5;

@@ -61,4 +61,24 @@ public class IOSFontLoader implements FontLoader {
     public BitmapFont getTitleMenuFont(AssetManager manager) {
         return manager.get("fonts/Podkova-VariableFont_wghtTitleMenu.ttf", BitmapFont.class);
     }
+
+    @Override
+    public void loadStatisticsFont(AssetManager manager) {
+        setLoader(manager);
+
+        FreetypeFontLoader.FreeTypeFontLoaderParameter statisticsFont = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        statisticsFont.fontFileName = "fonts/Podkova-VariableFont_wght.ttf";
+        statisticsFont.fontParameters.characters = Constants.FONT_CHARACTERS;
+        statisticsFont.fontParameters.size = MathUtils.round((float) Constants.STATISTICS_FONT_SIZE / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+        statisticsFont.fontParameters.color = Constants.FONT_COLOR;
+        statisticsFont.fontParameters.shadowColor = Constants.FONT_SHADOW_COLOR;
+        statisticsFont.fontParameters.shadowOffsetX = MathUtils.round((float) Constants.STATISTICS_FONT_SHADOW_OFFSET / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+        statisticsFont.fontParameters.shadowOffsetY = MathUtils.round((float) Constants.STATISTICS_FONT_SHADOW_OFFSET / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+        manager.load("fonts/Podkova-VariableFont_wghtStatistics.ttf", BitmapFont.class, statisticsFont);
+    }
+
+    @Override
+    public BitmapFont getStatisticsFont(AssetManager manager) {
+        return manager.get("fonts/Podkova-VariableFont_wghtStatistics.ttf", BitmapFont.class);
+    }
 }

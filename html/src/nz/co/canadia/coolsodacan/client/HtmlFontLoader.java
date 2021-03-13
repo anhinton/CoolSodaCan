@@ -27,4 +27,14 @@ public class HtmlFontLoader implements FontLoader {
     public BitmapFont getTitleMenuFont(AssetManager manager) {
         return manager.get("fonts/Podkova36.fnt", BitmapFont.class);
     }
+
+    @Override
+    public void loadStatisticsFont(AssetManager manager) {
+        manager.load("fonts/Podkova27.fnt", BitmapFont.class);
+    }
+
+    @Override
+    public BitmapFont getStatisticsFont(AssetManager manager) {
+        return manager.get("fonts/Podkova27.fnt", BitmapFont.class);
+    }
 }
