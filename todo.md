@@ -65,6 +65,8 @@
       - The easy fix is probably just going back to and ExtendViewport
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
+  
+  + Do I care about buffer overflow for high scores?
 
 ## Done
       
