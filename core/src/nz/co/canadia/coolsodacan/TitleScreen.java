@@ -60,6 +60,12 @@ public class TitleScreen implements Screen, InputProcessor {
         });
 
         TextButton statsButton = new TextButton(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
+        statsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showStatistics();
+            }
+        });
 
         TextButton settingsButton = new TextButton(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
 
@@ -93,6 +99,21 @@ public class TitleScreen implements Screen, InputProcessor {
     }
 
     private void showSettingsMenu() {
+    }
+
+    private void showStatistics() {
+        currentMenu = CurrentMenu.STATISTICS;
+        table.clear();
+        table.center();
+        table.pad(padding);
+
+        Label headingLabel = new Label("Statistics", game.skin, "titlemenu");
+
+        Table statisticsTable = new Table();
+        statisticsTable.top().left();
+        statisticsTable.add(headingLabel);
+        table.add(statisticsTable)
+                .prefSize(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
     }
 
     private void goBack() {
