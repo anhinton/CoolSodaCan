@@ -20,7 +20,6 @@ public class CoolSodaCan extends Game {
 	private int gameUiWidth;
 	private int gameUiPadding;
 	private int menuUiPadding;
-	private String fontCharacters;
 	SpriteBatch batch;
 	I18NBundle bundle;
 	FontLoader fontLoader;
