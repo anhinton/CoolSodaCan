@@ -158,7 +158,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height);
     }
 
     @Override
@@ -187,6 +187,14 @@ public class TitleScreen implements Screen, InputProcessor {
             case Input.Keys.BACK:
             case Input.Keys.ESCAPE:
                 goBack();
+                break;
+            case Input.Keys.F:
+                if (Gdx.graphics.isFullscreen()) {
+                    Gdx.graphics.setWindowedMode(Constants.DESKTOP_WIDTH, Constants.DESKTOP_HEIGHT);
+                } else {
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                }
+                showMainMenu();
                 break;
         }
         return true;

@@ -63,6 +63,8 @@
   + **BUG**: There is a 1 (?) pixel gap between the side banners and the game area in GameScreen
       - Do I care enough to fix?
       - The easy fix is probably just going back to and ExtendViewport
+      
+  + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
 
 ## Done
       
