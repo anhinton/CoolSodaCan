@@ -21,8 +21,6 @@
           - Music volume
           - Sound volume
           - Credits
-          
-  + Resolve menu and game menu UI padding sizes across device sizes
   
   + Add score particle to Animal/Plant when points are scored
       

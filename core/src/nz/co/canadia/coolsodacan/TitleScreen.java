@@ -27,7 +27,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
-        padding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+        padding = game.getMenuUiPadding();
 
         FitViewport uiViewport = new FitViewport(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);
@@ -49,9 +49,9 @@ public class TitleScreen implements Screen, InputProcessor {
         table.center();
         table.pad(padding);
 
-        Label titleLabel = new Label("Cool Soda Can", game.skin, "titlemenu");
+        Label titleLabel = new Label(Constants.GAME_NAME, game.skin, "titlemenu");
 
-        TextButton startButton = new TextButton("Start Game", game.skin, "titlemenu");
+        TextButton startButton = new TextButton(game.bundle.get("titlescreenStartButton"), game.skin, "titlemenu");
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,9 +59,9 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        TextButton statsButton = new TextButton("Statistics", game.skin, "titlemenu");
+        TextButton statsButton = new TextButton(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
 
-        TextButton settingsButton = new TextButton("Settings", game.skin, "titlemenu");
+        TextButton settingsButton = new TextButton(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
 
         table.add(titleLabel).space(padding);
         table.row();
@@ -78,7 +78,7 @@ public class TitleScreen implements Screen, InputProcessor {
                         startButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
 
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            TextButton quitButton = new TextButton("Quit", game.skin, "titlemenu");
+            TextButton quitButton = new TextButton(game.bundle.get("titlescreenQuitButton"), game.skin, "titlemenu");
             quitButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {

@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
  */
 
 public class Constants {
-    public static final String GAME_NAME = "Cool Soda Can by Ashley Noel Hinton";
+    public static final String GAME_NAME = "Cool Soda Can";
     public static final String GAME_STATISTICS_PATH = "nz.co.canadia.coolsodacan.statistics";
     public static final float AUTOSAVE_INTERVAL = 60;
 
