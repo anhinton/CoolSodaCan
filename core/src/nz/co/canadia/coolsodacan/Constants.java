@@ -37,7 +37,8 @@ public class Constants {
     public static final Color FONT_SHADOW_COLOR = Color.BLACK;
     public static final int GAMEUI_FONT_SIZE = 32;
     public static final int GAMEUI_FONT_SHADOW_OFFSET = 2;
-    public static int TITLEMENU_FONT_SIZE = 64;
+    public static final int TITLEMENU_FONT_SIZE = 64;
+    public static final int TITLEMENU_FONT_SHADOW_OFFSET = 4;
 
     // UI constants
     public static final int GAMEUI_PADDING = 5;

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -107,13 +108,18 @@ public class TitleScreen implements Screen, InputProcessor {
         table.center();
         table.pad(padding);
 
-        Label headingLabel = new Label("Statistics", game.skin, "titlemenu");
+        Label headingLabel = new Label(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
 
-        Table statisticsTable = new Table();
-        statisticsTable.top().left();
-        statisticsTable.add(headingLabel);
-        table.add(statisticsTable)
-                .prefSize(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+        String bp = game.bundle.get("bulletPoint") + " ";
+        String statisticsString =
+                bp + game.bundle.get("statisticsThrown") + ": " + game.statistics.getTotalCansThrown() + "\n" +
+                bp + FreeTypeFontGenerator.DEFAULT_CHARS;
+        Label statisticsLabel = new Label(statisticsString, game.skin, "titlemenu");
+        statisticsLabel.setWrap(true);
+
+        table.add(headingLabel).space(padding).left();
+        table.row();
+        table.add(statisticsLabel).prefWidth(Gdx.graphics.getBackBufferWidth());
     }
 
     private void goBack() {

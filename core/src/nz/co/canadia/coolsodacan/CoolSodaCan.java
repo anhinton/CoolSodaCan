@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -19,6 +20,7 @@ public class CoolSodaCan extends Game {
 	private int gameUiWidth;
 	private int gameUiPadding;
 	private int menuUiPadding;
+	private String fontCharacters;
 	SpriteBatch batch;
 	I18NBundle bundle;
 	FontLoader fontLoader;
@@ -53,6 +55,7 @@ public class CoolSodaCan extends Game {
 		}
 		gameUiPadding = MathUtils.round((float) Constants.GAMEUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
 		menuUiPadding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+		fontCharacters = FreeTypeFontGenerator.DEFAULT_CHARS + "\u2022";
 
 		// Load assets
 		manager = new AssetManager();
@@ -63,8 +66,8 @@ public class CoolSodaCan extends Game {
 		param.magFilter = Texture.TextureFilter.Linear;
 		manager.load("banner/banner_left.jpg", Texture.class, param);
 		manager.load("banner/banner_right.jpg", Texture.class, param);
-		fontLoader.loadGameUiFont(manager);
-		fontLoader.loadTitleMenuFont(manager);
+		fontLoader.loadGameUiFont(manager, fontCharacters);
+		fontLoader.loadTitleMenuFont(manager, fontCharacters);
 		manager.load("skin/uiskin.atlas", TextureAtlas.class);
 		manager.finishLoading();
 
