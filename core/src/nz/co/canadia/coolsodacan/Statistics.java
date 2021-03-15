@@ -184,11 +184,13 @@ public class Statistics {
     public boolean isSodaUnlocked(Player.PlayerType playerType) {
         switch(playerType) {
             case ORANGE:
-                return totalPointsScored > Constants.UNLOCK_POINTS_THRESHOLD;
+                return totalPointsScored >= Constants.UNLOCK_POINTS_THRESHOLD;
             case PURPLE:
-                return guineapigsSuperhit > Constants.UNLOCK_GUINEAPIGS_THRESHOLD;
+                return guineapigsSuperhit >= Constants.UNLOCK_GUINEAPIGS_THRESHOLD;
             case SILVER:
-                return longestSession > Constants.UNLOCK_SESSION_THRESHOLD;
+                return longestSession >= Constants.UNLOCK_SESSION_THRESHOLD;
+            case YELLOW:
+                return plantsSuperHit >= Constants.UNLOCK_PLANTS_THRESHOLD;
             case BLUE:
             default:
                 return true;

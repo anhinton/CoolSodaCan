@@ -1,4 +1,8 @@
 # todo.md
+
+  + Unlock sodas during gameplay
+      - Check if new unlock has occurred
+      - Display in popup which pauses game
       
   + Title screen
       - New game
@@ -24,12 +28,6 @@
   + Add score particle to Animal/Plant when points are scored
       
   + Create a tutorial at start of game
-          
-  + Can unlock conditions
-      - ~~ORANGE: Score more than 50,000 points overall~~
-      - ~~SILVER: Play one session for longer than 5 minutes~~
-      - PURPLE: Super-sate 50 guinea pigs
-      - YELLOW: Destroy 100 plants
       
   + Add two new Animals
       - Blue hedgehog
@@ -66,6 +64,12 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+          
+  + ~~Can unlock conditions~~
+      - ~~ORANGE: Score more than 10,000 points overall~~
+      - ~~SILVER: Play one session for longer than 1 minute~~
+      - ~~PURPLE: Super-sate 15 guinea pigs~~
+      - ~~YELLOW: Destroy 100 plants~~
       
   + ~~**WILL NOT FIX** Launching from app menu of Moto G test device shows a black bar where bottom
     system bar would display. Doesn't seem to when "running" game from Android Studio~~

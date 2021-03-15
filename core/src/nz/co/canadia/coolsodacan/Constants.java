@@ -101,7 +101,8 @@ public class Constants {
     public static final float PLAY_CENTRE_OFFSET = 4 / 9f;
 
     // Soda unlock constants
-    public static final int UNLOCK_POINTS_THRESHOLD = 50000;
-    public static final float UNLOCK_SESSION_THRESHOLD = 60 * 5;
-    public static final int UNLOCK_GUINEAPIGS_THRESHOLD = 50;
+    public static final int UNLOCK_POINTS_THRESHOLD = 10000;
+    public static final float UNLOCK_SESSION_THRESHOLD = 60;
+    public static final int UNLOCK_GUINEAPIGS_THRESHOLD = 15;
+    public static final int UNLOCK_PLANTS_THRESHOLD = 100;
 }

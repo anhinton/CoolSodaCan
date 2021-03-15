@@ -230,6 +230,9 @@ public class TitleScreen implements Screen, InputProcessor {
             case SILVER:
                 text += game.bundle.get("unlockDialogSilver");
                 break;
+            case YELLOW:
+                text += game.bundle.get("unlockDialogYellow");
+                break;
             case BLUE:
             default:
                 text = "This case should be impossible to reach";
