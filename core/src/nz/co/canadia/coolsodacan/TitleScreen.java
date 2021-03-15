@@ -171,7 +171,11 @@ public class TitleScreen implements Screen, InputProcessor {
         silverButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, Player.PlayerType.SILVER));
+                if (game.statistics.isSodaUnlocked(Player.PlayerType.SILVER)) {
+                    game.setScreen(new GameScreen(game, Player.PlayerType.SILVER));
+                } else {
+                    showUnlockDialog(Player.PlayerType.SILVER);
+                }
             }
         });
 
@@ -207,16 +211,20 @@ public class TitleScreen implements Screen, InputProcessor {
         currentSprite.setCenter(Constants.GAME_WIDTH / 2f, game.getGameHeight() / 2f);
         currentSprite.setAlpha(Constants.TITLEMENU_SODA_ALPHA_LOCKED);
 
-        String text;
+        String text = game.bundle.get("unlockDialogPrefix") + "\n\n";
         switch (playerType) {
             case ORANGE:
-                text = game.bundle.get("unlockDialogPrefix") + "\n\n" + game.bundle.get("unlockDialogOrange");
+                text += game.bundle.get("unlockDialogOrange");
+                break;
+            case SILVER:
+                text += game.bundle.get("unlockDialogSilver");
                 break;
             case BLUE:
             default:
                 text = "This case should be impossible to reach";
                 break;
         }
+        text += "\n";
 
         Label unlockDialogLabel = new Label(text, game.skin, "statistics");
         unlockDialogLabel.setWrap(true);

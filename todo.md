@@ -25,13 +25,11 @@
       
   + Create a tutorial at start of game
           
-  + Can unlock ideas
-      - Score more than 50,000 points overall
-          - Should I calculate this based on fire rate and points per can? This is my guess at 5
-            minutes of super-sating animals
-      - Play one session for longer than 5 minutes
-      - Super-sate 50 guinea pigs
-      - Destroy 100 plants
+  + Can unlock conditions
+      - ~~ORANGE: Score more than 50,000 points overall~~
+      - ~~SILVER: Play one session for longer than 5 minutes~~
+      - PURPLE: Super-sate 50 guinea pigs
+      - YELLOW: Destroy 100 plants
       
   + Add two new Animals
       - Blue hedgehog

@@ -102,4 +102,5 @@ public class Constants {
 
     // Soda unlock constants
     public static final int UNLOCK_POINTS_THRESHOLD = 50000;
+    public static final float UNLOCK_SESSION_THRESHOLD = 60 * 5;
 }
