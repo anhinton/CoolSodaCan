@@ -163,7 +163,11 @@ public class TitleScreen implements Screen, InputProcessor {
         purpleButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, Player.PlayerType.PURPLE));
+                if (game.statistics.isSodaUnlocked(Player.PlayerType.PURPLE)) {
+                    game.setScreen(new GameScreen(game, Player.PlayerType.PURPLE));
+                } else {
+                    showUnlockDialog(Player.PlayerType.PURPLE);
+                }
             }
         });
 
@@ -183,7 +187,11 @@ public class TitleScreen implements Screen, InputProcessor {
         yellowButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, Player.PlayerType.YELLOW));
+                if (game.statistics.isSodaUnlocked(Player.PlayerType.YELLOW)) {
+                    game.setScreen(new GameScreen(game, Player.PlayerType.YELLOW));
+                } else {
+                    showUnlockDialog(Player.PlayerType.YELLOW);
+                }
             }
         });
 
@@ -215,6 +223,9 @@ public class TitleScreen implements Screen, InputProcessor {
         switch (playerType) {
             case ORANGE:
                 text += game.bundle.get("unlockDialogOrange");
+                break;
+            case PURPLE:
+                text += game.bundle.get("unlockDialogPurple");
                 break;
             case SILVER:
                 text += game.bundle.get("unlockDialogSilver");

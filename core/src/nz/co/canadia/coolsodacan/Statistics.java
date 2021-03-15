@@ -185,6 +185,8 @@ public class Statistics {
         switch(playerType) {
             case ORANGE:
                 return totalPointsScored > Constants.UNLOCK_POINTS_THRESHOLD;
+            case PURPLE:
+                return guineapigsSuperhit > Constants.UNLOCK_GUINEAPIGS_THRESHOLD;
             case SILVER:
                 return longestSession > Constants.UNLOCK_SESSION_THRESHOLD;
             case BLUE:
