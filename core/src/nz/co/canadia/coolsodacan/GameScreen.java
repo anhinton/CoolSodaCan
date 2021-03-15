@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.BooleanArray;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -45,6 +47,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final float menuButtonWidth;
     private final float buttonHeight;
     private final float gameUiButtonWidth;
+    private final ObjectMap<Player.PlayerType, Boolean> sodasUnlocked;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -75,11 +78,14 @@ public class GameScreen implements Screen, InputProcessor {
         menuButtonWidth = game.getUiWidth() * Constants.GAMEMENU_BUTTON_WIDTH;
         buttonHeight = menuButtonWidth * Constants.GAMEMENU_BUTTON_RELATIVE_HEIGHT;
         gameUiButtonWidth = game.getUiWidth() * Constants.GAMEUI_BUTTON_WIDTH;
+        sodasUnlocked = new ObjectMap<>(Player.PlayerType.values().length);
+        for (Player.PlayerType pt : Player.PlayerType.values()) {
+            sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+        }
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
         // create player object
-//        Player.PlayerType playerType = Player.PlayerType.values()[MathUtils.random(Player.PlayerType.values().length - 1)];
         player = new Player(game.getGameHeight(), atlas, playerType);
 
         // create game objects
@@ -436,6 +442,16 @@ public class GameScreen implements Screen, InputProcessor {
                             // Hit the can
                             ac.hit();
                         }
+                    }
+                }
+            }
+
+            // Check for can unlocks
+            for (Player.PlayerType pt : Player.PlayerType.values()) {
+                if (!sodasUnlocked.get(pt)) {
+                    if (game.statistics.isSodaUnlocked(pt)) {
+                        sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+                        Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
                     }
                 }
             }
