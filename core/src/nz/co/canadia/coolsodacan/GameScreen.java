@@ -135,7 +135,7 @@ public class GameScreen implements Screen, InputProcessor {
         bannerStage.addActor(bannerRightImage);
 
         // Create the Game UI
-        Viewport uiViewport = new FitViewport(game.getGameUiWidth(), Gdx.graphics.getBackBufferHeight());
+        Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         uiStage = new Stage(uiViewport);
         gameUiTable = new Table();
         gameUiTable.setFillParent(true);
@@ -230,9 +230,9 @@ public class GameScreen implements Screen, InputProcessor {
                 break;
         }
 
-        gameUiTable.add(leftColumn).prefWidth(game.getGameUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).left();
-        gameUiTable.add(middleColumn).prefWidth(game.getGameUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).center();
-        gameUiTable.add(rightColumn).prefWidth(game.getGameUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).right();
+        gameUiTable.add(leftColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).left();
+        gameUiTable.add(middleColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).center();
+        gameUiTable.add(rightColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).right();
     }
 
     private void showMenu() {
@@ -253,7 +253,7 @@ public class GameScreen implements Screen, InputProcessor {
                 continueGame();
             }
         });
-        menuBox.add(continueButton).prefWidth(game.getGameUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
+        menuBox.add(continueButton).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
                 .prefHeight(continueButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE)
                 .space(game.getMenuUiPadding());
         menuBox.row();
@@ -265,7 +265,7 @@ public class GameScreen implements Screen, InputProcessor {
                 exit();
             }
         });
-        menuBox.add(exitButton).prefWidth(game.getGameUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
+        menuBox.add(exitButton).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
                 .prefHeight(exitButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE)
                 .space(game.getMenuUiPadding());
 

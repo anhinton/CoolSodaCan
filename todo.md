@@ -19,7 +19,7 @@
           - Music volume
           - Sound volume
           - Credits
-      - Calculate button widths and heights to stay the same across devices
+      - ~~Calculate button widths and heights to stay the same across devices~~
   
   + Add score particle to Animal/Plant when points are scored
       

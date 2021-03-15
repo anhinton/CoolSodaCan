@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -17,7 +16,7 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 public class CoolSodaCan extends Game {
 	private int gameHeight;
-	private int gameUiWidth;
+	private int uiWidth;
 	private int gameUiPadding;
 	private int menuUiPadding;
 	SpriteBatch batch;
@@ -45,12 +44,12 @@ public class CoolSodaCan extends Game {
 		gameHeight = Constants.GAME_HEIGHT;
 		float gameRatio = (float) gameWidth / gameHeight;
 		float screenRatio = (float) Gdx.graphics.getBackBufferWidth() / Gdx.graphics.getBackBufferHeight();
-		gameUiWidth = Gdx.graphics.getBackBufferWidth();
+		uiWidth = Gdx.graphics.getBackBufferWidth();
 		int gameUiHeight = Gdx.graphics.getBackBufferHeight();
 		if (screenRatio < gameRatio) {
 			gameHeight = MathUtils.round(gameWidth / screenRatio);
 		} else {
-			gameUiWidth = MathUtils.round(gameUiHeight * gameRatio);
+			uiWidth = MathUtils.round(gameUiHeight * gameRatio);
 		}
 		gameUiPadding = MathUtils.round((float) Constants.GAMEUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
 		menuUiPadding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
@@ -93,8 +92,8 @@ public class CoolSodaCan extends Game {
 		return gameHeight;
 	}
 
-	int getGameUiWidth() {
-		return gameUiWidth;
+	int getUiWidth() {
+		return uiWidth;
 	}
 
 	public int getGameUiPadding() {

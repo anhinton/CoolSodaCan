@@ -6,7 +6,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -24,6 +23,8 @@ public class TitleScreen implements Screen, InputProcessor {
     private final Stage stage;
     private final Table table;
     private final int padding;
+    private final int buttonHeight;
+    private final int buttonWidth;
     private CurrentMenu currentMenu;
 
     private enum CurrentMenu { MAIN, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
@@ -31,8 +32,10 @@ public class TitleScreen implements Screen, InputProcessor {
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
         padding = game.getMenuUiPadding();
+        buttonWidth = MathUtils.round(game.getUiWidth() * 4f / 5);
+        buttonHeight = MathUtils.round(buttonWidth / 5f);
 
-        FitViewport uiViewport = new FitViewport(Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
+        FitViewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);
         table = new Table();
         table.setFillParent(true);
@@ -75,16 +78,16 @@ public class TitleScreen implements Screen, InputProcessor {
         table.add(titleLabel).space(padding);
         table.row();
         table.add(startButton).space(padding)
-                .prefSize(startButton.getPrefWidth() * Constants.GAMEUI_MENUBUTTON_SCALE,
-                        startButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
+                .prefSize(buttonWidth,
+                        buttonHeight);
         table.row();
         table.add(statsButton).space(padding)
-                .prefSize(startButton.getPrefWidth() * Constants.GAMEUI_MENUBUTTON_SCALE,
-                        startButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
+                .prefSize(buttonWidth,
+                        buttonHeight);
         table.row();
         table.add(settingsButton).space(padding)
-                .prefSize(startButton.getPrefWidth() * Constants.GAMEUI_MENUBUTTON_SCALE,
-                        startButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
+                .prefSize(buttonWidth,
+                        buttonHeight);
 
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
             TextButton quitButton = new TextButton(game.bundle.get("titlescreenQuitButton"), game.skin, "titlemenu");
@@ -96,8 +99,8 @@ public class TitleScreen implements Screen, InputProcessor {
             });
             table.row();
             table.add(quitButton).space(padding)
-                    .prefSize(startButton.getPrefWidth() * Constants.GAMEUI_MENUBUTTON_SCALE,
-                            startButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
+                    .prefSize(buttonWidth,
+                            buttonHeight);
         }
     }
 
@@ -142,16 +145,15 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.setSize(Gdx.graphics.getBackBufferHeight(), Gdx.graphics.getBackBufferHeight());
         table.add(headingLabel).space(padding);
         table.row();
         table.add(statisticsLabel)
                 .prefWidth(Gdx.graphics.getBackBufferWidth())
                 .top();
         table.row();
-        table.add(backButton).space(padding).prefSize(Value.percentWidth(1.5f), Value.percentHeight(1.25f));
+        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
         table.row();
-        table.add(resetStatisticsButton).space(padding).prefSize(Value.percentWidth(1.1f), Value.percentHeight(1.25f));
+        table.add(resetStatisticsButton).space(padding).prefSize(buttonWidth, buttonHeight);
     }
 
     private void showResetStatistics() {
@@ -184,12 +186,13 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.add(resetHeadingLabel).colspan(2).space(padding);
+        table.add(resetHeadingLabel).space(padding);
         table.row();
-        table.add(resetQuestionLabel).colspan(2).space(padding).prefWidth(Gdx.graphics.getBackBufferWidth());
+        table.add(resetQuestionLabel).space(padding).prefWidth(Gdx.graphics.getBackBufferWidth());
         table.row();
-        table.add(resetNoButton).space(padding).right();
-        table.add(resetYesButton).space(padding).left();
+        table.add(resetNoButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(resetYesButton).space(padding).prefSize(buttonWidth, buttonHeight);
     }
 
     private void goBack() {
