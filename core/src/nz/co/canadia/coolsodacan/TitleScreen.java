@@ -25,7 +25,7 @@ public class TitleScreen implements Screen, InputProcessor {
     private final float buttonWidth;
     private CurrentMenu currentMenu;
 
-    private enum CurrentMenu { MAIN, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
+    private enum CurrentMenu { MAIN, SELECT_SODA, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
@@ -55,11 +55,11 @@ public class TitleScreen implements Screen, InputProcessor {
 
         Label titleLabel = new Label(Constants.GAME_NAME, game.skin, "titlemenu");
 
-        TextButton startButton = new TextButton(game.bundle.get("titlescreenStartButton"), game.skin, "titlemenu");
+        TextButton startButton = new TextButton(game.bundle.get("titlescreenChooseButton"), game.skin, "titlemenu");
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                showSodaSelection();
             }
         });
 
@@ -72,6 +72,12 @@ public class TitleScreen implements Screen, InputProcessor {
         });
 
         TextButton settingsButton = new TextButton(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
+        settingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showSettingsMenu();
+            }
+        });
 
         table.add(titleLabel).space(padding);
         table.row();
@@ -102,7 +108,70 @@ public class TitleScreen implements Screen, InputProcessor {
         }
     }
 
+    private void showSodaSelection() {
+        currentMenu = CurrentMenu.SELECT_SODA;
+        table.clearChildren();
+        table.pad(padding);
+
+        Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
+
+        TextButton blueButton = new TextButton(game.bundle.get("sodaBlueButton"), game.skin, "titlemenu");
+        blueButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game, Player.PlayerType.BLUE));
+            }
+        });
+
+        TextButton orangeButton = new TextButton(game.bundle.get("sodaOrangeButton"), game.skin, "titlemenu");
+        orangeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game, Player.PlayerType.ORANGE));
+            }
+        });
+
+        TextButton purpleButton = new TextButton(game.bundle.get("sodaPurpleButton"), game.skin, "titlemenu");
+        purpleButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game, Player.PlayerType.PURPLE));
+            }
+        });
+
+        TextButton silverButton = new TextButton(game.bundle.get("sodaSilverButton"), game.skin, "titlemenu");
+        silverButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game, Player.PlayerType.SILVER));
+            }
+        });
+
+        TextButton yellowButton = new TextButton(game.bundle.get("sodaYellowButton"), game.skin, "titlemenu");
+        yellowButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new GameScreen(game, Player.PlayerType.YELLOW));
+            }
+        });
+
+        table.add(sodaSelectLabel).space(padding);
+        table.row();
+        table.add(blueButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(orangeButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(purpleButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(silverButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(yellowButton).space(padding).prefSize(buttonWidth, buttonHeight);
+    }
+
     private void showSettingsMenu() {
+        currentMenu = CurrentMenu.STATISTICS;
+        table.clearChildren();
+        table.pad(padding);
     }
 
     private void showStatistics() {
@@ -159,7 +228,7 @@ public class TitleScreen implements Screen, InputProcessor {
         table.clearChildren();
         table.pad(padding);
 
-        Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetButton"), game.skin, "titlemenu");
+        Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetLabel"), game.skin, "titlemenu");
 
         Label resetQuestionLabel = new Label(game.bundle.get("statisticsResetQuestion"), game.skin, "statistics");
         resetQuestionLabel.setWrap(true);
@@ -198,9 +267,8 @@ public class TitleScreen implements Screen, InputProcessor {
             case MAIN:
                 quit();
                 break;
+            case SELECT_SODA:
             case SETTINGS:
-                showMainMenu();
-                break;
             case STATISTICS:
                 showMainMenu();
                 break;

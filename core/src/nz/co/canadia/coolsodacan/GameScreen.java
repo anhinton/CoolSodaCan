@@ -63,7 +63,7 @@ public class GameScreen implements Screen, InputProcessor {
     private enum GameState { ACTIVE, PAUSED }
     private GameState currentState;
 
-    GameScreen(CoolSodaCan game) {
+    GameScreen(CoolSodaCan game, Player.PlayerType playerType) {
         this.game = game;
         timeElapsed = 0;
         lastSaved = 0;
@@ -79,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor {
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
         // create player object
-        Player.PlayerType playerType = Player.PlayerType.values()[MathUtils.random(Player.PlayerType.values().length - 1)];
+//        Player.PlayerType playerType = Player.PlayerType.values()[MathUtils.random(Player.PlayerType.values().length - 1)];
         player = new Player(game.getGameHeight(), atlas, playerType);
 
         // create game objects
