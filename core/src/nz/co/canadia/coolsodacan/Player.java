@@ -2,7 +2,9 @@ package nz.co.canadia.coolsodacan;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -20,24 +22,31 @@ class Player {
     private Vector2 targetXY;
 
     public enum PlayerType {
-        BLUE    ("blue_soda_small",     "blue_anim",    Constants.BLUE_COLOR),
-        ORANGE  ("orange_soda_small",   "orange_anim",  Constants.ORANGE_COLOR),
-        PURPLE  ("purple_soda_small",   "purple_anim",  Constants.PURPLE_COLOR),
-        SILVER  ("silver_soda_small",   "silver_anim",  Constants.SILVER_COLOR),
-        YELLOW  ("yellow_soda_small",   "yellow_anim",  Constants.YELLOW_COLOR);
+        BLUE    ("blue_soda_small",     "cans_large/blue_soda.png",
+                "blue_anim",    Constants.BLUE_COLOR),
+        ORANGE  ("orange_soda_small",   "cans_large/orange_soda.png",
+                "orange_anim",  Constants.ORANGE_COLOR),
+        PURPLE  ("purple_soda_small",   "cans_large/purple_soda.png",
+                "purple_anim",  Constants.PURPLE_COLOR),
+        SILVER  ("silver_soda_small",   "cans_large/silver_soda.png",
+                "silver_anim",  Constants.SILVER_COLOR),
+        YELLOW  ("yellow_soda_small",   "cans_large/yellow_soda.png",
+                "yellow_anim",  Constants.YELLOW_COLOR);
 
-        private final String textureName;
+        private final String smallTextureName;
+        private final String largeTextureName;
         private final String animTexture;
         private final Color explosionColor;
 
-        PlayerType(String textureName, String animTexture, Color explosionColor) {
-            this.textureName = textureName;
+        PlayerType(String smallTextureName, String largeTextureName, String animTexture, Color explosionColor) {
+            this.smallTextureName = smallTextureName;
+            this.largeTextureName = largeTextureName;
             this.animTexture = animTexture;
             this.explosionColor = explosionColor;
         }
 
-        public String getTextureName() {
-            return textureName;
+        public String getLargeTextureName() {
+            return largeTextureName;
         }
 
         String getAnimTexture() {
@@ -55,7 +64,7 @@ class Player {
         targetXY = new Vector2(
                 Constants.GAME_WIDTH * Constants.CURSOR_START_X,
                 gameHeight * Constants.CURSOR_START_Y);
-        sprite = atlas.createSprite(playerType.textureName);
+        sprite = atlas.createSprite(playerType.smallTextureName);
         sprite.setCenter(targetXY.x, targetXY.y);
         sprite.setSize(sprite.getWidth(), sprite.getHeight());
     }

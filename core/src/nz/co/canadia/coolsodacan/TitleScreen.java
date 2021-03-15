@@ -6,15 +6,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -63,7 +64,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showMainMenu() {
         currentMenu = CurrentMenu.MAIN;
-        table.clearChildren();
+        table.clear();
+        table.setBackground((Drawable) null);
         table.center();
         table.pad(padding);
 
@@ -124,7 +126,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showSodaSelection() {
         currentMenu = CurrentMenu.SELECT_SODA;
-        table.clearChildren();
+        table.clear();
+        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
@@ -190,10 +193,11 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showUnlockDialog(Player.PlayerType playerType) {
         currentMenu = CurrentMenu.UNLOCK_DIALOG;
-        table.clearChildren();
+        table.clear();
         table.pad(padding);
 
-        Image sodaImage = new Image(new SpriteDrawable(atlas.createSprite(playerType.getTextureName())));
+        Texture texture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
+        table.setBackground(new TextureRegionDrawable(texture));
 
         String text;
         switch (playerType) {
@@ -209,8 +213,6 @@ public class TitleScreen implements Screen, InputProcessor {
         Label unlockDialogLabel = new Label(text, game.skin, "statistics");
         unlockDialogLabel.setWrap(true);
 
-        table.add(sodaImage).space(padding);
-        table.row();
         table.add(unlockDialogLabel).space(padding).prefWidth(game.getUiWidth());
         table.row();
         table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
@@ -218,13 +220,15 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showSettingsMenu() {
         currentMenu = CurrentMenu.STATISTICS;
-        table.clearChildren();
+        table.clear();
+        table.setBackground((Drawable) null);
         table.pad(padding);
     }
 
     private void showStatistics() {
         currentMenu = CurrentMenu.STATISTICS;
-        table.clearChildren();
+        table.clear();
+        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
@@ -273,7 +277,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void showResetStatistics() {
         currentMenu = CurrentMenu.RESET_STATISTICS;
-        table.clearChildren();
+        table.clear();
+        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetLabel"), game.skin, "titlemenu");

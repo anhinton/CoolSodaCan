@@ -63,6 +63,11 @@ public class CoolSodaCan extends Game {
 		param.magFilter = Texture.TextureFilter.Linear;
 		manager.load("banner/banner_left.jpg", Texture.class, param);
 		manager.load("banner/banner_right.jpg", Texture.class, param);
+		manager.load("cans_large/blue_soda.png", Texture.class, param);
+		manager.load("cans_large/orange_soda.png", Texture.class, param);
+		manager.load("cans_large/purple_soda.png", Texture.class, param);
+		manager.load("cans_large/silver_soda.png", Texture.class, param);
+		manager.load("cans_large/yellow_soda.png", Texture.class, param);
 		fontLoader.loadGameUiFont(manager);
 		fontLoader.loadTitleMenuFont(manager);
 		fontLoader.loadStatisticsFont(manager);
