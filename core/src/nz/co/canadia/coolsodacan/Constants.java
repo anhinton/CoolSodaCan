@@ -98,4 +98,7 @@ public class Constants {
     // My player cans have drop shadows, meaning the "centre" of the can is not in the middle.
     // As at 2021-03-01 I have 80px wide cans with a 10px drop shadow
     public static final float PLAY_CENTRE_OFFSET = 4 / 9f;
+
+    // Soda unlock constants
+    public static final int UNLOCK_POINTS_THRESHOLD = 50000;
 }

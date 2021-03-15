@@ -26,14 +26,18 @@ class Player {
         SILVER  ("silver_soda_small",   "silver_anim",  Constants.SILVER_COLOR),
         YELLOW  ("yellow_soda_small",   "yellow_anim",  Constants.YELLOW_COLOR);
 
-        private final String smallTexture;
+        private final String textureName;
         private final String animTexture;
         private final Color explosionColor;
 
-        PlayerType(String smallTexture, String animTexture, Color explosionColor) {
-            this.smallTexture = smallTexture;
+        PlayerType(String textureName, String animTexture, Color explosionColor) {
+            this.textureName = textureName;
             this.animTexture = animTexture;
             this.explosionColor = explosionColor;
+        }
+
+        public String getTextureName() {
+            return textureName;
         }
 
         String getAnimTexture() {
@@ -51,7 +55,7 @@ class Player {
         targetXY = new Vector2(
                 Constants.GAME_WIDTH * Constants.CURSOR_START_X,
                 gameHeight * Constants.CURSOR_START_Y);
-        sprite = atlas.createSprite(playerType.smallTexture);
+        sprite = atlas.createSprite(playerType.textureName);
         sprite.setCenter(targetXY.x, targetXY.y);
         sprite.setSize(sprite.getWidth(), sprite.getHeight());
     }

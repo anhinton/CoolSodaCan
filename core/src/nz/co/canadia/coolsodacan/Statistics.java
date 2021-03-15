@@ -180,4 +180,14 @@ public class Statistics {
             Gdx.app.error("Statistics", "Unable to do incrementSuperHit " + e.getLocalizedMessage());
         }
     }
+
+    public boolean isSodaUnlocked(Player.PlayerType playerType) {
+        switch(playerType) {
+            case ORANGE:
+                return totalPointsScored > Constants.UNLOCK_POINTS_THRESHOLD;
+            case BLUE:
+            default:
+                return true;
+        }
+    }
 }

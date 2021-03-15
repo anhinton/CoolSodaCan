@@ -6,12 +6,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -23,15 +26,26 @@ public class TitleScreen implements Screen, InputProcessor {
     private final int padding;
     private final float buttonHeight;
     private final float buttonWidth;
+    private final TextureAtlas atlas;
+    private final TextButton backButton;
     private CurrentMenu currentMenu;
 
-    private enum CurrentMenu { MAIN, SELECT_SODA, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
+    private enum CurrentMenu { MAIN, SELECT_SODA, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
         padding = game.getMenuUiPadding();
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
+        atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+
+        backButton = new TextButton(game.bundle.get("backButton"), game.skin, "titlemenu");
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                goBack();
+            }
+        });
 
         FitViewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);
@@ -127,7 +141,11 @@ public class TitleScreen implements Screen, InputProcessor {
         orangeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game, Player.PlayerType.ORANGE));
+                if (game.statistics.isSodaUnlocked(Player.PlayerType.ORANGE)) {
+                    game.setScreen(new GameScreen(game, Player.PlayerType.ORANGE));
+                } else {
+                    showUnlockDialog(Player.PlayerType.ORANGE);
+                }
             }
         });
 
@@ -166,6 +184,36 @@ public class TitleScreen implements Screen, InputProcessor {
         table.add(silverButton).space(padding).prefSize(buttonWidth, buttonHeight);
         table.row();
         table.add(yellowButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.row();
+        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
+    }
+
+    private void showUnlockDialog(Player.PlayerType playerType) {
+        currentMenu = CurrentMenu.UNLOCK_DIALOG;
+        table.clearChildren();
+        table.pad(padding);
+
+        Image sodaImage = new Image(new SpriteDrawable(atlas.createSprite(playerType.getTextureName())));
+
+        String text;
+        switch (playerType) {
+            case ORANGE:
+                text = game.bundle.get("unlockDialogPrefix") + "\n\n" + game.bundle.get("unlockDialogOrange");
+                break;
+            case BLUE:
+            default:
+                text = "This case should be impossible to reach";
+                break;
+        }
+
+        Label unlockDialogLabel = new Label(text, game.skin, "statistics");
+        unlockDialogLabel.setWrap(true);
+
+        table.add(sodaImage).space(padding);
+        table.row();
+        table.add(unlockDialogLabel).space(padding).prefWidth(game.getUiWidth());
+        table.row();
+        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
     }
 
     private void showSettingsMenu() {
@@ -271,6 +319,9 @@ public class TitleScreen implements Screen, InputProcessor {
             case SETTINGS:
             case STATISTICS:
                 showMainMenu();
+                break;
+            case UNLOCK_DIALOG:
+                showSodaSelection();
                 break;
             case RESET_STATISTICS:
                 showStatistics();

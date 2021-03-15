@@ -2,7 +2,7 @@
       
   + Title screen
       - New game
-          - Choose from one of five cans
+          - ~~Choose from one of five cans~~
           - Cans unlocked via progression?
       - Statistics
           - ~~Number of sodas thrown~~
