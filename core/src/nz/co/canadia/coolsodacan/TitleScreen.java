@@ -26,7 +26,7 @@ public class TitleScreen implements Screen, InputProcessor {
     private final int padding;
     private CurrentMenu currentMenu;
 
-    private enum CurrentMenu { MAIN, STATISTICS, SETTINGS, CREDITS}
+    private enum CurrentMenu { MAIN, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
@@ -135,6 +135,12 @@ public class TitleScreen implements Screen, InputProcessor {
         });
 
         TextButton resetStatisticsButton = new TextButton(game.bundle.get("statisticsResetButton"), game.skin, "titlemenu");
+        resetStatisticsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showResetStatistics();
+            }
+        });
 
         table.setSize(Gdx.graphics.getBackBufferHeight(), Gdx.graphics.getBackBufferHeight());
         table.add(headingLabel).space(padding);
@@ -148,6 +154,44 @@ public class TitleScreen implements Screen, InputProcessor {
         table.add(resetStatisticsButton).space(padding).prefSize(Value.percentWidth(1.1f), Value.percentHeight(1.25f));
     }
 
+    private void showResetStatistics() {
+        currentMenu = CurrentMenu.RESET_STATISTICS;
+        table.clearChildren();
+        table.pad(padding);
+
+        Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetButton"), game.skin, "titlemenu");
+
+        Label resetQuestionLabel = new Label(game.bundle.get("statisticsResetQuestion"), game.skin, "statistics");
+        resetQuestionLabel.setWrap(true);
+        resetQuestionLabel.setAlignment(Align.center);
+
+        TextButton resetNoButton = new TextButton(game.bundle.get("statisticsResetNo"), game.skin, "titlemenu");
+        resetNoButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                goBack();
+            }
+        });
+
+        TextButton resetYesButton = new TextButton(game.bundle.get("statisticsResetYes"), game.skin, "titlemenu");
+        resetYesButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.statistics.clear();
+                game.statistics.save();
+                game.statistics.load();
+                showStatistics();
+            }
+        });
+
+        table.add(resetHeadingLabel).colspan(2).space(padding);
+        table.row();
+        table.add(resetQuestionLabel).colspan(2).space(padding).prefWidth(Gdx.graphics.getBackBufferWidth());
+        table.row();
+        table.add(resetNoButton).space(padding).right();
+        table.add(resetYesButton).space(padding).left();
+    }
+
     private void goBack() {
         switch (currentMenu) {
             case MAIN:
@@ -158,6 +202,9 @@ public class TitleScreen implements Screen, InputProcessor {
                 break;
             case STATISTICS:
                 showMainMenu();
+                break;
+            case RESET_STATISTICS:
+                showStatistics();
                 break;
             case CREDITS:
                 showSettingsMenu();

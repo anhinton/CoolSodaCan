@@ -5,22 +5,21 @@
           - Choose from one of five cans
           - Cans unlocked via progression?
       - Statistics
-          - Number of sodas thrown
-          - Number of sodas drunk
-          - Highest score
-          - Total points scored
-          - Animals sated
-              - Horses
-              - Guinea pigs
-              - Others?
-          - Trees destroyed
+          - ~~Number of sodas thrown~~
+          - ~~Number of sodas drunk~~
+          - ~~High score~~
+          - ~~Total points scored~~
+          - ~~Animals quenched~~
+          - ~~Plants pruned~~
+          - ~~Longest session~~
+          - ~~Total time played~~
           - Sodas unlocked
-          - Longest session
-          - Total time played
+          - ~~Reset progess button~~
       - Settings
           - Music volume
           - Sound volume
           - Credits
+      - Calculate button widths and heights to stay the same across devices
   
   + Add score particle to Animal/Plant when points are scored
       

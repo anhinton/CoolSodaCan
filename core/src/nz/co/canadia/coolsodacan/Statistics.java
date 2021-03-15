@@ -77,6 +77,8 @@ public class Statistics {
         }
     }
 
+    public void clear() { statistics.clear(); }
+
     public void save() {
         statistics.flush();
     }
