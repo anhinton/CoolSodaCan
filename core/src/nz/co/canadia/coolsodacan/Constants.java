@@ -53,6 +53,7 @@ public class Constants {
     public static final float GAMEMENU_BUTTON_WIDTH = 0.4f;
     public static final float GAMEMENU_BUTTON_RELATIVE_HEIGHT = 0.25f;
     public static final int MENUUI_PADDING = 20;
+    public static final float TITLEMENU_SODA_ALPHA_LOCKED = 0.5f;
 
     // Particle effect constants
     public static final Color BLUE_COLOR = new Color(0.165f, 0.427f, 0.925f, 1);

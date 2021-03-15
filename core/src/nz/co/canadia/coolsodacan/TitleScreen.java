@@ -6,8 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,8 +27,9 @@ public class TitleScreen implements Screen, InputProcessor {
     private final int padding;
     private final float buttonHeight;
     private final float buttonWidth;
-    private final TextureAtlas atlas;
     private final TextButton backButton;
+    private Sprite currentSprite;
+    private final FitViewport viewport;
     private CurrentMenu currentMenu;
 
     private enum CurrentMenu { MAIN, SELECT_SODA, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
@@ -38,7 +39,8 @@ public class TitleScreen implements Screen, InputProcessor {
         padding = game.getMenuUiPadding();
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
-        atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+
+        currentSprite = new Sprite(game.manager.get(Player.PlayerType.BLUE.getLargeTextureName(), Texture.class));
 
         backButton = new TextButton(game.bundle.get("backButton"), game.skin, "titlemenu");
         backButton.addListener(new ChangeListener() {
@@ -47,6 +49,12 @@ public class TitleScreen implements Screen, InputProcessor {
                 goBack();
             }
         });
+
+        // create the game viewport
+        OrthographicCamera camera = new OrthographicCamera();
+        camera.setToOrtho(false, Constants.GAME_WIDTH, game.getGameHeight());
+        viewport = new FitViewport(Constants.GAME_WIDTH,
+                game.getGameHeight(), camera);
 
         FitViewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);
@@ -65,7 +73,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showMainMenu() {
         currentMenu = CurrentMenu.MAIN;
         table.clear();
-        table.setBackground((Drawable) null);
         table.center();
         table.pad(padding);
 
@@ -196,8 +203,9 @@ public class TitleScreen implements Screen, InputProcessor {
         table.clear();
         table.pad(padding);
 
-        Texture texture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
-        table.setBackground(new TextureRegionDrawable(texture));
+        currentSprite = new Sprite(game.manager.get(playerType.getLargeTextureName(), Texture.class));
+        currentSprite.setCenter(Constants.GAME_WIDTH / 2f, game.getGameHeight() / 2f);
+        currentSprite.setAlpha(Constants.TITLEMENU_SODA_ALPHA_LOCKED);
 
         String text;
         switch (playerType) {
@@ -350,12 +358,23 @@ public class TitleScreen implements Screen, InputProcessor {
     public void render(float delta) {
         ScreenUtils.clear(Constants.BACKGROUND_COLOUR);
 
+        if (currentMenu == CurrentMenu.UNLOCK_DIALOG) {
+            // draw sprites
+            viewport.apply();
+            game.batch.setProjectionMatrix(viewport.getCamera().combined);
+            game.batch.begin();
+            currentSprite.draw(game.batch);
+            game.batch.end();
+        }
+
+        stage.getViewport().apply();
         stage.act(delta);
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        viewport.update(width, height);
         stage.getViewport().update(width, height);
     }
 
@@ -376,7 +395,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 
     @Override
