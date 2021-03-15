@@ -51,8 +51,8 @@ public class CoolSodaCan extends Game {
 		} else {
 			uiWidth = MathUtils.round(gameUiHeight * gameRatio);
 		}
-		gameUiPadding = MathUtils.round((float) Constants.GAMEUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
-		menuUiPadding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_HEIGHT * Gdx.graphics.getBackBufferHeight());
+		gameUiPadding = MathUtils.round((float) Constants.GAMEUI_PADDING / Constants.GAME_WIDTH * uiWidth);
+		menuUiPadding = MathUtils.round((float) Constants.MENUUI_PADDING / Constants.GAME_WIDTH * uiWidth);
 
 		// Load assets
 		manager = new AssetManager();

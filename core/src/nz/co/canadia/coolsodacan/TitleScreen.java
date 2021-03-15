@@ -6,13 +6,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -23,8 +21,8 @@ public class TitleScreen implements Screen, InputProcessor {
     private final Stage stage;
     private final Table table;
     private final int padding;
-    private final int buttonHeight;
-    private final int buttonWidth;
+    private final float buttonHeight;
+    private final float buttonWidth;
     private CurrentMenu currentMenu;
 
     private enum CurrentMenu { MAIN, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
@@ -32,8 +30,8 @@ public class TitleScreen implements Screen, InputProcessor {
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
         padding = game.getMenuUiPadding();
-        buttonWidth = MathUtils.round(game.getUiWidth() * 4f / 5);
-        buttonHeight = MathUtils.round(buttonWidth / 5f);
+        buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
+        buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
 
         FitViewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);

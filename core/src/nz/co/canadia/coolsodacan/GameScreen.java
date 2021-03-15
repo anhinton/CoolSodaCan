@@ -42,6 +42,9 @@ public class GameScreen implements Screen, InputProcessor {
     private final Table gameUiTable;
     private final Table menuUiTable;
     private final InputMultiplexer multiplexer;
+    private final float menuButtonWidth;
+    private final float buttonHeight;
+    private final float gameUiButtonWidth;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -69,6 +72,9 @@ public class GameScreen implements Screen, InputProcessor {
         cansDelivered = 0;
         score = 0;
         currentState = GameState.ACTIVE;
+        menuButtonWidth = game.getUiWidth() * Constants.GAMEMENU_BUTTON_WIDTH;
+        buttonHeight = menuButtonWidth * Constants.GAMEMENU_BUTTON_RELATIVE_HEIGHT;
+        gameUiButtonWidth = game.getUiWidth() * Constants.GAMEUI_BUTTON_WIDTH;
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
@@ -179,6 +185,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showGameUi() {
+        float columnWidth = game.getUiWidth() * Constants.GAMEUI_COLUMN_WIDTH;
 
         gameUiTable.clear();
         gameUiTable.top().left();
@@ -224,19 +231,17 @@ public class GameScreen implements Screen, InputProcessor {
                         goBack();
                     }
                 });
-                rightColumn.add(menuButton)
-                        .prefWidth(menuButton.getPrefWidth() * Constants.GAMEUI_MENUBUTTON_SCALE)
-                        .prefHeight(menuButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE);
+                // Button should be 2/3 as wide as a column and as tall as the column next to it
+                rightColumn.add(menuButton).prefSize(gameUiButtonWidth, buttonHeight);
                 break;
         }
 
-        gameUiTable.add(leftColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).left();
-        gameUiTable.add(middleColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).center();
-        gameUiTable.add(rightColumn).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION).right();
+        gameUiTable.add(leftColumn).prefWidth(columnWidth).left();
+        gameUiTable.add(middleColumn).prefWidth(columnWidth).center();
+        gameUiTable.add(rightColumn).prefWidth(columnWidth).right();
     }
 
     private void showMenu() {
-
         Table menuBox = new Table();
         menuBox.pad(game.getMenuUiPadding());
         menuBox.setSkin(game.skin);
@@ -253,8 +258,7 @@ public class GameScreen implements Screen, InputProcessor {
                 continueGame();
             }
         });
-        menuBox.add(continueButton).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
-                .prefHeight(continueButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE)
+        menuBox.add(continueButton).prefSize(menuButtonWidth, buttonHeight)
                 .space(game.getMenuUiPadding());
         menuBox.row();
 
@@ -265,8 +269,7 @@ public class GameScreen implements Screen, InputProcessor {
                 exit();
             }
         });
-        menuBox.add(exitButton).prefWidth(game.getUiWidth() * Constants.GAMEUI_COLUMN_PROPORTION)
-                .prefHeight(exitButton.getPrefHeight() * Constants.GAMEUI_MENUBUTTON_SCALE)
+        menuBox.add(exitButton).prefSize(menuButtonWidth, buttonHeight)
                 .space(game.getMenuUiPadding());
 
         menuUiTable.add(menuBox);

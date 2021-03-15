@@ -45,11 +45,14 @@ public class Constants {
     public static final int STATISTICS_FONT_SHADOW_OFFSET = 3;
 
     // UI constants
+    public static final float TITLEMENU_BUTTON_WIDTH = 0.8f;
+    public static final float TITLEMENU_BUTTON_RELATIVE_HEIGHT = 0.2f;
     public static final int GAMEUI_PADDING = 5;
-    public static final float GAMEUI_COLUMN_PROPORTION = 1 / 3f;
-    public static final float GAMEUI_MENUBUTTON_SCALE = 1.5f;
+    public static final float GAMEUI_COLUMN_WIDTH = 0.333f;
+    public static final float GAMEUI_BUTTON_WIDTH = 0.222f;
+    public static final float GAMEMENU_BUTTON_WIDTH = 0.4f;
+    public static final float GAMEMENU_BUTTON_RELATIVE_HEIGHT = 0.25f;
     public static final int MENUUI_PADDING = 20;
-    public static final float TITLEMENU_BUTTON_HEIGHT_SCALE = .1f;
 
     // Particle effect constants
     public static final Color BLUE_COLOR = new Color(0.165f, 0.427f, 0.925f, 1);
@@ -85,8 +88,8 @@ public class Constants {
     // Animal constants
     public static final float DEGREES_PER_SECOND = 10.0f;
     public static final float WIGGLE_AMPLITUDE_IN_DEGREES = 5.0f;
-    public static float ANIMAL_SHAKE_DURATION = 0.25f;
-    public static int ANIMAL_SHAKE_MAGNITUDE = 5;
+    public static final float ANIMAL_SHAKE_DURATION = 0.25f;
+    public static final int ANIMAL_SHAKE_MAGNITUDE = 5;
 
     // Animation constants
     public static final float CAN_FRAME_DURATION = 0.066f;
