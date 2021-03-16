@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.BooleanArray;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -48,6 +51,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final float buttonHeight;
     private final float gameUiButtonWidth;
     private final ObjectMap<Player.PlayerType, Boolean> sodasUnlocked;
+    private final Table menuBox;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -62,6 +66,7 @@ public class GameScreen implements Screen, InputProcessor {
     private Label cansDeliveredLabel;
     private Label scoreLabel;
     private Label timeLabel;
+    private Image sodaImage;
 
     private enum GameState { ACTIVE, PAUSED }
     private GameState currentState;
@@ -153,12 +158,17 @@ public class GameScreen implements Screen, InputProcessor {
         gameUiTable.setFillParent(true);
         gameUiTable.pad(game.getGameUiPadding());
         uiStage.addActor(gameUiTable);
+        sodaImage = new Image();
 
         // Create the Game Menu
         menuStage = new Stage(uiViewport);
         menuUiTable = new Table();
         menuUiTable.setFillParent(true);
         menuStage.addActor(menuUiTable);
+        menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         showGameUi();
 
@@ -248,10 +258,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showMenu() {
-        Table menuBox = new Table();
-        menuBox.pad(game.getMenuUiPadding());
-        menuBox.setSkin(game.skin);
-        menuBox.setBackground("default-rect");
+        menuBox.clear();
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "default");
         menuBox.add(pauseLabel).space(game.getMenuUiPadding());
@@ -279,6 +286,24 @@ public class GameScreen implements Screen, InputProcessor {
                 .space(game.getMenuUiPadding());
 
         menuUiTable.add(menuBox);
+    }
+
+    private void showSodaUnlocked(Player.PlayerType pt) {
+        setMenuInputs();
+        currentState = GameState.PAUSED;
+        menuBox.clear();
+
+        Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "default");
+
+        Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
+        sodaImage = new Image(new SpriteDrawable(sodaSprite));
+
+        menuBox.add(sodaUnlockedLabel).space(game.getMenuUiPadding());
+        menuBox.row();
+        menuBox.add(sodaImage).space(game.getMenuUiPadding());
+        menuUiTable.add(menuBox);
+
+        Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
     }
 
     private void continueGame() {
@@ -451,7 +476,7 @@ public class GameScreen implements Screen, InputProcessor {
                 if (!sodasUnlocked.get(pt)) {
                     if (game.statistics.isSodaUnlocked(pt)) {
                         sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
-                        Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
+                        showSodaUnlocked(pt);
                     }
                 }
             }
@@ -464,6 +489,8 @@ public class GameScreen implements Screen, InputProcessor {
                 ac.update(delta);
             }
             player.update(delta);
+        } else if (currentState == GameState.PAUSED) {
+
         }
 
         // draw sprites

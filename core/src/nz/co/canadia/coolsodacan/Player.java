@@ -45,6 +45,10 @@ class Player {
             this.explosionColor = explosionColor;
         }
 
+        public String getSmallTextureName() {
+            return smallTextureName;
+        }
+
         public String getLargeTextureName() {
             return largeTextureName;
         }

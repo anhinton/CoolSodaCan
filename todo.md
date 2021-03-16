@@ -1,6 +1,6 @@
 # todo.md
 
-  + Unlock sodas during gameplay
+  + Unlock sodas during game play
       - Check if new unlock has occurred
       - Display in popup which pauses game
       
