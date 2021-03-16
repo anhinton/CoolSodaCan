@@ -1,6 +1,7 @@
 # todo.md
 
   + Show big can after soda select and spin and shrink to center to start
+      - Can I use an ExtendViewport so the can show in wider screens?
       
   + Title screen
       - New game

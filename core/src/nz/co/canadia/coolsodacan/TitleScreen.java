@@ -10,9 +10,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,9 +26,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
 public class TitleScreen implements Screen, InputProcessor {
     private final CoolSodaCan game;
@@ -35,10 +44,10 @@ public class TitleScreen implements Screen, InputProcessor {
     private final TextButton backButton;
     private final TextureAtlas atlas;
     private Sprite currentSprite;
-    private final FitViewport viewport;
+    private final Viewport viewport;
     private CurrentMenu currentMenu;
 
-    private enum CurrentMenu { MAIN, SELECT_SODA, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
+    private enum CurrentMenu { MAIN, SELECT_SODA, START_GAME, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
     public TitleScreen(CoolSodaCan game) {
         this.game = game;
@@ -63,7 +72,7 @@ public class TitleScreen implements Screen, InputProcessor {
         viewport = new FitViewport(Constants.GAME_WIDTH,
                 game.getGameHeight(), camera);
 
-        FitViewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
+        Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         stage = new Stage(uiViewport);
         table = new Table();
         table.setFillParent(true);
@@ -150,7 +159,7 @@ public class TitleScreen implements Screen, InputProcessor {
         blueImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game, Player.PlayerType.BLUE));
+                showStartGame(Player.PlayerType.BLUE);
             }
         });
 
@@ -162,7 +171,7 @@ public class TitleScreen implements Screen, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.ORANGE)) {
-                    game.setScreen(new GameScreen(game, Player.PlayerType.ORANGE));
+                    showStartGame(Player.PlayerType.ORANGE);
                 } else {
                     showUnlockDialog(Player.PlayerType.ORANGE);
                 }
@@ -177,7 +186,7 @@ public class TitleScreen implements Screen, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.PURPLE)) {
-                    game.setScreen(new GameScreen(game, Player.PlayerType.PURPLE));
+                    showStartGame(Player.PlayerType.PURPLE);
                 } else {
                     showUnlockDialog(Player.PlayerType.PURPLE);
                 }
@@ -192,7 +201,7 @@ public class TitleScreen implements Screen, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.SILVER)) {
-                    game.setScreen(new GameScreen(game, Player.PlayerType.SILVER));
+                    showStartGame(Player.PlayerType.SILVER);
                 } else {
                     showUnlockDialog(Player.PlayerType.SILVER);
                 }
@@ -207,7 +216,7 @@ public class TitleScreen implements Screen, InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.YELLOW)) {
-                    game.setScreen(new GameScreen(game, Player.PlayerType.YELLOW));
+                    showStartGame(Player.PlayerType.YELLOW);
                 } else {
                     showUnlockDialog(Player.PlayerType.YELLOW);
                 }
@@ -225,6 +234,35 @@ public class TitleScreen implements Screen, InputProcessor {
         table.add(yellowImage).space(padding);
         table.row();
         table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight).colspan(2);
+    }
+
+    private void showStartGame(final Player.PlayerType playerType) {
+        currentMenu = CurrentMenu.START_GAME;
+        table.clear();
+        table.setBackground((Drawable) null);
+        table.pad(padding);
+
+        Image sodaCan = new Image(new TextureRegionDrawable(game.manager.get(playerType.getLargeTextureName(), Texture.class)));
+        sodaCan.setOrigin(game.getUiWidth() / 2f, Gdx.graphics.getBackBufferHeight() / 2f);
+        ParallelAction parallelAction = new ParallelAction();
+        RotateByAction rotateByAction = Actions.rotateBy(Constants.UNLOCK_SODA_ROTATION, 1);
+        rotateByAction.setInterpolation(Interpolation.swingOut);
+        parallelAction.addAction(rotateByAction);
+        parallelAction.addAction(Actions.scaleTo(0, 0, 1));
+        SequenceAction sequenceAction = new SequenceAction(
+                parallelAction,
+                run(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.setScreen(new GameScreen(game, playerType));
+                    }
+                })
+        );
+        sodaCan.addAction(sequenceAction);
+
+        table.add(sodaCan);
+
+//        game.setScreen(new GameScreen(game, Player.PlayerType.BLUE));
     }
 
     private void showUnlockDialog(Player.PlayerType playerType) {
