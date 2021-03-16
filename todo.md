@@ -1,4 +1,6 @@
 # todo.md
+
+  + Show big can after soda select and spin and shrink to center to start
       
   + Title screen
       - New game

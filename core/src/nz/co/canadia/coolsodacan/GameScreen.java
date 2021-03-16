@@ -304,7 +304,7 @@ public class GameScreen implements Screen, InputProcessor {
         Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
         sodaImage = new Image(new SpriteDrawable(sodaSprite));
         sodaImage.setOrigin(sodaImage.getWidth() * Constants.PLAYER_CENTRE_OFFSET_X, sodaImage.getHeight() / 2);
-        RotateByAction rotateByAction = Actions.rotateBy(360, 3);
+        RotateByAction rotateByAction = Actions.rotateBy(Constants.UNLOCK_SODA_ROTATION, Constants.UNLOCK_SODA_DURATION);
         rotateByAction.setInterpolation(Interpolation.swingOut);
         RepeatAction repeatAction = Actions.forever(rotateByAction);
         sodaImage.addAction(repeatAction);

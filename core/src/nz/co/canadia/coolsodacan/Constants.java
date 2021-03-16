@@ -105,4 +105,6 @@ public class Constants {
     public static final float UNLOCK_SESSION_THRESHOLD = 60;
     public static final int UNLOCK_GUINEAPIGS_THRESHOLD = 60;
     public static final int UNLOCK_PLANTS_THRESHOLD = 100;
+    public static final float UNLOCK_SODA_ROTATION = 360;
+    public static final float UNLOCK_SODA_DURATION = 3;
 }
