@@ -27,6 +27,7 @@ public class CoolSodaCan extends Game {
 	Skin skin;
 	ShapeRenderer shapeRenderer;
 	Statistics statistics;
+	boolean debugUnlocks;
 
 	public CoolSodaCan(FontLoader fontLoader, Formatter formatter) {
 		this.formatter = formatter;
@@ -35,10 +36,16 @@ public class CoolSodaCan extends Game {
 
 	@Override
 	public void create () {
+		// Set to true to prepare statistic for testing unlocks
+		debugUnlocks = false;
+
 		I18NBundle.setSimpleFormatter(true);
 		Gdx.input.setCatchKey(Input.Keys.BACK, true);
 		statistics = new Statistics();
 		statistics.load();
+		if (debugUnlocks) {
+			statistics.testUnlocks();
+		}
 
 		int gameWidth = Constants.GAME_WIDTH;
 		gameHeight = Constants.GAME_HEIGHT;

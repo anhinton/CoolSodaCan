@@ -196,4 +196,20 @@ public class Statistics {
                 return true;
         }
     }
+
+    public int getSodasUnlocked() {
+        int unlocked = 0;
+        for (Player.PlayerType pt : Player.PlayerType.values()) {
+            if (isSodaUnlocked(pt)) unlocked++;
+        }
+        return unlocked;
+    }
+
+    public void testUnlocks() {
+        totalPointsScored = Constants.UNLOCK_POINTS_THRESHOLD - 1;
+        guineapigsSuperhit = Constants.UNLOCK_GUINEAPIGS_THRESHOLD - 1;
+        plantsSuperHit = Constants.UNLOCK_PLANTS_THRESHOLD - 1;
+        longestSession = 55;
+        totalTimePlayed = 55;
+    }
 }

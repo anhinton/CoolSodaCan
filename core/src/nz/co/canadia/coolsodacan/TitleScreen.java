@@ -273,7 +273,7 @@ public class TitleScreen implements Screen, InputProcessor {
                 + bp + game.bundle.get("statisticsPlantsDestroyed") + ": " + game.statistics.getPlantsSuperHit() + nl
                 + bp + game.bundle.get("statisticsLongestSession") + ": " + game.displayTime(game.statistics.getLongestSession()) + nl
                 + bp + game.bundle.get("statisticsTime") + ": " + game.displayTime(game.statistics.getTotalTimePlayed()) + nl
-                + bp + game.bundle.get("statisticsUnlocked") + ": ";
+                + bp + game.bundle.get("statisticsUnlocked") + ": " + game.statistics.getSodasUnlocked();
         Label statisticsLabel = new Label(statisticsString, game.skin, "statistics");
         statisticsLabel.setWrap(true);
         statisticsLabel.setAlignment(Align.top);

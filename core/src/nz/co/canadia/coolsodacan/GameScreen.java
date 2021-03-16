@@ -75,7 +75,11 @@ public class GameScreen implements Screen, InputProcessor {
 
     GameScreen(CoolSodaCan game, Player.PlayerType playerType) {
         this.game = game;
-        timeElapsed = 0;
+        if (game.debugUnlocks) {
+            timeElapsed = 55;
+        } else {
+            timeElapsed = 0;
+        }
         lastSaved = 0;
         playerIsFiring = false;
         cansThrown = 0;
