@@ -9,13 +9,18 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -28,6 +33,7 @@ public class TitleScreen implements Screen, InputProcessor {
     private final float buttonHeight;
     private final float buttonWidth;
     private final TextButton backButton;
+    private final TextureAtlas atlas;
     private Sprite currentSprite;
     private final FitViewport viewport;
     private CurrentMenu currentMenu;
@@ -39,8 +45,9 @@ public class TitleScreen implements Screen, InputProcessor {
         padding = game.getMenuUiPadding();
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
+        atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
-        currentSprite = new Sprite(game.manager.get(Player.PlayerType.BLUE.getLargeTextureName(), Texture.class));
+        currentSprite = new Sprite();
 
         backButton = new TextButton(game.bundle.get("backButton"), game.skin, "titlemenu");
         backButton.addListener(new ChangeListener() {
@@ -139,18 +146,21 @@ public class TitleScreen implements Screen, InputProcessor {
 
         Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
 
-        TextButton blueButton = new TextButton(game.bundle.get("sodaBlueButton"), game.skin, "titlemenu");
-        blueButton.addListener(new ChangeListener() {
+        Image blueImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.BLUE.getSmallTextureName())));
+        blueImage.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game, Player.PlayerType.BLUE));
             }
         });
 
-        TextButton orangeButton = new TextButton(game.bundle.get("sodaOrangeButton"), game.skin, "titlemenu");
-        orangeButton.addListener(new ChangeListener() {
+        Image orangeImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.ORANGE.getSmallTextureName())));
+        if (!game.statistics.isSodaUnlocked(Player.PlayerType.ORANGE)) {
+            orangeImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
+        }
+        orangeImage.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.ORANGE)) {
                     game.setScreen(new GameScreen(game, Player.PlayerType.ORANGE));
                 } else {
@@ -159,10 +169,13 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        TextButton purpleButton = new TextButton(game.bundle.get("sodaPurpleButton"), game.skin, "titlemenu");
-        purpleButton.addListener(new ChangeListener() {
+        Image purpleImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.PURPLE.getSmallTextureName())));
+        if (!game.statistics.isSodaUnlocked(Player.PlayerType.PURPLE)) {
+            purpleImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
+        }
+        purpleImage.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.PURPLE)) {
                     game.setScreen(new GameScreen(game, Player.PlayerType.PURPLE));
                 } else {
@@ -171,10 +184,13 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        TextButton silverButton = new TextButton(game.bundle.get("sodaSilverButton"), game.skin, "titlemenu");
-        silverButton.addListener(new ChangeListener() {
+        Image silverImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.SILVER.getSmallTextureName())));
+        if (!game.statistics.isSodaUnlocked(Player.PlayerType.SILVER)) {
+            silverImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
+        }
+        silverImage.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.SILVER)) {
                     game.setScreen(new GameScreen(game, Player.PlayerType.SILVER));
                 } else {
@@ -183,10 +199,13 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        TextButton yellowButton = new TextButton(game.bundle.get("sodaYellowButton"), game.skin, "titlemenu");
-        yellowButton.addListener(new ChangeListener() {
+        Image yellowImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.YELLOW.getSmallTextureName())));
+        if (!game.statistics.isSodaUnlocked(Player.PlayerType.YELLOW)) {
+            yellowImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
+        }
+        yellowImage.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 if (game.statistics.isSodaUnlocked(Player.PlayerType.YELLOW)) {
                     game.setScreen(new GameScreen(game, Player.PlayerType.YELLOW));
                 } else {
@@ -195,19 +214,17 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.add(sodaSelectLabel).space(padding);
+        table.add(sodaSelectLabel).space(padding).colspan(2);
         table.row();
-        table.add(blueButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(blueImage).space(padding).colspan(2);
         table.row();
-        table.add(orangeButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(orangeImage).space(padding);
+        table.add(purpleImage).space(padding);
         table.row();
-        table.add(purpleButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(silverImage).space(padding);
+        table.add(yellowImage).space(padding);
         table.row();
-        table.add(silverButton).space(padding).prefSize(buttonWidth, buttonHeight);
-        table.row();
-        table.add(yellowButton).space(padding).prefSize(buttonWidth, buttonHeight);
-        table.row();
-        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight).colspan(2);
     }
 
     private void showUnlockDialog(Player.PlayerType playerType) {

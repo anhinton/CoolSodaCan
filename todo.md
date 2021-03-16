@@ -1,14 +1,10 @@
 # todo.md
-
-  + Unlock sodas during game play
-      - Check if new unlock has occurred
-      - Display in popup which pauses game
       
   + Title screen
       - New game
           - ~~Choose from one of five cans~~
-          - Cans unlocked via progression?
-      - Statistics
+          - ~~Cans unlocked via progression~~
+      - ~~Statistics~~
           - ~~Number of sodas thrown~~
           - ~~Number of sodas drunk~~
           - ~~High score~~
@@ -17,7 +13,7 @@
           - ~~Plants pruned~~
           - ~~Longest session~~
           - ~~Total time played~~
-          - Sodas unlocked
+          - ~~Sodas unlocked~~
           - ~~Reset progess button~~
       - Settings
           - Music volume
@@ -64,6 +60,10 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+
+  + ~~Unlock sodas during game play~~
+      - ~~Check if new unlock has occurred~~
+      - ~~Display in popup which pauses game~~
           
   + ~~Can unlock conditions~~
       - ~~ORANGE: Score more than 10,000 points overall~~
