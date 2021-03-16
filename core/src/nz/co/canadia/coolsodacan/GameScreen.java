@@ -305,9 +305,19 @@ public class GameScreen implements Screen, InputProcessor {
         RepeatAction repeatAction = Actions.forever(rotateByAction);
         sodaImage.addAction(repeatAction);
 
+        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinuButton"), game.skin, "default");
+        continueButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                continueGame();
+            }
+        });
+
         menuBox.add(sodaUnlockedLabel).space(game.getMenuUiPadding());
         menuBox.row();
         menuBox.add(sodaImage).space(game.getMenuUiPadding()).center();
+        menuBox.row();
+        menuBox.add(continueButton).space(game.getMenuUiPadding()).prefSize(menuButtonWidth, buttonHeight);
         menuUiTable.add(menuBox);
 
         Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
