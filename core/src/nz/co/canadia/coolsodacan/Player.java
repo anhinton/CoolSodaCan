@@ -2,9 +2,7 @@ package nz.co.canadia.coolsodacan;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -129,7 +127,7 @@ class Player {
     }
 
     public float getAnimationX() {
-        return sprite.getX() + sprite.getWidth() * Constants.PLAY_CENTRE_OFFSET;
+        return sprite.getX() + sprite.getWidth() * Constants.PLAYER_CENTRE_OFFSET_X;
     }
 
     public float getAnimationY() {

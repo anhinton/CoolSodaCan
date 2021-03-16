@@ -10,18 +10,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.BooleanArray;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
@@ -297,10 +299,15 @@ public class GameScreen implements Screen, InputProcessor {
 
         Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
         sodaImage = new Image(new SpriteDrawable(sodaSprite));
+        sodaImage.setOrigin(sodaImage.getWidth() * Constants.PLAYER_CENTRE_OFFSET_X, sodaImage.getHeight() / 2);
+        RotateByAction rotateByAction = Actions.rotateBy(360, 3);
+        rotateByAction.setInterpolation(Interpolation.swingOut);
+        RepeatAction repeatAction = Actions.forever(rotateByAction);
+        sodaImage.addAction(repeatAction);
 
         menuBox.add(sodaUnlockedLabel).space(game.getMenuUiPadding());
         menuBox.row();
-        menuBox.add(sodaImage).space(game.getMenuUiPadding());
+        menuBox.add(sodaImage).space(game.getMenuUiPadding()).center();
         menuUiTable.add(menuBox);
 
         Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
@@ -490,7 +497,7 @@ public class GameScreen implements Screen, InputProcessor {
             }
             player.update(delta);
         } else if (currentState == GameState.PAUSED) {
-
+            menuStage.act(delta);
         }
 
         // draw sprites
