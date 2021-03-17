@@ -1,9 +1,5 @@
 # todo.md
       
-  + Make soda can sizes on TitleScreen consistent across devices
-  
-  + **BUG** Continuous firing if firing when unlocked soda popup appears
-      
   + Title screen
       - New game
           - ~~Choose from one of five cans~~
@@ -64,6 +60,11 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+  
+  + ~~**FIXED** Continuous firing if firing when unlocked soda popup appears~~
+      - ~~Set playerIsFiring = false in showSodaUnlocked and showMenu~~
+      
+  + ~~Make soda can sizes on TitleScreen consistent across devices~~
 
   + ~~Show big can after soda select and spin and shrink to center to start~~
       - ~~Use an ExtendViewport so the can will show in wider screens~~

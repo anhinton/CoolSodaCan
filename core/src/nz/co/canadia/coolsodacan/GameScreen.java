@@ -264,6 +264,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showMenu() {
+        playerIsFiring = false;
         menuBox.clear();
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "default");
@@ -295,6 +296,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showSodaUnlocked(Player.PlayerType pt) {
+        playerIsFiring = false;
         setMenuInputs();
         currentState = GameState.PAUSED;
         menuBox.clear();
