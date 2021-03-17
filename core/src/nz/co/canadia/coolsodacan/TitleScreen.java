@@ -89,6 +89,18 @@ public class TitleScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    // Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
+    private float calculateWidth(int width) {
+        return (float) width / Constants.GAME_WIDTH * game.getUiWidth();
+    }
+
+    // Calculate the height of a Game-size Sprite/Texture in uiViewport coordinates
+    private float calculateHeight(int width, int height) {
+        float adjustedWidth = calculateWidth(width);
+        float ratio = adjustedWidth / width;
+        return height * ratio;
+    }
+
     private void showMainMenu() {
         currentMenu = CurrentMenu.MAIN;
         table.clear();
@@ -243,14 +255,14 @@ public class TitleScreen implements Screen, InputProcessor {
         table.clear();
         table.pad(padding);
 
-        // Get large soda can texture and calculate dimensions in UI scale
-        Texture texture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
-        float imageWidth = (float) texture.getWidth() / Constants.GAME_WIDTH * game.getUiWidth();
-        float imageHeight = (float) texture.getHeight() / game.getGameHeight() * Gdx.graphics.getBackBufferHeight();
+        // Get large soda can Texture and calculate dimensions in UI scale
+        Texture sodaCanTexture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
+        float imageWidth = calculateWidth(sodaCanTexture.getWidth());
+        float imageHeight = calculateHeight(sodaCanTexture.getWidth(), sodaCanTexture.getHeight());
 
-        Image sodaCan = new Image(new TextureRegionDrawable(texture));
+        Image sodaCanImage = new Image(new TextureRegionDrawable(sodaCanTexture));
         // Set origin to centre for spin effect
-        sodaCan.setOrigin(imageWidth / 2,imageHeight / 2);
+        sodaCanImage.setOrigin(imageWidth / 2,imageHeight / 2);
 
         // Set up spin and shrink actions, start game when finished
         ParallelAction parallelAction = new ParallelAction();
@@ -267,9 +279,9 @@ public class TitleScreen implements Screen, InputProcessor {
                     }
                 })
         );
-        sodaCan.addAction(sequenceAction);
+        sodaCanImage.addAction(sequenceAction);
 
-        table.add(sodaCan).prefSize(imageWidth, imageHeight);
+        table.add(sodaCanImage).prefSize(imageWidth, imageHeight);
     }
 
     private void showUnlockDialog(Player.PlayerType playerType) {
