@@ -132,23 +132,24 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.add(titleImage).space(padding)
+        table.add(titleImage)
                 .expandY()
                 .prefWidth(calculateImageWidth(titleImage.getWidth()))
-                .prefHeight(calculateImageHeight(titleImage.getWidth(), titleImage.getHeight()));
+                .prefHeight(calculateImageHeight(titleImage.getWidth(), titleImage.getHeight()))
+                .space(padding);
         table.row();
         Table buttonTable = new Table();
-        buttonTable.add(startButton).space(padding)
-                .prefSize(buttonWidth,
-                        buttonHeight);
+        buttonTable.add(startButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
         buttonTable.row();
-        buttonTable.add(statsButton).space(padding)
-                .prefSize(buttonWidth,
-                        buttonHeight);
+        buttonTable.add(statsButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
         buttonTable.row();
-        buttonTable.add(settingsButton).space(padding)
-                .prefSize(buttonWidth,
-                        buttonHeight);
+        buttonTable.add(settingsButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
 
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
             TextButton quitButton = new TextButton(game.bundle.get("titlescreenQuitButton"), game.skin, "titlemenu");
@@ -159,9 +160,9 @@ public class TitleScreen implements Screen, InputProcessor {
                 }
             });
             buttonTable.row();
-            buttonTable.add(quitButton).space(padding)
-                    .prefSize(buttonWidth,
-                            buttonHeight);
+            buttonTable.add(quitButton)
+                    .prefSize(buttonWidth, buttonHeight)
+                    .space(padding);
         }
         table.add(buttonTable).expandY();
     }
@@ -241,28 +242,40 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.add(sodaSelectLabel).space(padding).colspan(2).expandY();
+        table.add(sodaSelectLabel)
+                .colspan(2)
+                .expandY()
+                .space(padding);
         table.row();
-        table.add(blueImage).space(padding)
+        table.add(blueImage)
+                .colspan(2)
                 .prefWidth(calculateImageWidth(blueImage.getWidth()))
                 .prefHeight(calculateImageHeight(blueImage.getWidth(), blueImage.getHeight()))
-                .colspan(2);
+                .space(padding);
         table.row();
-        table.add(orangeImage).space(padding)
+        table.add(orangeImage)
                 .prefWidth(calculateImageWidth(orangeImage.getWidth()))
-                .prefHeight(calculateImageHeight(orangeImage.getWidth(), orangeImage.getHeight()));
-        table.add(purpleImage).space(padding)
+                .prefHeight(calculateImageHeight(orangeImage.getWidth(), orangeImage.getHeight()))
+                .space(padding);
+        table.add(purpleImage)
                 .prefWidth(calculateImageWidth(purpleImage.getWidth()))
-                .prefHeight(calculateImageHeight(purpleImage.getWidth(), purpleImage.getHeight()));
+                .prefHeight(calculateImageHeight(purpleImage.getWidth(), purpleImage.getHeight()))
+                .space(padding);
         table.row();
-        table.add(silverImage).space(padding)
+        table.add(silverImage)
                 .prefWidth(calculateImageWidth(silverImage.getWidth()))
-                .prefHeight(calculateImageHeight(silverImage.getWidth(), silverImage.getHeight()));
-        table.add(yellowImage).space(padding)
+                .prefHeight(calculateImageHeight(silverImage.getWidth(), silverImage.getHeight()))
+                .space(padding);
+        table.add(yellowImage)
                 .prefWidth(calculateImageWidth(yellowImage.getWidth()))
-                .prefHeight(calculateImageHeight(yellowImage.getWidth(), yellowImage.getHeight()));
+                .prefHeight(calculateImageHeight(yellowImage.getWidth(), yellowImage.getHeight()))
+                .space(padding);
         table.row();
-        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight).colspan(2).expandY();
+        table.add(backButton)
+                .colspan(2)
+                .expandY()
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
     }
 
     private void showStartGame(final Player.PlayerType playerType) {
@@ -332,9 +345,13 @@ public class TitleScreen implements Screen, InputProcessor {
         Label unlockDialogLabel = new Label(text, game.skin, "statistics");
         unlockDialogLabel.setWrap(true);
 
-        table.add(unlockDialogLabel).space(padding).prefWidth(game.getUiWidth());
+        table.add(unlockDialogLabel)
+                .prefWidth(game.getUiWidth())
+                .space(padding);
         table.row();
-        table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(backButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
     }
 
     private void showSettingsMenu() {
@@ -381,15 +398,20 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        table.add(headingLabel).space(padding).expandY();
+        table.add(headingLabel)
+                .expandY()
+                .space(padding);
         table.row();
-        table.add(statisticsLabel)
-                .prefWidth(game.getUiWidth());
+        table.add(statisticsLabel).prefWidth(game.getUiWidth());
         table.row();
         Table buttonTable = new Table();
-        buttonTable.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        buttonTable.add(backButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
         buttonTable.row();
-        buttonTable.add(resetStatisticsButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        buttonTable.add(resetStatisticsButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
         table.add(buttonTable).expandY();
     }
 
@@ -425,11 +447,17 @@ public class TitleScreen implements Screen, InputProcessor {
 
         table.add(resetHeadingLabel).space(padding);
         table.row();
-        table.add(resetQuestionLabel).space(padding).prefWidth(Gdx.graphics.getBackBufferWidth());
+        table.add(resetQuestionLabel)
+                .prefWidth(Gdx.graphics.getBackBufferWidth())
+                .space(padding);
         table.row();
-        table.add(resetNoButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(resetNoButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
         table.row();
-        table.add(resetYesButton).space(padding).prefSize(buttonWidth, buttonHeight);
+        table.add(resetYesButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
     }
 
     private void goBack() {
