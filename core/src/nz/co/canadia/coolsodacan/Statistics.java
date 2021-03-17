@@ -180,4 +180,36 @@ public class Statistics {
             Gdx.app.error("Statistics", "Unable to do incrementSuperHit " + e.getLocalizedMessage());
         }
     }
+
+    public boolean isSodaUnlocked(Player.PlayerType playerType) {
+        switch(playerType) {
+            case ORANGE:
+                return totalPointsScored >= Constants.UNLOCK_POINTS_THRESHOLD;
+            case PURPLE:
+                return guineapigsSuperhit >= Constants.UNLOCK_GUINEAPIGS_THRESHOLD;
+            case SILVER:
+                return longestSession >= Constants.UNLOCK_SESSION_THRESHOLD;
+            case YELLOW:
+                return plantsSuperHit >= Constants.UNLOCK_PLANTS_THRESHOLD;
+            case BLUE:
+            default:
+                return true;
+        }
+    }
+
+    public int getSodasUnlocked() {
+        int unlocked = 0;
+        for (Player.PlayerType pt : Player.PlayerType.values()) {
+            if (isSodaUnlocked(pt)) unlocked++;
+        }
+        return unlocked;
+    }
+
+    public void testUnlocks() {
+        totalPointsScored = Constants.UNLOCK_POINTS_THRESHOLD - 1;
+        guineapigsSuperhit = Constants.UNLOCK_GUINEAPIGS_THRESHOLD - 1;
+        plantsSuperHit = Constants.UNLOCK_PLANTS_THRESHOLD - 1;
+        longestSession = 55;
+        totalTimePlayed = 55;
+    }
 }

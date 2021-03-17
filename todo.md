@@ -2,9 +2,9 @@
       
   + Title screen
       - New game
-          - Choose from one of five cans
-          - Cans unlocked via progression?
-      - Statistics
+          - ~~Choose from one of five cans~~
+          - ~~Cans unlocked via progression~~
+      - ~~Statistics~~
           - ~~Number of sodas thrown~~
           - ~~Number of sodas drunk~~
           - ~~High score~~
@@ -13,7 +13,7 @@
           - ~~Plants pruned~~
           - ~~Longest session~~
           - ~~Total time played~~
-          - Sodas unlocked
+          - ~~Sodas unlocked~~
           - ~~Reset progess button~~
       - Settings
           - Music volume
@@ -24,14 +24,6 @@
   + Add score particle to Animal/Plant when points are scored
       
   + Create a tutorial at start of game
-          
-  + Can unlock ideas
-      - Score more than 50,000 points overall
-          - Should I calculate this based on fire rate and points per can? This is my guess at 5
-            minutes of super-sating animals
-      - Play one session for longer than 5 minutes
-      - Super-sate 50 guinea pigs
-      - Destroy 100 plants
       
   + Add two new Animals
       - Blue hedgehog
@@ -68,6 +60,24 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+  
+  + ~~**FIXED** Continuous firing if firing when unlocked soda popup appears~~
+      - ~~Set playerIsFiring = false in showSodaUnlocked and showMenu~~
+      
+  + ~~Make soda can sizes on TitleScreen consistent across devices~~
+
+  + ~~Show big can after soda select and spin and shrink to center to start~~
+      - ~~Use an ExtendViewport so the can will show in wider screens~~
+
+  + ~~Unlock sodas during game play~~
+      - ~~Check if new unlock has occurred~~
+      - ~~Display in popup which pauses game~~
+          
+  + ~~Can unlock conditions~~
+      - ~~ORANGE: Score more than 10,000 points overall~~
+      - ~~SILVER: Play one session for longer than 1 minute~~
+      - ~~PURPLE: Super-sate 15 guinea pigs~~
+      - ~~YELLOW: Destroy 100 plants~~
       
   + ~~**WILL NOT FIX** Launching from app menu of Moto G test device shows a black bar where bottom
     system bar would display. Doesn't seem to when "running" game from Android Studio~~

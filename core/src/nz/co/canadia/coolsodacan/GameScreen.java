@@ -8,16 +8,23 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -45,6 +52,8 @@ public class GameScreen implements Screen, InputProcessor {
     private final float menuButtonWidth;
     private final float buttonHeight;
     private final float gameUiButtonWidth;
+    private final ObjectMap<Player.PlayerType, Boolean> sodasUnlocked;
+    private final Table menuBox;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -59,13 +68,18 @@ public class GameScreen implements Screen, InputProcessor {
     private Label cansDeliveredLabel;
     private Label scoreLabel;
     private Label timeLabel;
+    private Image sodaImage;
 
     private enum GameState { ACTIVE, PAUSED }
     private GameState currentState;
 
     GameScreen(CoolSodaCan game, Player.PlayerType playerType) {
         this.game = game;
-        timeElapsed = 0;
+        if (game.debugUnlocks) {
+            timeElapsed = 55;
+        } else {
+            timeElapsed = 0;
+        }
         lastSaved = 0;
         playerIsFiring = false;
         cansThrown = 0;
@@ -75,11 +89,14 @@ public class GameScreen implements Screen, InputProcessor {
         menuButtonWidth = game.getUiWidth() * Constants.GAMEMENU_BUTTON_WIDTH;
         buttonHeight = menuButtonWidth * Constants.GAMEMENU_BUTTON_RELATIVE_HEIGHT;
         gameUiButtonWidth = game.getUiWidth() * Constants.GAMEUI_BUTTON_WIDTH;
+        sodasUnlocked = new ObjectMap<>(Player.PlayerType.values().length);
+        for (Player.PlayerType pt : Player.PlayerType.values()) {
+            sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+        }
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
         // create player object
-//        Player.PlayerType playerType = Player.PlayerType.values()[MathUtils.random(Player.PlayerType.values().length - 1)];
         player = new Player(game.getGameHeight(), atlas, playerType);
 
         // create game objects
@@ -147,12 +164,17 @@ public class GameScreen implements Screen, InputProcessor {
         gameUiTable.setFillParent(true);
         gameUiTable.pad(game.getGameUiPadding());
         uiStage.addActor(gameUiTable);
+        sodaImage = new Image();
 
         // Create the Game Menu
         menuStage = new Stage(uiViewport);
         menuUiTable = new Table();
         menuUiTable.setFillParent(true);
         menuStage.addActor(menuUiTable);
+        menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         showGameUi();
 
@@ -242,10 +264,8 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showMenu() {
-        Table menuBox = new Table();
-        menuBox.pad(game.getMenuUiPadding());
-        menuBox.setSkin(game.skin);
-        menuBox.setBackground("default-rect");
+        playerIsFiring = false;
+        menuBox.clear();
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "default");
         menuBox.add(pauseLabel).space(game.getMenuUiPadding());
@@ -273,6 +293,40 @@ public class GameScreen implements Screen, InputProcessor {
                 .space(game.getMenuUiPadding());
 
         menuUiTable.add(menuBox);
+    }
+
+    private void showSodaUnlocked(Player.PlayerType pt) {
+        playerIsFiring = false;
+        setMenuInputs();
+        currentState = GameState.PAUSED;
+        menuBox.clear();
+
+        Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "default");
+
+        Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
+        sodaImage = new Image(new SpriteDrawable(sodaSprite));
+        sodaImage.setOrigin(sodaImage.getWidth() * Constants.PLAYER_CENTRE_OFFSET_X, sodaImage.getHeight() / 2);
+        RotateByAction rotateByAction = Actions.rotateBy(Constants.UNLOCK_SODA_ROTATION, Constants.UNLOCK_SODA_DURATION);
+        rotateByAction.setInterpolation(Interpolation.swingOut);
+        RepeatAction repeatAction = Actions.forever(rotateByAction);
+        sodaImage.addAction(repeatAction);
+
+        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinuButton"), game.skin, "default");
+        continueButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                continueGame();
+            }
+        });
+
+        menuBox.add(sodaUnlockedLabel).space(game.getMenuUiPadding());
+        menuBox.row();
+        menuBox.add(sodaImage).space(game.getMenuUiPadding()).center();
+        menuBox.row();
+        menuBox.add(continueButton).space(game.getMenuUiPadding()).prefSize(menuButtonWidth, buttonHeight);
+        menuUiTable.add(menuBox);
+
+        Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");
     }
 
     private void continueGame() {
@@ -440,6 +494,16 @@ public class GameScreen implements Screen, InputProcessor {
                 }
             }
 
+            // Check for can unlocks
+            for (Player.PlayerType pt : Player.PlayerType.values()) {
+                if (!sodasUnlocked.get(pt)) {
+                    if (game.statistics.isSodaUnlocked(pt)) {
+                        sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+                        showSodaUnlocked(pt);
+                    }
+                }
+            }
+
             // update objects
             for (GameObject g : gameObjectArray) {
                 g.update(delta);
@@ -448,6 +512,8 @@ public class GameScreen implements Screen, InputProcessor {
                 ac.update(delta);
             }
             player.update(delta);
+        } else if (currentState == GameState.PAUSED) {
+            menuStage.act(delta);
         }
 
         // draw sprites

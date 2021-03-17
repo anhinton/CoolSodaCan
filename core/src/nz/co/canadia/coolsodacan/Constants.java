@@ -53,6 +53,7 @@ public class Constants {
     public static final float GAMEMENU_BUTTON_WIDTH = 0.4f;
     public static final float GAMEMENU_BUTTON_RELATIVE_HEIGHT = 0.25f;
     public static final int MENUUI_PADDING = 20;
+    public static final float TITLEMENU_SODA_ALPHA_LOCKED = 0.5f;
 
     // Particle effect constants
     public static final Color BLUE_COLOR = new Color(0.165f, 0.427f, 0.925f, 1);
@@ -97,5 +98,13 @@ public class Constants {
     public static final float ANIMATED_CAN_DISTANCE = GAME_HEIGHT / 4f;
     // My player cans have drop shadows, meaning the "centre" of the can is not in the middle.
     // As at 2021-03-01 I have 80px wide cans with a 10px drop shadow
-    public static final float PLAY_CENTRE_OFFSET = 4 / 9f;
+    public static final float PLAYER_CENTRE_OFFSET_X = 4 / 9f;
+
+    // Soda unlock constants
+    public static final int UNLOCK_POINTS_THRESHOLD = 30000;
+    public static final float UNLOCK_SESSION_THRESHOLD = 60;
+    public static final int UNLOCK_GUINEAPIGS_THRESHOLD = 60;
+    public static final int UNLOCK_PLANTS_THRESHOLD = 100;
+    public static final float UNLOCK_SODA_ROTATION = 360;
+    public static final float UNLOCK_SODA_DURATION = 3;
 }
