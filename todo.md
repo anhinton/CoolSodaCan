@@ -1,6 +1,8 @@
 # todo.md
       
   + Make soda can sizes on TitleScreen consistent across devices
+  
+  + **BUG** Continuous firing if firing when unlocked soda popup appears
       
   + Title screen
       - New game
