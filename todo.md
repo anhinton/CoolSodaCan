@@ -1,7 +1,6 @@
 # todo.md
-
-  + Show big can after soda select and spin and shrink to center to start
-      - Can I use an ExtendViewport so the can show in wider screens?
+      
+  + Make soda can sizes on TitleScreen consistent across devices
       
   + Title screen
       - New game
@@ -63,6 +62,9 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+
+  + ~~Show big can after soda select and spin and shrink to center to start~~
+      - ~~Use an ExtendViewport so the can will show in wider screens~~
 
   + ~~Unlock sodas during game play~~
       - ~~Check if new unlock has occurred~~

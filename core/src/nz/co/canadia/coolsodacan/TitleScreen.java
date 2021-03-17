@@ -29,6 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -72,7 +73,9 @@ public class TitleScreen implements Screen, InputProcessor {
         viewport = new FitViewport(Constants.GAME_WIDTH,
                 game.getGameHeight(), camera);
 
-        Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
+        OrthographicCamera uiCamera = new OrthographicCamera();
+        Viewport uiViewport = new ExtendViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight(),
+                uiCamera);
         stage = new Stage(uiViewport);
         table = new Table();
         table.setFillParent(true);
@@ -150,7 +153,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showSodaSelection() {
         currentMenu = CurrentMenu.SELECT_SODA;
         table.clear();
-        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
@@ -239,11 +241,18 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showStartGame(final Player.PlayerType playerType) {
         currentMenu = CurrentMenu.START_GAME;
         table.clear();
-        table.setBackground((Drawable) null);
         table.pad(padding);
 
-        Image sodaCan = new Image(new TextureRegionDrawable(game.manager.get(playerType.getLargeTextureName(), Texture.class)));
-        sodaCan.setOrigin(game.getUiWidth() / 2f, Gdx.graphics.getBackBufferHeight() / 2f);
+        // Get large soda can texture and calculate dimensions in UI scale
+        Texture texture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
+        float imageWidth = (float) texture.getWidth() / Constants.GAME_WIDTH * game.getUiWidth();
+        float imageHeight = (float) texture.getHeight() / game.getGameHeight() * Gdx.graphics.getBackBufferHeight();
+
+        Image sodaCan = new Image(new TextureRegionDrawable(texture));
+        // Set origin to centre for spin effect
+        sodaCan.setOrigin(imageWidth / 2,imageHeight / 2);
+
+        // Set up spin and shrink actions, start game when finished
         ParallelAction parallelAction = new ParallelAction();
         RotateByAction rotateByAction = Actions.rotateBy(Constants.UNLOCK_SODA_ROTATION, 1);
         rotateByAction.setInterpolation(Interpolation.swingOut);
@@ -260,9 +269,7 @@ public class TitleScreen implements Screen, InputProcessor {
         );
         sodaCan.addAction(sequenceAction);
 
-        table.add(sodaCan);
-
-//        game.setScreen(new GameScreen(game, Player.PlayerType.BLUE));
+        table.add(sodaCan).prefSize(imageWidth, imageHeight);
     }
 
     private void showUnlockDialog(Player.PlayerType playerType) {
@@ -306,14 +313,12 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showSettingsMenu() {
         currentMenu = CurrentMenu.STATISTICS;
         table.clear();
-        table.setBackground((Drawable) null);
         table.pad(padding);
     }
 
     private void showStatistics() {
         currentMenu = CurrentMenu.STATISTICS;
         table.clear();
-        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
@@ -363,7 +368,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showResetStatistics() {
         currentMenu = CurrentMenu.RESET_STATISTICS;
         table.clear();
-        table.setBackground((Drawable) null);
         table.pad(padding);
 
         Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetLabel"), game.skin, "titlemenu");
@@ -452,7 +456,7 @@ public class TitleScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        stage.getViewport().update(width, height);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
