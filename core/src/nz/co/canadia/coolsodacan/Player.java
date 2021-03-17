@@ -21,19 +21,19 @@ class Player {
 
     public enum PlayerType {
         BLUE    ("blue_soda_small", "blue_soda_select",
-                "cans_large/blue_soda.png","blue_anim",
+                "textures_large/blue_soda.png","blue_anim",
                 Constants.BLUE_COLOR),
         ORANGE  ("orange_soda_small", "orange_soda_select",
-                "cans_large/orange_soda.png","orange_anim",
+                "textures_large/orange_soda.png","orange_anim",
                 Constants.ORANGE_COLOR),
         PURPLE  ("purple_soda_small", "purple_soda_select",
-                "cans_large/purple_soda.png", "purple_anim",
+                "textures_large/purple_soda.png", "purple_anim",
                 Constants.PURPLE_COLOR),
         SILVER  ("silver_soda_small", "silver_soda_select",
-                "cans_large/silver_soda.png", "silver_anim",
+                "textures_large/silver_soda.png", "silver_anim",
                 Constants.SILVER_COLOR),
         YELLOW  ("yellow_soda_small", "yellow_soda_select",
-                "cans_large/yellow_soda.png", "yellow_anim",
+                "textures_large/yellow_soda.png", "yellow_anim",
                 Constants.YELLOW_COLOR);
 
         private final String smallTextureName;

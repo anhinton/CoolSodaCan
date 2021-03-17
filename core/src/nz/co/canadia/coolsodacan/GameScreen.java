@@ -148,8 +148,8 @@ public class GameScreen implements Screen, InputProcessor {
         // These are in a different Viewport to game objects so they can be wholly or partially "off-screen"
         Viewport bannerViewport = new FillViewport(Constants.BANNER_WIDTH, Constants.BANNER_HEIGHT);
         bannerStage = new Stage(bannerViewport);
-        Texture bannerLeftTexture = game.manager.get("banner/banner_left.jpg", Texture.class);
-        Texture bannerRightTexture = game.manager.get("banner/banner_right.jpg", Texture.class);
+        Texture bannerLeftTexture = game.manager.get("textures_large/banner_left.jpg", Texture.class);
+        Texture bannerRightTexture = game.manager.get("textures_large/banner_right.jpg", Texture.class);
         Image bannerLeftImage = new Image(bannerLeftTexture);
         bannerLeftImage.setPosition(0, 0);
         bannerStage.addActor(bannerLeftImage);
