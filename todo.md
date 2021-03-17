@@ -1,6 +1,7 @@
 # todo.md
       
   + Title screen
+      - Cool title graphic
       - New game
           - ~~Choose from one of five cans~~
           - ~~Cans unlocked via progression~~
