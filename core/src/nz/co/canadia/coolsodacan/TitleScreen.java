@@ -24,7 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -90,13 +89,13 @@ public class TitleScreen implements Screen, InputProcessor {
     }
 
     // Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
-    private float calculateWidth(int width) {
-        return (float) width / Constants.GAME_WIDTH * game.getUiWidth();
+    private float calculateImageWidth(float width) {
+        return width / Constants.GAME_WIDTH * game.getUiWidth();
     }
 
     // Calculate the height of a Game-size Sprite/Texture in uiViewport coordinates
-    private float calculateHeight(int width, int height) {
-        float adjustedWidth = calculateWidth(width);
+    private float calculateImageHeight(float width, float height) {
+        float adjustedWidth = calculateImageWidth(width);
         float ratio = adjustedWidth / width;
         return height * ratio;
     }
@@ -169,7 +168,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
         Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
 
-        Image blueImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.BLUE.getSmallTextureName())));
+        Image blueImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.BLUE.getSelectTextureName())));
         blueImage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -177,7 +176,7 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        Image orangeImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.ORANGE.getSmallTextureName())));
+        Image orangeImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.ORANGE.getSelectTextureName())));
         if (!game.statistics.isSodaUnlocked(Player.PlayerType.ORANGE)) {
             orangeImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
         }
@@ -192,7 +191,7 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        Image purpleImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.PURPLE.getSmallTextureName())));
+        Image purpleImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.PURPLE.getSelectTextureName())));
         if (!game.statistics.isSodaUnlocked(Player.PlayerType.PURPLE)) {
             purpleImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
         }
@@ -207,7 +206,7 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        Image silverImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.SILVER.getSmallTextureName())));
+        Image silverImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.SILVER.getSelectTextureName())));
         if (!game.statistics.isSodaUnlocked(Player.PlayerType.SILVER)) {
             silverImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
         }
@@ -222,7 +221,7 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        Image yellowImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.YELLOW.getSmallTextureName())));
+        Image yellowImage = new Image(new SpriteDrawable(atlas.createSprite(Player.PlayerType.YELLOW.getSelectTextureName())));
         if (!game.statistics.isSodaUnlocked(Player.PlayerType.YELLOW)) {
             yellowImage.setColor(1, 1, 1, Constants.TITLEMENU_SODA_ALPHA_LOCKED);
         }
@@ -239,13 +238,24 @@ public class TitleScreen implements Screen, InputProcessor {
 
         table.add(sodaSelectLabel).space(padding).colspan(2);
         table.row();
-        table.add(blueImage).space(padding).colspan(2);
+        table.add(blueImage).space(padding)
+                .prefWidth(calculateImageWidth(blueImage.getWidth()))
+                .prefHeight(calculateImageHeight(blueImage.getWidth(), blueImage.getHeight()))
+                .colspan(2);
         table.row();
-        table.add(orangeImage).space(padding);
-        table.add(purpleImage).space(padding);
+        table.add(orangeImage).space(padding)
+                .prefWidth(calculateImageWidth(orangeImage.getWidth()))
+                .prefHeight(calculateImageHeight(orangeImage.getWidth(), orangeImage.getHeight()));
+        table.add(purpleImage).space(padding)
+                .prefWidth(calculateImageWidth(purpleImage.getWidth()))
+                .prefHeight(calculateImageHeight(purpleImage.getWidth(), purpleImage.getHeight()));
         table.row();
-        table.add(silverImage).space(padding);
-        table.add(yellowImage).space(padding);
+        table.add(silverImage).space(padding)
+                .prefWidth(calculateImageWidth(silverImage.getWidth()))
+                .prefHeight(calculateImageHeight(silverImage.getWidth(), silverImage.getHeight()));
+        table.add(yellowImage).space(padding)
+                .prefWidth(calculateImageWidth(yellowImage.getWidth()))
+                .prefHeight(calculateImageHeight(yellowImage.getWidth(), yellowImage.getHeight()));
         table.row();
         table.add(backButton).space(padding).prefSize(buttonWidth, buttonHeight).colspan(2);
     }
@@ -257,8 +267,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
         // Get large soda can Texture and calculate dimensions in UI scale
         Texture sodaCanTexture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
-        float imageWidth = calculateWidth(sodaCanTexture.getWidth());
-        float imageHeight = calculateHeight(sodaCanTexture.getWidth(), sodaCanTexture.getHeight());
+        float imageWidth = calculateImageWidth(sodaCanTexture.getWidth());
+        float imageHeight = calculateImageHeight(sodaCanTexture.getWidth(), sodaCanTexture.getHeight());
 
         Image sodaCanImage = new Image(new TextureRegionDrawable(sodaCanTexture));
         // Set origin to centre for spin effect
