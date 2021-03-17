@@ -56,6 +56,8 @@
       - Do I care enough to fix?
       - The easy fix is probably just going back to and ExtendViewport
       
+  + **BUG**: What happens if player unlocks two new sodas at the same time? Something messy
+      
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
   + Do I care about buffer overflow for high scores?
