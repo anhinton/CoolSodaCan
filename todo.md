@@ -1,7 +1,4 @@
 # todo.md
-
-  + **BUG** Incorrectly sized spinning soda can in GameScreen.showSodaUnlocked on
-    different sized devices
       
   + Title screen
       - ~~Cool title graphic~~
@@ -66,6 +63,12 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+
+  + ~~**FIXED** Incorrectly sized spinning soda can in GameScreen.showSodaUnlocked on
+    different sized devices~~
+      - ~~Move TitleScreen.calculateImageWidth and .calculateImageHeight to public
+        CoolSodaCan.calculateImageWidth and .calculateImageHeight~~
+      - ~~Use these in GameScreen.showSodaUnlocked to set screen appropriate size of sodaImage~~
   
   + ~~**FIXED** Continuous firing if firing when unlocked soda popup appears~~
       - ~~Set playerIsFiring = false in showSodaUnlocked and showMenu~~

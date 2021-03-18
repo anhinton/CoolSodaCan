@@ -305,7 +305,9 @@ public class GameScreen implements Screen, InputProcessor {
 
         Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
         sodaImage = new Image(new SpriteDrawable(sodaSprite));
-        sodaImage.setOrigin(sodaImage.getWidth() * Constants.PLAYER_CENTRE_OFFSET_X, sodaImage.getHeight() / 2);
+        float imageWidth = game.calculateImageWidth(sodaImage.getWidth());
+        float imageHeight = game.calculateImageHeight(sodaImage.getWidth(), sodaImage.getHeight());
+        sodaImage.setOrigin(imageWidth * Constants.PLAYER_CENTRE_OFFSET_X, imageHeight / 2);
         RotateByAction rotateByAction = Actions.rotateBy(Constants.UNLOCK_SODA_ROTATION, Constants.UNLOCK_SODA_DURATION);
         rotateByAction.setInterpolation(Interpolation.swingOut);
         RepeatAction repeatAction = Actions.forever(rotateByAction);
@@ -321,9 +323,14 @@ public class GameScreen implements Screen, InputProcessor {
 
         menuBox.add(sodaUnlockedLabel).space(game.getMenuUiPadding());
         menuBox.row();
-        menuBox.add(sodaImage).space(game.getMenuUiPadding()).center();
+        menuBox.add(sodaImage)
+                .center()
+                .prefSize(imageWidth, imageHeight)
+                .space(game.getMenuUiPadding());
         menuBox.row();
-        menuBox.add(continueButton).space(game.getMenuUiPadding()).prefSize(menuButtonWidth, buttonHeight);
+        menuBox.add(continueButton)
+                .prefSize(menuButtonWidth, buttonHeight)
+                .space(game.getMenuUiPadding());
         menuUiTable.add(menuBox);
 
         Gdx.app.log("GameScreen", pt.name() + " soda can unlocked!");

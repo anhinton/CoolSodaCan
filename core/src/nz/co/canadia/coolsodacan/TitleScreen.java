@@ -89,18 +89,6 @@ public class TitleScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    // Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
-    private float calculateImageWidth(float width) {
-        return width / Constants.GAME_WIDTH * game.getUiWidth();
-    }
-
-    // Calculate the height of a Game-size Sprite/Texture in uiViewport coordinates
-    private float calculateImageHeight(float width, float height) {
-        float adjustedWidth = calculateImageWidth(width);
-        float ratio = adjustedWidth / width;
-        return height * ratio;
-    }
-
     private void showMainMenu() {
         currentMenu = CurrentMenu.MAIN;
         table.clear();
@@ -135,8 +123,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
         table.add(titleImage)
                 .expandY()
-                .prefWidth(calculateImageWidth(titleImage.getWidth()))
-                .prefHeight(calculateImageHeight(titleImage.getWidth(), titleImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(titleImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(titleImage.getWidth(), titleImage.getHeight()))
                 .space(padding);
         table.row();
         Table buttonTable = new Table();
@@ -250,26 +238,26 @@ public class TitleScreen implements Screen, InputProcessor {
         table.row();
         table.add(blueImage)
                 .colspan(2)
-                .prefWidth(calculateImageWidth(blueImage.getWidth()))
-                .prefHeight(calculateImageHeight(blueImage.getWidth(), blueImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(blueImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(blueImage.getWidth(), blueImage.getHeight()))
                 .space(padding);
         table.row();
         table.add(orangeImage)
-                .prefWidth(calculateImageWidth(orangeImage.getWidth()))
-                .prefHeight(calculateImageHeight(orangeImage.getWidth(), orangeImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(orangeImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(orangeImage.getWidth(), orangeImage.getHeight()))
                 .space(padding);
         table.add(purpleImage)
-                .prefWidth(calculateImageWidth(purpleImage.getWidth()))
-                .prefHeight(calculateImageHeight(purpleImage.getWidth(), purpleImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(purpleImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(purpleImage.getWidth(), purpleImage.getHeight()))
                 .space(padding);
         table.row();
         table.add(silverImage)
-                .prefWidth(calculateImageWidth(silverImage.getWidth()))
-                .prefHeight(calculateImageHeight(silverImage.getWidth(), silverImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(silverImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(silverImage.getWidth(), silverImage.getHeight()))
                 .space(padding);
         table.add(yellowImage)
-                .prefWidth(calculateImageWidth(yellowImage.getWidth()))
-                .prefHeight(calculateImageHeight(yellowImage.getWidth(), yellowImage.getHeight()))
+                .prefWidth(game.calculateImageWidth(yellowImage.getWidth()))
+                .prefHeight(game.calculateImageHeight(yellowImage.getWidth(), yellowImage.getHeight()))
                 .space(padding);
         table.row();
         table.add(backButton)
@@ -286,8 +274,8 @@ public class TitleScreen implements Screen, InputProcessor {
 
         // Get large soda can Texture and calculate dimensions in UI scale
         Texture sodaCanTexture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
-        float imageWidth = calculateImageWidth(sodaCanTexture.getWidth());
-        float imageHeight = calculateImageHeight(sodaCanTexture.getWidth(), sodaCanTexture.getHeight());
+        float imageWidth = game.calculateImageWidth(sodaCanTexture.getWidth());
+        float imageHeight = game.calculateImageHeight(sodaCanTexture.getWidth(), sodaCanTexture.getHeight());
 
         Image sodaCanImage = new Image(new TextureRegionDrawable(sodaCanTexture));
         // Set origin to centre for spin effect

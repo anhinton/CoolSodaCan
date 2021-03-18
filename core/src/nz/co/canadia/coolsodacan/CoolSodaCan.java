@@ -109,6 +109,18 @@ public class CoolSodaCan extends Game {
 		this.setScreen(new TitleScreen(this));
 	}
 
+	// Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
+	public float calculateImageWidth(float width) {
+		return width / Constants.GAME_WIDTH * getUiWidth();
+	}
+
+	// Calculate the height of a Game-size Sprite/Texture in uiViewport coordinates
+	public float calculateImageHeight(float width, float height) {
+		float adjustedWidth = calculateImageWidth(width);
+		float ratio = adjustedWidth / width;
+		return height * ratio;
+	}
+
 	int getGameHeight() {
 		return gameHeight;
 	}
