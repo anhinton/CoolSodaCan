@@ -17,8 +17,8 @@
           - ~~Sodas unlocked~~
           - ~~Reset progess button~~
       - Settings
-          - Music volume
-          - Sound volume
+          - ~~Music volume~~
+          - ~~Sound volume~~
           - Credits
       - ~~Calculate button widths and heights to stay the same across devices~~
   

@@ -3,6 +3,7 @@ package nz.co.canadia.coolsodacan;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Color;
@@ -29,6 +30,7 @@ public class CoolSodaCan extends Game {
 	Skin skin;
 	ShapeRenderer shapeRenderer;
 	Statistics statistics;
+	private Preferences settings;
 	boolean debugUnlocks;
 	private float musicVolume;
 	private float soundVolume;
@@ -43,8 +45,9 @@ public class CoolSodaCan extends Game {
 		// Set to true to prepare statistic for testing unlocks
 		debugUnlocks = false;
 
-		musicVolume = 0;
-		soundVolume = 0;
+		settings = Gdx.app.getPreferences(Constants.SETTINGS_PATH);
+		musicVolume = settings.getFloat("musicVolume", Constants.DEFAULT_MUSIC_VOLUME);
+		soundVolume = settings.getFloat("soundVolume", Constants.DEFAULT_SOUND_VOLUME);
 
 		I18NBundle.setSimpleFormatter(true);
 		Gdx.input.setCatchKey(Input.Keys.BACK, true);
@@ -123,6 +126,10 @@ public class CoolSodaCan extends Game {
 		return height * ratio;
 	}
 
+	public void flushSettings() {
+		settings.flush();
+	}
+
 	int getGameHeight() {
 		return gameHeight;
 	}
@@ -149,6 +156,7 @@ public class CoolSodaCan extends Game {
 
 	public void setMusicVolume(float volume) {
 		musicVolume = MathUtils.clamp(volume, 0, 1);
+		settings.putFloat("musicVolume", musicVolume);
 	}
 
 	public void decreaseMusicVolume() {
@@ -165,6 +173,7 @@ public class CoolSodaCan extends Game {
 
 	public void setSoundVolume(float volume) {
 		soundVolume = MathUtils.clamp(volume, 0, 1);
+		settings.putFloat("soundVolume", soundVolume);
 	}
 
 	public void decreaseSoundVolume() {

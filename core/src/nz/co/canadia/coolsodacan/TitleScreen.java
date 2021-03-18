@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -60,10 +61,6 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
-
-        // Do this with Preferences
-        game.setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
-        game.setSoundVolume(Constants.DEFAULT_SOUND_VOLUME);
 
         currentSprite = new Sprite();
 
@@ -352,7 +349,7 @@ public class TitleScreen implements Screen, InputProcessor {
     }
 
     private void showSettingsMenu() {
-        currentMenu = CurrentMenu.STATISTICS;
+        currentMenu = CurrentMenu.SETTINGS;
         table.clear();
         table.pad(padding);
 
@@ -585,8 +582,11 @@ public class TitleScreen implements Screen, InputProcessor {
             case MAIN:
                 quit();
                 break;
-            case SELECT_SODA:
             case SETTINGS:
+                game.flushSettings();
+                showMainMenu();
+                break;
+            case SELECT_SODA:
             case STATISTICS:
                 showMainMenu();
                 break;
