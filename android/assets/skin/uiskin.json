@@ -129,6 +129,10 @@
     "default-vertical": {
       "background": "default-slider",
       "knob": "default-round-large"
+    },
+    "volume-horizontal": {
+      "background": "default-slider",
+      "knob": "default-round-large"
     }
   },
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {

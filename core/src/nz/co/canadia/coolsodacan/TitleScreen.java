@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -358,6 +359,26 @@ public class TitleScreen implements Screen, InputProcessor {
         currentMenu = CurrentMenu.STATISTICS;
         table.clear();
         table.pad(padding);
+
+        Label headingLabel = new Label(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
+
+        Label musicVolumeLabel = new Label(game.bundle.get("settingsMusicVolumeLabel"), game.skin, "titlemenu");
+
+        Slider musicVolumeSlider = new Slider(0, 1, 0.1f, false, game.skin, "default-vertical");
+
+        table.add(headingLabel)
+                .expandY()
+                .space(padding);
+        table.row();
+        table.add(musicVolumeLabel).space(padding);
+        table.row();
+        table.add(musicVolumeSlider).space(padding);
+        table.row();
+
+        table.add(backButton)
+                .expandY()
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
     }
 
     private void showStatistics() {
