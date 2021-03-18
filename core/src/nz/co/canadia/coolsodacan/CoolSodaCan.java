@@ -4,14 +4,19 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.I18NBundle;
 
 public class CoolSodaCan extends Game {
@@ -79,19 +84,22 @@ public class CoolSodaCan extends Game {
 		fontLoader.loadGameUiFont(manager);
 		fontLoader.loadTitleMenuFont(manager);
 		fontLoader.loadStatisticsFont(manager);
-		manager.load("skin/uiskin.atlas", TextureAtlas.class);
+		manager.load("skin/uiskin.json", Skin.class);
 		manager.finishLoading();
 
 		// Prepare skin
-		skin = new Skin();
-		// Manually load fonts with dynamic sizes
-		skin.add("default-font", fontLoader.getGameUiFont(manager), BitmapFont.class);
-		skin.add("titlemenu-font", fontLoader.getTitleMenuFont(manager), BitmapFont.class);
-		skin.add("statistics-font", fontLoader.getStatisticsFont(manager), BitmapFont.class);
-		// Load Texture atlas and skinFile
-		skin.addRegions(manager.get("skin/uiskin.atlas", TextureAtlas.class));
-		// Note skinFile does *not* contain a BitmapFont `default-font`, this must be loaded previously
-		skin.load(Gdx.files.internal("skin/uiskin.json"));
+		skin = manager.get("skin/uiskin.json", Skin.class);
+
+		skin.add("game", new Label.LabelStyle(fontLoader.getGameUiFont(manager), Color.WHITE), Label.LabelStyle.class);
+		skin.add("titlemenu", new Label.LabelStyle(fontLoader.getTitleMenuFont(manager), Color.WHITE), Label.LabelStyle.class);
+		skin.add("statistics", new Label.LabelStyle(fontLoader.getStatisticsFont(manager), Color.WHITE), Label.LabelStyle.class);
+
+		TextButton.TextButtonStyle gameTextButtonStyle = new TextButton.TextButtonStyle(skin.get("default", TextButton.TextButtonStyle.class));
+		gameTextButtonStyle.font = fontLoader.getGameUiFont(manager);
+		skin.add("game", gameTextButtonStyle);
+		TextButton.TextButtonStyle titlemenuTextButtonStyle = new TextButton.TextButtonStyle(skin.get("default", TextButton.TextButtonStyle.class));
+		titlemenuTextButtonStyle.font = fontLoader.getTitleMenuFont(manager);
+		skin.add("titlemenu", titlemenuTextButtonStyle);
 
 		batch = new SpriteBatch();
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);

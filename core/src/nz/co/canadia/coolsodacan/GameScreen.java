@@ -214,23 +214,23 @@ public class GameScreen implements Screen, InputProcessor {
 
         Table leftColumn = new Table().left();
         // Cans thrown
-        cansThrownLabel = new Label("", game.skin.get("default", Label.LabelStyle.class));
+        cansThrownLabel = new Label("", game.skin.get("game", Label.LabelStyle.class));
         setCansThrownLabel();
         leftColumn.add(cansThrownLabel).left();
         leftColumn.row();
         // Cans delivered
-        cansDeliveredLabel = new Label("", game.skin.get("default", Label.LabelStyle.class));
+        cansDeliveredLabel = new Label("", game.skin.get("game", Label.LabelStyle.class));
         setCansDeliveredLabel();
         leftColumn.add(cansDeliveredLabel).left();
 
         Table middleColumn = new Table();
         // Score
-        scoreLabel = new Label("", game.skin.get("default", Label.LabelStyle.class));
+        scoreLabel = new Label("", game.skin.get("game", Label.LabelStyle.class));
         setScoreLabel();
         middleColumn.add(scoreLabel).left();
         middleColumn.row();
         // Timer
-        timeLabel = new Label("", game.skin.get("default", Label.LabelStyle.class));
+        timeLabel = new Label("", game.skin.get("game", Label.LabelStyle.class));
         setTimeLabel();
         middleColumn.add(timeLabel);
 
@@ -239,14 +239,14 @@ public class GameScreen implements Screen, InputProcessor {
             case Desktop:
             case WebGL:
                 // Menu label Desktop
-                Label menuLabel = new Label(game.bundle.get("gameUiMenuLabelDesktop"), game.skin.get("default", Label.LabelStyle.class));
+                Label menuLabel = new Label(game.bundle.get("gameUiMenuLabelDesktop"), game.skin.get("game", Label.LabelStyle.class));
                 rightColumn.add(menuLabel).right();
                 break;
             case Android:
             case iOS:
                 // Menu button mobile
                 TextButton menuButton = new TextButton(game.bundle.get("gameUiMenuButton"),
-                        game.skin.get("default", TextButton.TextButtonStyle.class));
+                        game.skin.get("game", TextButton.TextButtonStyle.class));
                 menuButton.addListener(new ChangeListener() {
                     @Override
                     public void changed(ChangeEvent event, Actor actor) {
@@ -267,11 +267,11 @@ public class GameScreen implements Screen, InputProcessor {
         playerIsFiring = false;
         menuBox.clear();
 
-        Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "default");
+        Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "game");
         menuBox.add(pauseLabel).space(game.getMenuUiPadding());
         menuBox.row();
 
-        TextButton continueButton = new TextButton(game.bundle.get("gameMenuContinueButton"), game.skin, "default");
+        TextButton continueButton = new TextButton(game.bundle.get("gameMenuContinueButton"), game.skin, "game");
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -282,7 +282,7 @@ public class GameScreen implements Screen, InputProcessor {
                 .space(game.getMenuUiPadding());
         menuBox.row();
 
-        TextButton exitButton = new TextButton(game.bundle.get("gameMenuExitButton"), game.skin, "default");
+        TextButton exitButton = new TextButton(game.bundle.get("gameMenuExitButton"), game.skin, "game");
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -301,7 +301,7 @@ public class GameScreen implements Screen, InputProcessor {
         currentState = GameState.PAUSED;
         menuBox.clear();
 
-        Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "default");
+        Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "game");
 
         Sprite sodaSprite = atlas.createSprite(pt.getSmallTextureName());
         sodaImage = new Image(new SpriteDrawable(sodaSprite));
@@ -311,7 +311,7 @@ public class GameScreen implements Screen, InputProcessor {
         RepeatAction repeatAction = Actions.forever(rotateByAction);
         sodaImage.addAction(repeatAction);
 
-        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinuButton"), game.skin, "default");
+        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinuButton"), game.skin, "game");
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

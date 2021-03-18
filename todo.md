@@ -1,4 +1,7 @@
 # todo.md
+
+  + **BUG** Incorrectly sized spinning soda can in GameScreen.showSodaUnlocked on
+    different sized devices
       
   + Title screen
       - ~~Cool title graphic~~
