@@ -89,11 +89,11 @@ public class CoolSodaCan extends Game {
 
 		// Prepare skin
 		skin = manager.get("skin/uiskin.json", Skin.class);
-
+		// LabelStyles
 		skin.add("game", new Label.LabelStyle(fontLoader.getGameUiFont(manager), Color.WHITE), Label.LabelStyle.class);
 		skin.add("titlemenu", new Label.LabelStyle(fontLoader.getTitleMenuFont(manager), Color.WHITE), Label.LabelStyle.class);
 		skin.add("statistics", new Label.LabelStyle(fontLoader.getStatisticsFont(manager), Color.WHITE), Label.LabelStyle.class);
-
+		// TextButtonStyles
 		TextButton.TextButtonStyle gameTextButtonStyle = new TextButton.TextButtonStyle(skin.get("default", TextButton.TextButtonStyle.class));
 		gameTextButtonStyle.font = fontLoader.getGameUiFont(manager);
 		skin.add("game", gameTextButtonStyle);
