@@ -364,7 +364,7 @@ public class TitleScreen implements Screen, InputProcessor {
 
         Label musicVolumeLabel = new Label(game.bundle.get("settingsMusicVolumeLabel"), game.skin, "titlemenu");
 
-        Slider musicVolumeSlider = new Slider(0, 1, 0.1f, false, game.skin, "default-vertical");
+        Slider musicVolumeSlider = new Slider(0, 1, 0.1f, false, game.skin, "volume-horizontal");
 
         table.add(headingLabel)
                 .expandY()
