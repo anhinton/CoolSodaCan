@@ -29,6 +29,8 @@ public class Constants {
 
     // Settings constants
     public static final float VOLUME_STEP_SIZE = 0.1f;
+    public static final float DEFAULT_MUSIC_VOLUME = 0.5f;
+    public static final float DEFAULT_SOUND_VOLUME = 0.8f;
 
     // Game constants
     public static final float PLAYER_SPEED = 2560f;

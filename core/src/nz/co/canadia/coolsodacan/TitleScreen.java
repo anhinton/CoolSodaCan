@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -50,6 +49,8 @@ public class TitleScreen implements Screen, InputProcessor {
     private CurrentMenu currentMenu;
     private Label musicVolumeLabel;
     private Slider musicVolumeSlider;
+    private Label soundVolumeLabel;
+    private Slider soundVolumeSlider;
 
     private enum CurrentMenu { MAIN, SELECT_SODA, START_GAME, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
@@ -59,6 +60,10 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+
+        // Do this with Preferences
+        game.setMusicVolume(Constants.DEFAULT_MUSIC_VOLUME);
+        game.setSoundVolume(Constants.DEFAULT_SOUND_VOLUME);
 
         currentSprite = new Sprite();
 
@@ -367,6 +372,7 @@ public class TitleScreen implements Screen, InputProcessor {
         });
 
         musicVolumeSlider = new Slider(0, 1, Constants.VOLUME_STEP_SIZE, false, game.skin, "volume-horizontal");
+        musicVolumeSlider.setValue(game.getMusicVolume());
         musicVolumeSlider.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -385,10 +391,62 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
+        soundVolumeLabel = new Label("", game.skin, "titlemenu");
+        updateSoundVolumeLabel();
+
+        TextButton decreaseSoundVolumeButton = new TextButton("-", game.skin, "titlemenu");
+        decreaseSoundVolumeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.decreaseSoundVolume();
+                updateSoundVolumeLabel();
+                soundVolumeSlider.setValue(game.getSoundVolume());
+            }
+        });
+
+        soundVolumeSlider = new Slider(0, 1, Constants.VOLUME_STEP_SIZE, false, game.skin, "volume-horizontal");
+        soundVolumeSlider.setValue(game.getSoundVolume());
+        soundVolumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setSoundVolume(soundVolumeSlider.getValue());
+                updateSoundVolumeLabel();
+            }
+        });
+
+        TextButton increaseSoundVolumeButton = new TextButton("+", game.skin, "titlemenu");
+        increaseSoundVolumeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.increaseSoundVolume();
+                updateSoundVolumeLabel();
+                soundVolumeSlider.setValue(game.getSoundVolume());
+            }
+        });
+
         table.add(headingLabel)
                 .expandY()
                 .space(padding);
         table.row();
+        table.add(soundVolumeLabel)
+                .space(padding);
+        table.row();
+
+        Table soundVolumeTable = new Table();
+        soundVolumeTable.add(decreaseSoundVolumeButton)
+                .prefSize(buttonHeight)
+                .space(padding);
+        soundVolumeTable.add(soundVolumeSlider)
+                .prefWidth(game.getUiWidth())
+                .space(padding);
+        soundVolumeTable.add(increaseSoundVolumeButton)
+                .prefSize(buttonHeight)
+                .space(padding);
+        table.add(soundVolumeTable)
+                .prefWidth(game.getUiWidth())
+                .space(padding);
+        table.row();
+
         table.add(musicVolumeLabel)
                 .space(padding);
         table.row();
@@ -403,7 +461,9 @@ public class TitleScreen implements Screen, InputProcessor {
         musicVolumeTable.add(increaseMusicVolumeButton)
                 .prefSize(buttonHeight)
                 .space(padding);
-        table.add(musicVolumeTable).prefWidth(game.getUiWidth());
+        table.add(musicVolumeTable)
+                .prefWidth(game.getUiWidth())
+                .space(padding);
         table.row();
 
         table.add(backButton)
@@ -414,6 +474,10 @@ public class TitleScreen implements Screen, InputProcessor {
 
     private void updateMusicVolumeLabel() {
         musicVolumeLabel.setText(game.bundle.get("settingsMusicVolumeLabel") + ": " + (int) (game.getMusicVolume() * 10));
+    }
+
+    private void updateSoundVolumeLabel() {
+        soundVolumeLabel.setText(game.bundle.get("settingsSoundVolumeLabel") + ": " + (int) (game.getSoundVolume() * 10));
     }
 
     private void showStatistics() {

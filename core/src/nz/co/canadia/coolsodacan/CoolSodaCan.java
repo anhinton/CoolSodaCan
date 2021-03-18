@@ -31,6 +31,7 @@ public class CoolSodaCan extends Game {
 	Statistics statistics;
 	boolean debugUnlocks;
 	private float musicVolume;
+	private float soundVolume;
 
 	public CoolSodaCan(FontLoader fontLoader, Formatter formatter) {
 		this.formatter = formatter;
@@ -43,6 +44,7 @@ public class CoolSodaCan extends Game {
 		debugUnlocks = false;
 
 		musicVolume = 0;
+		soundVolume = 0;
 
 		I18NBundle.setSimpleFormatter(true);
 		Gdx.input.setCatchKey(Input.Keys.BACK, true);
@@ -155,6 +157,22 @@ public class CoolSodaCan extends Game {
 
 	public void increaseMusicVolume() {
 		setMusicVolume(musicVolume + Constants.VOLUME_STEP_SIZE);
+	}
+
+	public float getSoundVolume() {
+		return soundVolume;
+	}
+
+	public void setSoundVolume(float volume) {
+		soundVolume = MathUtils.clamp(volume, 0, 1);
+	}
+
+	public void decreaseSoundVolume() {
+		setSoundVolume(soundVolume - Constants.VOLUME_STEP_SIZE);
+	}
+
+	public void increaseSoundVolume() {
+		setSoundVolume(soundVolume + Constants.VOLUME_STEP_SIZE);
 	}
 
 	@Override
