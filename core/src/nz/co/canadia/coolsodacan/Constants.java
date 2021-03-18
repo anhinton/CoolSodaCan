@@ -27,6 +27,9 @@ public class Constants {
     public static final int HTML_WIDTH = 720;
     public static final int HTML_HEIGHT = 720;
 
+    // Settings constants
+    public static final float VOLUME_STEP_SIZE = 0.1f;
+
     // Game constants
     public static final float PLAYER_SPEED = 2560f;
     public static final float WORLD_MOVEMENT_SPEED = 160f;

@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -47,6 +48,8 @@ public class TitleScreen implements Screen, InputProcessor {
     private Sprite currentSprite;
     private final Viewport viewport;
     private CurrentMenu currentMenu;
+    private Label musicVolumeLabel;
+    private Slider musicVolumeSlider;
 
     private enum CurrentMenu { MAIN, SELECT_SODA, START_GAME, UNLOCK_DIALOG, STATISTICS, RESET_STATISTICS, SETTINGS, CREDITS}
 
@@ -350,23 +353,67 @@ public class TitleScreen implements Screen, InputProcessor {
 
         Label headingLabel = new Label(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
 
-        Label musicVolumeLabel = new Label(game.bundle.get("settingsMusicVolumeLabel"), game.skin, "titlemenu");
+        musicVolumeLabel = new Label("", game.skin, "titlemenu");
+        updateMusicVolumeLabel();
 
-        Slider musicVolumeSlider = new Slider(0, 1, 0.1f, false, game.skin, "volume-horizontal");
+        TextButton decreaseMusicVolumeButton = new TextButton("-", game.skin, "titlemenu");
+        decreaseMusicVolumeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.decreaseMusicVolume();
+                updateMusicVolumeLabel();
+                musicVolumeSlider.setValue(game.getMusicVolume());
+            }
+        });
+
+        musicVolumeSlider = new Slider(0, 1, Constants.VOLUME_STEP_SIZE, false, game.skin, "volume-horizontal");
+        musicVolumeSlider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setMusicVolume(musicVolumeSlider.getValue());
+                updateMusicVolumeLabel();
+            }
+        });
+
+        TextButton increaseMusicVolumeButton = new TextButton("+", game.skin, "titlemenu");
+        increaseMusicVolumeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.increaseMusicVolume();
+                updateMusicVolumeLabel();
+                musicVolumeSlider.setValue(game.getMusicVolume());
+            }
+        });
 
         table.add(headingLabel)
                 .expandY()
                 .space(padding);
         table.row();
-        table.add(musicVolumeLabel).space(padding);
+        table.add(musicVolumeLabel)
+                .space(padding);
         table.row();
-        table.add(musicVolumeSlider).space(padding);
+
+        Table musicVolumeTable = new Table();
+        musicVolumeTable.add(decreaseMusicVolumeButton)
+                .prefSize(buttonHeight)
+                .space(padding);
+        musicVolumeTable.add(musicVolumeSlider)
+                .prefWidth(game.getUiWidth())
+                .space(padding);
+        musicVolumeTable.add(increaseMusicVolumeButton)
+                .prefSize(buttonHeight)
+                .space(padding);
+        table.add(musicVolumeTable).prefWidth(game.getUiWidth());
         table.row();
 
         table.add(backButton)
                 .expandY()
                 .prefSize(buttonWidth, buttonHeight)
                 .space(padding);
+    }
+
+    private void updateMusicVolumeLabel() {
+        musicVolumeLabel.setText(game.bundle.get("settingsMusicVolumeLabel") + ": " + (int) (game.getMusicVolume() * 10));
     }
 
     private void showStatistics() {

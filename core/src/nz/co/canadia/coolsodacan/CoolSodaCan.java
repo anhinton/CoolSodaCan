@@ -30,6 +30,7 @@ public class CoolSodaCan extends Game {
 	ShapeRenderer shapeRenderer;
 	Statistics statistics;
 	boolean debugUnlocks;
+	private float musicVolume;
 
 	public CoolSodaCan(FontLoader fontLoader, Formatter formatter) {
 		this.formatter = formatter;
@@ -40,6 +41,8 @@ public class CoolSodaCan extends Game {
 	public void create () {
 		// Set to true to prepare statistic for testing unlocks
 		debugUnlocks = false;
+
+		musicVolume = 0;
 
 		I18NBundle.setSimpleFormatter(true);
 		Gdx.input.setCatchKey(Input.Keys.BACK, true);
@@ -136,6 +139,22 @@ public class CoolSodaCan extends Game {
 		int minutes = (int) (timeElapsed / 60);
 		int seconds = (int) (timeElapsed % 60);
 		return formatter.zeroPadTime(minutes, bundle.getLocale()) + ":" + formatter.zeroPadTime(seconds, bundle.getLocale());
+	}
+
+	public float getMusicVolume() {
+		return musicVolume;
+	}
+
+	public void setMusicVolume(float volume) {
+		musicVolume = MathUtils.clamp(volume, 0, 1);
+	}
+
+	public void decreaseMusicVolume() {
+		setMusicVolume(musicVolume - Constants.VOLUME_STEP_SIZE);
+	}
+
+	public void increaseMusicVolume() {
+		setMusicVolume(musicVolume + Constants.VOLUME_STEP_SIZE);
 	}
 
 	@Override
