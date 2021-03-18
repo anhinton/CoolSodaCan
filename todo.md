@@ -1,26 +1,4 @@
 # todo.md
-      
-  + Title screen
-      - ~~Cool title graphic~~
-      - ~~New game~~
-          - ~~Choose from one of five cans~~
-          - ~~Cans unlocked via progression~~
-      - ~~Statistics~~
-          - ~~Number of sodas thrown~~
-          - ~~Number of sodas drunk~~
-          - ~~High score~~
-          - ~~Total points scored~~
-          - ~~Animals quenched~~
-          - ~~Plants pruned~~
-          - ~~Longest session~~
-          - ~~Total time played~~
-          - ~~Sodas unlocked~~
-          - ~~Reset progess button~~
-      - Settings
-          - ~~Music volume~~
-          - ~~Sound volume~~
-          - Credits
-      - ~~Calculate button widths and heights to stay the same across devices~~
   
   + Add score particle to Animal/Plant when points are scored
       
@@ -63,6 +41,28 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+      
+  + ~~Title screen~~
+      - ~~Cool title graphic~~
+      - ~~New game~~
+          - ~~Choose from one of five cans~~
+          - ~~Cans unlocked via progression~~
+      - ~~Statistics~~
+          - ~~Number of sodas thrown~~
+          - ~~Number of sodas drunk~~
+          - ~~High score~~
+          - ~~Total points scored~~
+          - ~~Animals quenched~~
+          - ~~Plants pruned~~
+          - ~~Longest session~~
+          - ~~Total time played~~
+          - ~~Sodas unlocked~~
+          - ~~Reset progess button~~
+      - ~~Settings~~
+          - ~~Music volume~~
+          - ~~Sound volume~~
+          - ~~Credits~~
+      - ~~Calculate button widths and heights to stay the same across devices~~
 
   + ~~**FIXED** Incorrectly sized spinning soda can in GameScreen.showSodaUnlocked on
     different sized devices~~

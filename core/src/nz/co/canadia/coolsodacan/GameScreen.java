@@ -313,7 +313,7 @@ public class GameScreen implements Screen, InputProcessor {
         RepeatAction repeatAction = Actions.forever(rotateByAction);
         sodaImage.addAction(repeatAction);
 
-        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinuButton"), game.skin, "game");
+        TextButton continueButton = new TextButton(game.bundle.get("gameSodaUnlockedContinueButton"), game.skin, "game");
         continueButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

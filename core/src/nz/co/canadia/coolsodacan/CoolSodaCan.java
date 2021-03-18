@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -105,6 +106,10 @@ public class CoolSodaCan extends Game {
 		TextButton.TextButtonStyle titlemenuTextButtonStyle = new TextButton.TextButtonStyle(skin.get("default", TextButton.TextButtonStyle.class));
 		titlemenuTextButtonStyle.font = fontLoader.getTitleMenuFont(manager);
 		skin.add("titlemenu", titlemenuTextButtonStyle);
+		// ScrollPaneStyles
+		ScrollPane.ScrollPaneStyle creditsScrollPaneStyle = new ScrollPane.ScrollPaneStyle(skin.get("default", ScrollPane.ScrollPaneStyle.class));
+		creditsScrollPaneStyle.background = null;
+		skin.add("credits", creditsScrollPaneStyle);
 
 		batch = new SpriteBatch();
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);

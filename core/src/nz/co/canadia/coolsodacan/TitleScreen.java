@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -421,6 +423,14 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
+        TextButton creditsButton = new TextButton(game.bundle.get("settingsCreditsButton"), game.skin, "titlemenu");
+        creditsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showCredits();
+            }
+        });
+
         table.add(headingLabel)
                 .expandY()
                 .space(padding);
@@ -460,6 +470,43 @@ public class TitleScreen implements Screen, InputProcessor {
                 .space(padding);
         table.add(musicVolumeTable)
                 .prefWidth(game.getUiWidth())
+                .space(padding);
+        table.row();
+
+        Table buttonTable = new Table();
+        buttonTable.add(creditsButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
+        buttonTable.row();
+        buttonTable.add(backButton)
+                .prefSize(buttonWidth, buttonHeight)
+                .space(padding);
+        table.add(buttonTable)
+                .expandY()
+                .space(padding);
+    }
+
+    private void showCredits() {
+        currentMenu = CurrentMenu.CREDITS;
+        table.clear();
+        table.pad(padding);
+
+        Label headingLabel = new Label(game.bundle.get("settingsCreditsButton"), game.skin, "titlemenu");
+
+        FileHandle file = Gdx.files.internal("credits.txt");
+        String creditsText = file.readString("UTF-8");
+        Label creditsLabel = new Label(creditsText, game.skin, "game");
+        creditsLabel.setWrap(true);
+        ScrollPane creditsPane = new ScrollPane(creditsLabel, game.skin, "credits");
+        creditsPane.setFadeScrollBars(false);
+
+        table.add(headingLabel)
+                .expandY()
+                .space(padding);
+        table.row();
+
+        table.add(creditsPane)
+                .prefWidth(Gdx.graphics.getBackBufferWidth())
                 .space(padding);
         table.row();
 
