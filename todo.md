@@ -6,7 +6,7 @@
       
   + Add two new Animals
       - Blue hedgehog
-      - Yellow rat    
+      - Yellow rat
           
   + Does my font have weird spacing on Web?
   

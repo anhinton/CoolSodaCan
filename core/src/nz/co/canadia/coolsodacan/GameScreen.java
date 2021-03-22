@@ -57,7 +57,8 @@ public class GameScreen implements Screen, InputProcessor {
     private final ObjectMap<Player.PlayerType, Boolean> sodaIsUnlocked;
     private final Table menuBox;
     private final Array<ParticleEffectPool.PooledEffect> effects;
-    private ParticleEffectPool points6EffectPool;
+    private final ParticleEffectPool pointsBaseEffectPool;
+    private final ParticleEffectPool pointsHighEffectPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -101,9 +102,12 @@ public class GameScreen implements Screen, InputProcessor {
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
-        ParticleEffect points6Effect = new ParticleEffect();
-        points6Effect.load(Gdx.files.internal("particleEffects/6_points.p"), atlas);
-        points6EffectPool = new ParticleEffectPool(points6Effect, 1, 2);
+        ParticleEffect pointsBaseEffect = new ParticleEffect();
+        pointsBaseEffect.load(Gdx.files.internal("particleEffects/points_base.p"), atlas);
+        pointsBaseEffectPool = new ParticleEffectPool(pointsBaseEffect, 1, 2);
+        ParticleEffect pointsHighEffect = new ParticleEffect();
+        pointsHighEffect.load(Gdx.files.internal("particleEffects/points_high.p"), atlas);
+        pointsHighEffectPool = new ParticleEffectPool(pointsHighEffect, 1, 2);
 
         // create player object
         player = new Player(game.getGameHeight(), atlas, playerType);
@@ -371,6 +375,27 @@ public class GameScreen implements Screen, InputProcessor {
         nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
+    private void addScoreEffect(int points, float x, float y) {
+        try {
+            // Triger a score particle
+            ParticleEffectPool.PooledEffect scoreEffect;
+            switch (points) {
+                case Constants.ANIMAL_BASE_POINTS:
+                    scoreEffect = pointsBaseEffectPool.obtain();
+                    break;
+                case Constants.ANIMAL_HIGH_POINTS:
+                    scoreEffect = pointsHighEffectPool.obtain();
+                    break;
+                default:
+                    throw new RuntimeException("Unexpected points amount: " + points);
+            }
+            scoreEffect.setPosition(x, y);
+            effects.add(scoreEffect);
+        } catch (RuntimeException e) {
+            Gdx.app.error("GameScreen", "Unable to create score particleEffect: " + e);
+        }
+    }
+
     private void exit() {
         game.statistics.save();
         game.setScreen(new TitleScreen(game));
@@ -501,11 +526,8 @@ public class GameScreen implements Screen, InputProcessor {
                             updateCansDelivered(h.getSodasDrunk());
                             int points = h.getPoints();
                             if (points > 0) {
-                                updateScore(h.getPoints());
-                                // Triger a score particle
-                                ParticleEffectPool.PooledEffect scoreEffect = points6EffectPool.obtain();
-                                scoreEffect.setPosition(h.getCenter().x, h.getCenter().y);
-                                effects.add(scoreEffect);
+                                updateScore(points);
+                                addScoreEffect(points, ac.getX(), ac.getY());
                             }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
                                 game.statistics.incrementSuperHit(h.getType());
@@ -572,7 +594,7 @@ public class GameScreen implements Screen, InputProcessor {
         uiStage.getViewport().apply();
         uiStage.draw();
 
-        // Draw meny UI
+        // Draw menu UI
         menuStage.getViewport().apply();
         menuStage.draw();
     }
