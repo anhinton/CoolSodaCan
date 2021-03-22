@@ -8,6 +8,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
@@ -52,8 +54,11 @@ public class GameScreen implements Screen, InputProcessor {
     private final float menuButtonWidth;
     private final float buttonHeight;
     private final float gameUiButtonWidth;
-    private final ObjectMap<Player.PlayerType, Boolean> sodasUnlocked;
+    private final ObjectMap<Player.PlayerType, Boolean> sodaIsUnlocked;
     private final Table menuBox;
+    private final Array<ParticleEffectPool.PooledEffect> effects;
+    private final ParticleEffectPool pointsBaseEffectPool;
+    private final ParticleEffectPool pointsHighEffectPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -89,12 +94,20 @@ public class GameScreen implements Screen, InputProcessor {
         menuButtonWidth = game.getUiWidth() * Constants.GAMEMENU_BUTTON_WIDTH;
         buttonHeight = menuButtonWidth * Constants.GAMEMENU_BUTTON_RELATIVE_HEIGHT;
         gameUiButtonWidth = game.getUiWidth() * Constants.GAMEUI_BUTTON_WIDTH;
-        sodasUnlocked = new ObjectMap<>(Player.PlayerType.values().length);
+        effects = new Array<>();
+        sodaIsUnlocked = new ObjectMap<>(Player.PlayerType.values().length);
         for (Player.PlayerType pt : Player.PlayerType.values()) {
-            sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+            sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
         }
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+
+        ParticleEffect pointsBaseEffect = new ParticleEffect();
+        pointsBaseEffect.load(Gdx.files.internal("particleEffects/points_base.p"), atlas);
+        pointsBaseEffectPool = new ParticleEffectPool(pointsBaseEffect, 1, 2);
+        ParticleEffect pointsHighEffect = new ParticleEffect();
+        pointsHighEffect.load(Gdx.files.internal("particleEffects/points_high.p"), atlas);
+        pointsHighEffectPool = new ParticleEffectPool(pointsHighEffect, 1, 2);
 
         // create player object
         player = new Player(game.getGameHeight(), atlas, playerType);
@@ -362,6 +375,27 @@ public class GameScreen implements Screen, InputProcessor {
         nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
+    private void addScoreEffect(int points, float x, float y) {
+        try {
+            // Triger a score particle
+            ParticleEffectPool.PooledEffect scoreEffect;
+            switch (points) {
+                case Constants.ANIMAL_BASE_POINTS:
+                    scoreEffect = pointsBaseEffectPool.obtain();
+                    break;
+                case Constants.ANIMAL_HIGH_POINTS:
+                    scoreEffect = pointsHighEffectPool.obtain();
+                    break;
+                default:
+                    throw new RuntimeException("Unexpected points amount: " + points);
+            }
+            scoreEffect.setPosition(x, y);
+            effects.add(scoreEffect);
+        } catch (RuntimeException e) {
+            Gdx.app.error("GameScreen", "Unable to create score particleEffect: " + e);
+        }
+    }
+
     private void exit() {
         game.statistics.save();
         game.setScreen(new TitleScreen(game));
@@ -490,7 +524,11 @@ public class GameScreen implements Screen, InputProcessor {
                             // Hit the hittable
                             h.hit();
                             updateCansDelivered(h.getSodasDrunk());
-                            updateScore(h.getPoints());
+                            int points = h.getPoints();
+                            if (points > 0) {
+                                updateScore(points);
+                                addScoreEffect(points, ac.getX(), ac.getY());
+                            }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
                                 game.statistics.incrementSuperHit(h.getType());
                             }
@@ -503,9 +541,9 @@ public class GameScreen implements Screen, InputProcessor {
 
             // Check for can unlocks
             for (Player.PlayerType pt : Player.PlayerType.values()) {
-                if (!sodasUnlocked.get(pt)) {
+                if (!sodaIsUnlocked.get(pt)) {
                     if (game.statistics.isSodaUnlocked(pt)) {
-                        sodasUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
+                        sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
                         showSodaUnlocked(pt);
                     }
                 }
@@ -535,6 +573,15 @@ public class GameScreen implements Screen, InputProcessor {
         for (AnimatedCan ac : animatedCanArray) {
             ac.draw(game.batch);
         }
+        //Draw particle effects
+        for (int i = effects.size - 1; i >= 0; i--) {
+            ParticleEffectPool.PooledEffect effect = effects.get(i);
+            effect.draw(game.batch, delta);
+            if (effect.isComplete()) {
+                effect.free();
+                effects.removeIndex(i);
+            }
+        }
         // Player
         player.draw(game.batch);
         game.batch.end();
@@ -547,7 +594,7 @@ public class GameScreen implements Screen, InputProcessor {
         uiStage.getViewport().apply();
         uiStage.draw();
 
-        // Draw meny UI
+        // Draw menu UI
         menuStage.getViewport().apply();
         menuStage.draw();
     }
@@ -580,6 +627,9 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.input.setCursorCatched(false);
         bannerStage.dispose();
         uiStage.dispose();
+        for (int i = effects.size - 1; i >= 0; i--)
+            effects.get(i).free();
+        effects.clear();
     }
 
     @Override

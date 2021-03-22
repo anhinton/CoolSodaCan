@@ -6,21 +6,21 @@ filter: Linear, Linear
 repeat: none
 blue_anim
   rotate: false
-  xy: 391, 10
+  xy: 423, 55
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 1
 blue_anim
   rotate: false
-  xy: 423, 55
+  xy: 222, 356
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 2
 blue_anim
   rotate: false
-  xy: 222, 356
+  xy: 34, 13
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
@@ -41,21 +41,21 @@ blue_anim
   index: 5
 blue_anim
   rotate: false
-  xy: 66, 34
+  xy: 423, 11
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 6
 blue_anim
   rotate: false
-  xy: 423, 11
+  xy: 455, 55
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 7
 blue_anim
   rotate: false
-  xy: 455, 55
+  xy: 254, 356
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
@@ -188,21 +188,21 @@ orange_anim
   index: 2
 orange_anim
   rotate: false
-  xy: 2, 33
+  xy: 391, 54
   size: 30, 43
   orig: 30, 43
   offset: 0, 0
   index: 3
 orange_anim
   rotate: false
-  xy: 391, 54
+  xy: 190, 355
   size: 30, 43
   orig: 30, 43
   offset: 0, 0
   index: 4
 orange_anim
   rotate: false
-  xy: 190, 355
+  xy: 2, 12
   size: 30, 43
   orig: 30, 43
   offset: 0, 0
@@ -223,7 +223,7 @@ orange_anim
   index: 7
 orange_anim
   rotate: false
-  xy: 34, 33
+  xy: 391, 9
   size: 30, 43
   orig: 30, 43
   offset: 0, 0
@@ -242,6 +242,20 @@ orange_soda_small
   orig: 90, 141
   offset: 0, 0
   index: -1
+particle6
+  rotate: false
+  xy: 71, 57
+  size: 31, 19
+  orig: 31, 19
+  offset: 0, 0
+  index: -1
+particle666
+  rotate: false
+  xy: 2, 57
+  size: 67, 19
+  orig: 67, 19
+  offset: 0, 0
+  index: -1
 particle_circle
   rotate: false
   xy: 638, 11
@@ -258,56 +272,56 @@ particle_starburst
   index: -1
 purple_anim
   rotate: false
-  xy: 254, 356
+  xy: 973, 846
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 1
 purple_anim
   rotate: false
-  xy: 973, 846
+  xy: 955, 348
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 2
 purple_anim
   rotate: false
-  xy: 955, 348
+  xy: 455, 11
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 3
 purple_anim
   rotate: false
-  xy: 98, 34
+  xy: 487, 55
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 4
 purple_anim
   rotate: false
-  xy: 455, 11
+  xy: 286, 356
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 5
 purple_anim
   rotate: false
-  xy: 487, 55
+  xy: 973, 802
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 6
 purple_anim
   rotate: false
-  xy: 286, 356
+  xy: 955, 304
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 7
 purple_anim
   rotate: false
-  xy: 973, 802
+  xy: 487, 11
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
@@ -328,56 +342,56 @@ purple_soda_small
   index: -1
 silver_anim
   rotate: false
-  xy: 955, 304
+  xy: 987, 482
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 1
 silver_anim
   rotate: false
-  xy: 487, 11
+  xy: 987, 438
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 2
 silver_anim
   rotate: false
-  xy: 130, 34
+  xy: 987, 394
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 3
 silver_anim
   rotate: false
-  xy: 162, 39
+  xy: 987, 350
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 4
 silver_anim
   rotate: false
-  xy: 194, 39
+  xy: 987, 306
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 5
 silver_anim
   rotate: false
-  xy: 226, 39
+  xy: 66, 13
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 6
 silver_anim
   rotate: false
-  xy: 258, 39
+  xy: 104, 34
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 7
 silver_anim
   rotate: false
-  xy: 987, 482
+  xy: 136, 34
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
@@ -426,56 +440,56 @@ tree02_hit
   index: -1
 yellow_anim
   rotate: false
-  xy: 987, 438
+  xy: 168, 39
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 1
 yellow_anim
   rotate: false
-  xy: 987, 394
+  xy: 200, 39
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 2
 yellow_anim
   rotate: false
-  xy: 987, 350
+  xy: 232, 39
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 3
 yellow_anim
   rotate: false
-  xy: 987, 306
+  xy: 494, 386
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 4
 yellow_anim
   rotate: false
-  xy: 494, 386
+  xy: 526, 386
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 5
 yellow_anim
   rotate: false
-  xy: 526, 386
+  xy: 494, 342
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 6
 yellow_anim
   rotate: false
-  xy: 494, 342
+  xy: 558, 386
   size: 30, 42
   orig: 30, 42
   offset: 0, 0
   index: 7
 yellow_anim
   rotate: false
-  xy: 558, 386
+  xy: 526, 342
   size: 30, 42
   orig: 30, 42
   offset: 0, 0

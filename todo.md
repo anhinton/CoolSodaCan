@@ -1,13 +1,11 @@
 # todo.md
-  
-  + Add score particle to Animal/Plant when points are scored
-      
-  + Create a tutorial at start of game
       
   + Add two new Animals
       - Blue hedgehog
-      - Yellow rat    
+      - Yellow rat
           
+  + Create a tutorial at start of game
+      
   + Does my font have weird spacing on Web?
   
   + Re-evaluate how much Y-offset there is from touch point on mobile
@@ -22,9 +20,8 @@
       - Rules?
       - Is this procgen?
       
-  + Investigate using Pools for
+  + Investigate using pooling for
       - AnimatedCan
-      - Explosion
       - Animal
       - Plant
       
@@ -41,6 +38,8 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+  
+  + ~~Add score particle to Animal/Plant when points are scored~~
       
   + ~~Title screen~~
       - ~~Cool title graphic~~

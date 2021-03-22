@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.Comparator;
 
@@ -100,6 +101,12 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
     @Override
     public int compareTo(GameObject o) {
         return compare(this, o);
+    }
+
+    @Override
+    public Vector2 getCenter() {
+        return new Vector2(currentSprite.getX() + currentSprite.getWidth() / 2,
+                currentSprite.getY() + currentSprite.getHeight() / 2);
     }
 
     @Override
