@@ -89,7 +89,7 @@ class Player {
 
     void update(float delta) {
         move(delta);
-//        Gdx.app.log("Player", "X: " + String.valueOf(sprite.getX()) + " Y: " + String.valueOf(sprite.getY()));
+//        Gdx.app.log("Player", "X: " + String.valueOf(sprite.getCenterX()) + " Y: " + String.valueOf(sprite.getY()));
         clamp();
     }
 

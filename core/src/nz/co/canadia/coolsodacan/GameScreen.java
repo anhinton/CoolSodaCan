@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -59,6 +60,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
+    private final ParticleEffectPool explosionEffectPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -102,12 +104,26 @@ public class GameScreen implements Screen, InputProcessor {
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
+        // Create particle effects pools
+        // Base points effect
         ParticleEffect pointsBaseEffect = new ParticleEffect();
         pointsBaseEffect.load(Gdx.files.internal("particleEffects/points_base.p"), atlas);
         pointsBaseEffectPool = new ParticleEffectPool(pointsBaseEffect, 1, 2);
+        // High points effect
         ParticleEffect pointsHighEffect = new ParticleEffect();
         pointsHighEffect.load(Gdx.files.internal("particleEffects/points_high.p"), atlas);
         pointsHighEffectPool = new ParticleEffectPool(pointsHighEffect, 1, 2);
+        // Can explosion effect
+        ParticleEffect explosionEffect = new ParticleEffect();
+        explosionEffect.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
+        // Set tint of particle effect
+        Color particleColor = playerType.getExplosionColor();
+        float[] tint = new float[3];
+        tint[0] = particleColor.r;
+        tint[1] = particleColor.g;
+        tint[2] = particleColor.b;
+        explosionEffect.getEmitters().first().getTint().setColors(tint);
+        explosionEffectPool = new ParticleEffectPool(explosionEffect, 1, 2);
 
         // create player object
         player = new Player(game.getGameHeight(), atlas, playerType);
@@ -375,6 +391,12 @@ public class GameScreen implements Screen, InputProcessor {
         nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
+    private void addExplosionEffect(float x, float y) {
+        ParticleEffectPool.PooledEffect explosionEffect = explosionEffectPool.obtain();
+        explosionEffect.setPosition(x, y);
+        effects.add(explosionEffect);
+    }
+
     private void addScoreEffect(int points, float x, float y) {
         try {
             // Triger a score particle
@@ -527,13 +549,14 @@ public class GameScreen implements Screen, InputProcessor {
                             int points = h.getPoints();
                             if (points > 0) {
                                 updateScore(points);
-                                addScoreEffect(points, ac.getX(), ac.getY());
+                                addScoreEffect(points, ac.getCenterX(), ac.getCenterY());
                             }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
                                 game.statistics.incrementSuperHit(h.getType());
                             }
                             // Hit the can
                             ac.hit();
+                            addExplosionEffect(ac.getCenterX(), ac.getCenterY());
                         }
                     }
                 }
