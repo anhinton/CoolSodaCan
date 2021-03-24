@@ -140,7 +140,17 @@ class Player {
     }
 
     public void throwCan(Array<AnimatedCan> animatedCanArray, TextureAtlas atlas) {
-        animatedCanArray.add(new AnimatedCan(this, atlas));
+        switch (this.playerType) {
+            case ORANGE:
+                animatedCanArray.add(new AnimatedCan(this, atlas, 315, Constants.ANIMATED_CAN_SPEED));
+                animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
+                animatedCanArray.add(new AnimatedCan(this, atlas, 45, Constants.ANIMATED_CAN_SPEED));
+                break;
+            case BLUE:
+            default:
+                animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
+                break;
+        }
     }
 
     public float getAnimationX() {
