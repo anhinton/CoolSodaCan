@@ -31,9 +31,10 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
     private float shakeElapsed;
 
     private enum AnimalType {
-        COCO    ("coco",    "coco_smile"),
-        HORSE01 ("horse01", "horse01_smile"),
-        HORSE02 ("horse02", "horse02_smile");
+        COCO    (   "coco",     "coco_smile"),
+        HEDGEHOG (  "hedgehog", "hedgehog_smile"),
+        HORSE01 (   "horse01",  "horse01_smile"),
+        HORSE02 (   "horse02",  "horse02_smile");
 
         private final String textureName;
         private final String hitTextureName;

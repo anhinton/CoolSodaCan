@@ -1,7 +1,7 @@
 # todo.md
       
   + Add two new Animals
-      - Blue hedgehog
+      - ~~Blue hedgehog~~
       - Yellow rat
           
   + Create a tutorial at start of game
