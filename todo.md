@@ -38,6 +38,12 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+
+  + ~~Make unlocked cans do something~~
+      - ~~ORANGE: fire three cans at once in a W shape~~
+      - ~~SILVER: fire cans three times as quickly as normal~~
+      - ~~PURPLE: fire 8 cans at once in a star pattern~~
+      - ~~YELLOW: fire cans twice as quickly as SILVER, going round 8 directions creating a spiral~~
   
   + ~~Add score particle to Animal/Plant when points are scored~~
       
