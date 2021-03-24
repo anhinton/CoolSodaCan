@@ -14,7 +14,6 @@ import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
 public class Animal implements GameObject, Hittable, Comparable<GameObject>, Comparator<GameObject> {
-    private final Sprite normalSprite;
     private final Sprite hitSprite;
     private final ParticleEffect explosion;
     private final float x;
@@ -55,15 +54,14 @@ public class Animal implements GameObject, Hittable, Comparable<GameObject>, Com
 
         // Give us a random set of AnimalTextures
         animalType = AnimalType.values()[MathUtils.random(AnimalType.values().length - 1)];
-        normalSprite = atlas.createSprite(animalType.textureName);
+        currentSprite = atlas.createSprite(animalType.textureName);
         hitSprite = atlas.createSprite(animalType.hitTextureName);
-        x = MathUtils.random(0, Constants.GAME_WIDTH - normalSprite.getWidth());
+        x = MathUtils.random(0, Constants.GAME_WIDTH - currentSprite.getWidth());
 
         boolean flipSprite = MathUtils.randomBoolean();
-        normalSprite.flip(flipSprite, false);
+        currentSprite.flip(flipSprite, false);
         hitSprite.flip(flipSprite, false);
 
-        currentSprite = normalSprite;
         currentSprite.setPosition(x, y);
         rot = MathUtils.random(0, 360f);
         wiggle(0);
