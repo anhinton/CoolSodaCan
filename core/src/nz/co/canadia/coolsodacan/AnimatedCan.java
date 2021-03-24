@@ -31,6 +31,8 @@ public class AnimatedCan {
         canState = AnimatedCanState.ACTIVE;
         String animationName = player.getPlayerType().getAnimTexture();
         Color particleColor = player.getPlayerType().getExplosionColor();
+
+
         animation = new Animation<TextureRegion>(
                 Constants.CAN_FRAME_DURATION,
                 atlas.findRegions(animationName),
@@ -67,7 +69,12 @@ public class AnimatedCan {
 
     void draw(SpriteBatch batch) {
         if (isActive()) {
-            batch.draw(currentFrame, x, y);
+            batch.draw(currentFrame, x, y,
+                    currentFrame.getRegionWidth() / 2f,
+                    currentFrame.getRegionHeight() / 2f,
+                    currentFrame.getRegionWidth(),
+                    currentFrame.getRegionHeight(),
+                    1, 1, -directionDegrees);
         } else {
             explosion.draw(batch);
         }
