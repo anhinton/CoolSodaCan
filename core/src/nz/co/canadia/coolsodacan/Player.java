@@ -23,33 +23,35 @@ class Player {
     public enum PlayerType {
         BLUE    ("blue_soda_small", "blue_soda_select",
                 "textures_large/blue_soda.png","blue_anim",
-                Constants.BLUE_COLOR),
+                Constants.BLUE_COLOR, Constants.ANIMATED_CAN_INTERVAL_BLUE),
         ORANGE  ("orange_soda_small", "orange_soda_select",
                 "textures_large/orange_soda.png","orange_anim",
-                Constants.ORANGE_COLOR),
+                Constants.ORANGE_COLOR, Constants.ANIMATED_CAN_INTERVAL_ORANGE),
         PURPLE  ("purple_soda_small", "purple_soda_select",
                 "textures_large/purple_soda.png", "purple_anim",
-                Constants.PURPLE_COLOR),
+                Constants.PURPLE_COLOR, Constants.ANIMATED_CAN_INTERVAL_PURPLE),
         SILVER  ("silver_soda_small", "silver_soda_select",
                 "textures_large/silver_soda.png", "silver_anim",
-                Constants.SILVER_COLOR),
+                Constants.SILVER_COLOR, Constants.ANIMATED_CAN_INTERVAL_SILVER),
         YELLOW  ("yellow_soda_small", "yellow_soda_select",
                 "textures_large/yellow_soda.png", "yellow_anim",
-                Constants.YELLOW_COLOR);
+                Constants.YELLOW_COLOR, Constants.ANIMATED_CAN_INTERVAL_YELLOW);
 
         private final String smallTextureName;
         private final String selectTextureName;
         private final String largeTextureName;
         private final String animTexture;
         private final Color explosionColor;
+        private final float animatedCanInterval;
 
         PlayerType(String smallTextureName, String selectTextureName, String largeTextureName,
-                   String animTexture, Color explosionColor) {
+                   String animTexture, Color explosionColor, float animatedCanInterval) {
             this.smallTextureName = smallTextureName;
             this.selectTextureName = selectTextureName;
             this.largeTextureName = largeTextureName;
             this.animTexture = animTexture;
             this.explosionColor = explosionColor;
+            this.animatedCanInterval = animatedCanInterval;
         }
 
         public String getSmallTextureName() {
@@ -64,12 +66,16 @@ class Player {
             return largeTextureName;
         }
 
-        String getAnimTexture() {
+        public String getAnimTexture() {
             return animTexture;
         }
 
         Color getExplosionColor() {
             return explosionColor;
+        }
+
+        public float getAnimatedCanInterval() {
+            return animatedCanInterval;
         }
     }
 
@@ -147,10 +153,15 @@ class Player {
                 animatedCanArray.add(new AnimatedCan(this, atlas, 45, Constants.ANIMATED_CAN_SPEED));
                 break;
             case BLUE:
+            case SILVER:
             default:
                 animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
                 break;
         }
+    }
+
+    public float getAnimatedCanInterval() {
+        return playerType.getAnimatedCanInterval();
     }
 
     public float getAnimationX() {
