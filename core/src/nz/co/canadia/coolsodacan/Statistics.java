@@ -13,6 +13,7 @@ public class Statistics {
     private float totalTimePlayed;
 
     private int guineapigsSuperhit;
+    private int hedgehogsSuperhit;
     private int horsesSuperhit;
     private int plantsSuperHit;
 
@@ -62,6 +63,12 @@ public class Statistics {
         } catch (RuntimeException e) {
             Gdx.app.error("Statistics", "guineapigsSuperhit value is invalid " + e.getLocalizedMessage());
             guineapigsSuperhit = 0;
+        }
+        try {
+            hedgehogsSuperhit = statistics.getInteger("hedgehogsSuperhit", 0);
+        } catch (RuntimeException e) {
+            Gdx.app.error("Statistics", "hedgehogsSuperhit value is invalid " + e.getLocalizedMessage());
+            hedgehogsSuperhit = 0;
         }
         try {
             horsesSuperhit = statistics.getInteger("horsesSuperhit", 0);
@@ -116,7 +123,7 @@ public class Statistics {
     }
 
     public int getAnimalsSuperhit() {
-        return guineapigsSuperhit + horsesSuperhit;
+        return guineapigsSuperhit + hedgehogsSuperhit + horsesSuperhit;
     }
 
     public int getPlantsSuperHit() {
@@ -131,7 +138,6 @@ public class Statistics {
     public void updateTotalPointsScored(int points) {
         this.totalPointsScored += points;
         statistics.putInteger("totalPointsScored", totalPointsScored);
-
     }
 
     public void updateLongestSession(float timeElapsed) {
@@ -160,6 +166,10 @@ public class Statistics {
                 case "COCO":
                     guineapigsSuperhit++;
                     statistics.putInteger("guineapigsSuperhit", guineapigsSuperhit);
+                    break;
+                case "HEDGEHOG":
+                    hedgehogsSuperhit++;
+                    statistics.putInteger("hedgehogsSuperhit", hedgehogsSuperhit);
                     break;
                 case "HORSE01":
                 case "HORSE02":
