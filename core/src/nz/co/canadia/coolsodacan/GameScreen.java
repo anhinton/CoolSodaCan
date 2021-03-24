@@ -527,7 +527,7 @@ public class GameScreen implements Screen, InputProcessor {
                             int points = h.getPoints();
                             if (points > 0) {
                                 updateScore(points);
-                                addScoreEffect(points, ac.getX(), ac.getY());
+                                addScoreEffect(points, ac.getCenterX(), ac.getY());
                             }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
                                 game.statistics.incrementSuperHit(h.getType());

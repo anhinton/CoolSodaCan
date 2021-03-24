@@ -42,7 +42,7 @@ public class AnimatedCan {
         tint[1] = particleColor.g;
         tint[2] = particleColor.b;
         explosion.getEmitters().first().getTint().setColors(tint);
-        explosion.setPosition(x + currentFrame.getRegionWidth() / 2f, y);
+        explosion.setPosition(getCenterX(), getY());
     }
 
     void update(float delta) {
@@ -54,7 +54,7 @@ public class AnimatedCan {
         }
         currentFrame = animation.getKeyFrame(timeElapsed, true);
         explosion.update(delta);
-        explosion.setPosition(x+ currentFrame.getRegionWidth() / 2f, y);
+        explosion.setPosition(getCenterX(), getY());
     }
 
     void draw(SpriteBatch batch) {
@@ -65,8 +65,8 @@ public class AnimatedCan {
         }
     }
 
-    public float getX() {
-        return x;
+    public float getCenterX() {
+        return x + currentFrame.getRegionWidth() / 2f;
     }
 
     public float getY() {
