@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 public class AnimatedCan {
 
     private final Animation<TextureRegion> animation;
     private final ParticleEffect explosion;
+    private final float speed;
+    private final float directionDegrees;
     private float timeElapsed;
     private AnimatedCanState canState;
     private TextureRegion currentFrame;
@@ -21,8 +24,10 @@ public class AnimatedCan {
 
     private enum AnimatedCanState { ACTIVE, INACTIVE }
 
-    public AnimatedCan(Player player, TextureAtlas atlas) {
+    public AnimatedCan(Player player, TextureAtlas atlas, float directionDegrees, float speed) {
         timeElapsed = 0;
+        this.speed = speed;
+        this.directionDegrees = directionDegrees;
         canState = AnimatedCanState.ACTIVE;
         String animationName = player.getPlayerType().getAnimTexture();
         Color particleColor = player.getPlayerType().getExplosionColor();
@@ -48,7 +53,10 @@ public class AnimatedCan {
     void update(float delta) {
         timeElapsed += delta;
         if (isActive()) {
-            y += Constants.ANIMATED_CAN_SPEED * delta;
+            float changeX = MathUtils.sinDeg(directionDegrees);
+            float changeY = MathUtils.cosDeg(directionDegrees);
+            x += changeX * speed * delta;
+            y += changeY * speed * delta;
         } else {
             y -= Constants.WORLD_MOVEMENT_SPEED * delta;
         }
