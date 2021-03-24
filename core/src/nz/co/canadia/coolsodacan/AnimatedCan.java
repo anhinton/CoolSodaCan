@@ -31,8 +31,6 @@ public class AnimatedCan {
         canState = AnimatedCanState.ACTIVE;
         String animationName = player.getPlayerType().getAnimTexture();
         Color particleColor = player.getPlayerType().getExplosionColor();
-
-
         animation = new Animation<TextureRegion>(
                 Constants.CAN_FRAME_DURATION,
                 atlas.findRegions(animationName),
