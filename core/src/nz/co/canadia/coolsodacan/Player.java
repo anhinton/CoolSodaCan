@@ -19,6 +19,7 @@ class Player {
     private final int gameHeight;
     private final PlayerType playerType;
     private Vector2 targetXY;
+    private float lastDirectionDegrees;
 
     public enum PlayerType {
         BLUE    ("blue_soda_small", "blue_soda_select",
@@ -82,6 +83,7 @@ class Player {
     Player(int gameHeight, TextureAtlas atlas, PlayerType playerType) {
         this.gameHeight = gameHeight;
         this.playerType = playerType;
+        lastDirectionDegrees = -45 % 360;
         targetXY = new Vector2(
                 Constants.GAME_WIDTH * Constants.CURSOR_START_X,
                 gameHeight * Constants.CURSOR_START_Y);
@@ -151,6 +153,16 @@ class Player {
                 animatedCanArray.add(new AnimatedCan(this, atlas, 315, Constants.ANIMATED_CAN_SPEED));
                 animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
                 animatedCanArray.add(new AnimatedCan(this, atlas, 45, Constants.ANIMATED_CAN_SPEED));
+                break;
+            case PURPLE:
+                for (int i = 0; i < 8; i++) {
+                    animatedCanArray.add(new AnimatedCan(this, atlas, i * 45, Constants.ANIMATED_CAN_SPEED));
+                }
+                break;
+            case YELLOW:
+                float directionDegrees = (lastDirectionDegrees + 45) % 360;
+                animatedCanArray.add(new AnimatedCan(this, atlas, directionDegrees, Constants.ANIMATED_CAN_SPEED));
+                lastDirectionDegrees = directionDegrees;
                 break;
             case BLUE:
             case SILVER:

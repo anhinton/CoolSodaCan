@@ -106,7 +106,7 @@ public class Constants {
     public static final float ANIMATED_CAN_INTERVAL_ORANGE = ANIMATED_CAN_INTERVAL_DEFAULT;
     public static final float ANIMATED_CAN_INTERVAL_PURPLE = ANIMATED_CAN_INTERVAL_DEFAULT;
     public static final float ANIMATED_CAN_INTERVAL_SILVER = ANIMATED_CAN_INTERVAL_DEFAULT / 3f;
-    public static final float ANIMATED_CAN_INTERVAL_YELLOW = ANIMATED_CAN_INTERVAL_DEFAULT;
+    public static final float ANIMATED_CAN_INTERVAL_YELLOW = ANIMATED_CAN_INTERVAL_SILVER / 2f;
     // My player cans have drop shadows, meaning the "centre" of the can is not in the middle.
     // As at 2021-03-01 I have 80px wide cans with a 10px drop shadow
     public static final float PLAYER_CENTRE_OFFSET_X = 4 / 9f;
