@@ -458,7 +458,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     private void throwCan() {
         player.throwCan(animatedCanArray, atlas);
-        nextAnimatedCan = timeElapsed + Constants.ANIMATED_CAN_RATE;
+        nextAnimatedCan = timeElapsed + player.getAnimatedCanInterval();
         cansThrown++;
         game.statistics.incrementTotalCansThrown();
         setCansThrownLabel();
