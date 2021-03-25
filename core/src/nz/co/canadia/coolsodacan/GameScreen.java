@@ -280,7 +280,25 @@ public class GameScreen implements Screen, InputProcessor {
     private void showTutorial() {
         menuUiTable.clear();
 
-        Label tutorialLabel = new Label(game.bundle.get("gameTutorialDesktop"), game.skin, "game");
+        String text = "";
+        try {
+            switch (Gdx.app.getType()) {
+                case Desktop:
+                case WebGL:
+                    text = game.bundle.get("gameTutorialDesktop");
+                    break;
+                case Android:
+                case iOS:
+                    text = game.bundle.get("gameTutorialMobile");
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + Gdx.app.getType());
+            }
+        } catch (IllegalStateException e) {
+            Gdx.app.error("GameScreen", "showTutorial: Unknown app type " + e);
+        }
+
+        Label tutorialLabel = new Label(text, game.skin, "game");
         tutorialLabel.setAlignment(Align.center);
 
         Table menuBox = new Table();
