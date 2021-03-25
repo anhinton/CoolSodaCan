@@ -82,8 +82,20 @@ public class AnimatedCan {
         return x + currentFrame.getRegionWidth() / 2f;
     }
 
+    public float getX() {
+        return x;
+    }
+
     public float getY() {
         return y;
+    }
+
+    public float getWidth() {
+        return currentFrame.getRegionWidth();
+    }
+
+    public float getHeight() {
+        return currentFrame.getRegionHeight();
     }
 
     public Rectangle getHitBox() {

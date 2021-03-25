@@ -493,7 +493,10 @@ public class GameScreen implements Screen, InputProcessor {
                 }
             }
             for (int i = 0; i < animatedCanArray.size; i++) {
-                if (animatedCanArray.get(i).getY() > game.getGameHeight()) {
+                if (animatedCanArray.get(i).getY() > game.getGameHeight()
+                        | animatedCanArray.get(i).getY() + animatedCanArray.get(i).getHeight() < 0
+                        | animatedCanArray.get(i).getX() > Constants.GAME_WIDTH
+                        | animatedCanArray.get(i).getX() + animatedCanArray.get(i).getWidth() < 0) {
                     animatedCanArray.removeIndex(i);
                 }
             }
