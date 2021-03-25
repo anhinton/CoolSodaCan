@@ -8,7 +8,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -58,7 +56,6 @@ public class GameScreen implements Screen, InputProcessor {
     private final float buttonHeight;
     private final float gameUiButtonWidth;
     private final ObjectMap<Player.PlayerType, Boolean> sodaIsUnlocked;
-    private final Table menuBox;
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
@@ -189,10 +186,6 @@ public class GameScreen implements Screen, InputProcessor {
         menuUiTable = new Table();
         menuUiTable.setFillParent(true);
         menuStage.addActor(menuUiTable);
-        menuBox = new Table();
-        menuBox.pad(game.getMenuUiPadding());
-        menuBox.setSkin(game.skin);
-        menuBox.setBackground("default-rect");
 
         showGameUi();
         showTutorial();
@@ -284,10 +277,14 @@ public class GameScreen implements Screen, InputProcessor {
 
     private void showTutorial() {
         menuUiTable.clear();
-        menuBox.clear();
 
         Label tutorialLabel = new Label(game.bundle.get("gameTutorialDesktop"), game.skin, "game");
         tutorialLabel.setAlignment(Align.center);
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         menuBox.add(tutorialLabel);
         menuUiTable.add(menuBox);
@@ -296,7 +293,11 @@ public class GameScreen implements Screen, InputProcessor {
     private void showMenu() {
         playerIsFiring = false;
         menuUiTable.clear();
-        menuBox.clear();
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "game");
         menuBox.add(pauseLabel).space(game.getMenuUiPadding());
@@ -327,10 +328,15 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showSodaUnlocked(Player.PlayerType pt) {
+        menuUiTable.clear();
         playerIsFiring = false;
         setMenuInputs();
         currentState = GameState.PAUSED;
-        menuBox.clear();
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "game");
 
