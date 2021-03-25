@@ -66,6 +66,7 @@ public class GameScreen implements Screen, InputProcessor {
     private float nextPlant;
     private float nextAnimal;
     private boolean playerIsFiring;
+    private boolean tutorialIsShown;
     private int cansThrown;
     private int cansDelivered;
     private int score;
@@ -87,6 +88,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
         lastSaved = 0;
         playerIsFiring = false;
+        tutorialIsShown = true;
         cansThrown = 0;
         cansDelivered = 0;
         score = 0;
@@ -692,6 +694,10 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (tutorialIsShown) {
+            menuUiTable.clear();
+            tutorialIsShown = false;
+        }
         if (currentState == GameState.ACTIVE) {
             if (!playerIsFiring) playerIsFiring = true;
             player.setTargetXY(screenX, screenY, viewport);
