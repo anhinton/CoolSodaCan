@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,10 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -173,6 +176,8 @@ public class GameScreen implements Screen, InputProcessor {
         // Create the Game UI
         Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         uiStage = new Stage(uiViewport);
+
+        // Game UI elements
         gameUiTable = new Table();
         gameUiTable.setFillParent(true);
         gameUiTable.pad(game.getGameUiPadding());
@@ -190,6 +195,7 @@ public class GameScreen implements Screen, InputProcessor {
         menuBox.setBackground("default-rect");
 
         showGameUi();
+        showTutorial();
 
         multiplexer = new InputMultiplexer();
         setGameInputs();
@@ -276,8 +282,20 @@ public class GameScreen implements Screen, InputProcessor {
         gameUiTable.add(rightColumn).prefWidth(columnWidth).right();
     }
 
+    private void showTutorial() {
+        menuUiTable.clear();
+        menuBox.clear();
+
+        Label tutorialLabel = new Label(game.bundle.get("gameTutorialDesktop"), game.skin, "game");
+        tutorialLabel.setAlignment(Align.center);
+
+        menuBox.add(tutorialLabel);
+        menuUiTable.add(menuBox);
+    }
+
     private void showMenu() {
         playerIsFiring = false;
+        menuUiTable.clear();
         menuBox.clear();
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "game");
