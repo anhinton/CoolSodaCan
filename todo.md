@@ -3,8 +3,6 @@
   + Add two new Animals
       - ~~Blue hedgehog~~
       - Yellow rat
-          
-  + Create a tutorial at start of game
       
   + Does my font have weird spacing on Web?
   
@@ -38,6 +36,8 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+          
+  + ~~Create a tutorial at start of game~~
 
   + ~~Make unlocked cans do something~~
       - ~~ORANGE: fire three cans at once in a W shape~~

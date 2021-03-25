@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -55,7 +56,6 @@ public class GameScreen implements Screen, InputProcessor {
     private final float buttonHeight;
     private final float gameUiButtonWidth;
     private final ObjectMap<Player.PlayerType, Boolean> sodaIsUnlocked;
-    private final Table menuBox;
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
@@ -66,6 +66,7 @@ public class GameScreen implements Screen, InputProcessor {
     private float nextPlant;
     private float nextAnimal;
     private boolean playerIsFiring;
+    private boolean tutorialIsShown;
     private int cansThrown;
     private int cansDelivered;
     private int score;
@@ -87,6 +88,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
         lastSaved = 0;
         playerIsFiring = false;
+        tutorialIsShown = true;
         cansThrown = 0;
         cansDelivered = 0;
         score = 0;
@@ -173,6 +175,8 @@ public class GameScreen implements Screen, InputProcessor {
         // Create the Game UI
         Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
         uiStage = new Stage(uiViewport);
+
+        // Game UI elements
         gameUiTable = new Table();
         gameUiTable.setFillParent(true);
         gameUiTable.pad(game.getGameUiPadding());
@@ -184,12 +188,9 @@ public class GameScreen implements Screen, InputProcessor {
         menuUiTable = new Table();
         menuUiTable.setFillParent(true);
         menuStage.addActor(menuUiTable);
-        menuBox = new Table();
-        menuBox.pad(game.getMenuUiPadding());
-        menuBox.setSkin(game.skin);
-        menuBox.setBackground("default-rect");
 
         showGameUi();
+        showTutorial();
 
         multiplexer = new InputMultiplexer();
         setGameInputs();
@@ -276,9 +277,47 @@ public class GameScreen implements Screen, InputProcessor {
         gameUiTable.add(rightColumn).prefWidth(columnWidth).right();
     }
 
+    private void showTutorial() {
+        menuUiTable.clear();
+
+        String text = "";
+        try {
+            switch (Gdx.app.getType()) {
+                case Desktop:
+                case WebGL:
+                    text = game.bundle.get("gameTutorialDesktop");
+                    break;
+                case Android:
+                case iOS:
+                    text = game.bundle.get("gameTutorialMobile");
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + Gdx.app.getType());
+            }
+        } catch (IllegalStateException e) {
+            Gdx.app.error("GameScreen", "showTutorial: Unknown app type " + e);
+        }
+
+        Label tutorialLabel = new Label(text, game.skin, "game");
+        tutorialLabel.setAlignment(Align.center);
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
+
+        menuBox.add(tutorialLabel);
+        menuUiTable.add(menuBox);
+    }
+
     private void showMenu() {
         playerIsFiring = false;
-        menuBox.clear();
+        menuUiTable.clear();
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         Label pauseLabel = new Label(game.bundle.get("gameMenuLabel"), game.skin, "game");
         menuBox.add(pauseLabel).space(game.getMenuUiPadding());
@@ -309,10 +348,15 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void showSodaUnlocked(Player.PlayerType pt) {
+        menuUiTable.clear();
         playerIsFiring = false;
         setMenuInputs();
         currentState = GameState.PAUSED;
-        menuBox.clear();
+
+        Table menuBox = new Table();
+        menuBox.pad(game.getMenuUiPadding());
+        menuBox.setSkin(game.skin);
+        menuBox.setBackground("default-rect");
 
         Label sodaUnlockedLabel = new Label(game.bundle.get("gameSodaUnlockedLabel"), game.skin, "game");
 
@@ -668,6 +712,10 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (tutorialIsShown) {
+            menuUiTable.clear();
+            tutorialIsShown = false;
+        }
         if (currentState == GameState.ACTIVE) {
             if (!playerIsFiring) playerIsFiring = true;
             player.setTargetXY(screenX, screenY, viewport);

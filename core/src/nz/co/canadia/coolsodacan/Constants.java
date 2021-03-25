@@ -36,8 +36,8 @@ public class Constants {
     // Game constants
     public static final float PLAYER_SPEED = 2560f;
     public static final float WORLD_MOVEMENT_SPEED = 160f;
-    public static final float CURSOR_START_X = 1 / 2f;
-    public static final float CURSOR_START_Y = 1 / 2f;
+    public static final float CURSOR_START_X = 0.5f;
+    public static final float CURSOR_START_Y = 0.25f;
 
     // Font constants
     public static final String FONT_CHARACTERS = FreeTypeFontGenerator.DEFAULT_CHARS + "\u2022";
