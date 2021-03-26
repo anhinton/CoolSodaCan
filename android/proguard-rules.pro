@@ -40,3 +40,8 @@
    boolean reportFixture(long);
    float   reportRayFixture(long, float, float, float, float, float);
 }
+
+# Fix Skin loading issues
+-keep class com.badlogic.gdx.graphics.g2d.BitmapFont
+-keep class com.badlogic.gdx.graphics.Color
+-keep class com.badlogic.gdx.scenes.scene2d.ui.**{ *; }
