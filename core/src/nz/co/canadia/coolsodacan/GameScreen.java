@@ -686,13 +686,13 @@ public class GameScreen implements Screen, InputProcessor {
             case Input.Keys.BACK:
                 goBack();
                 break;
-            case Input.Keys.F:
-                if (Gdx.graphics.isFullscreen()) {
-                    Gdx.graphics.setWindowedMode(Constants.DESKTOP_WIDTH, Constants.DESKTOP_HEIGHT);
-                } else {
-                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
-                }
-                break;
+//            case Input.Keys.F:
+//                if (Gdx.graphics.isFullscreen()) {
+//                    Gdx.graphics.setWindowedMode(Constants.DESKTOP_WIDTH, Constants.DESKTOP_HEIGHT);
+//                } else {
+//                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+//                }
+//                break;
             case Input.Keys.C:
                 Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
                 break;
