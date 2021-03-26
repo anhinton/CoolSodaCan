@@ -4,6 +4,10 @@
       - ~~Blue hedgehog~~
       - Yellow rat
       
+  + Pretty print integers on Statistics page
+      - Sodas thrown
+      - Sodas drunk
+      
   + Does my font have weird spacing on Web?
   
   + Re-evaluate how much Y-offset there is from touch point on mobile
