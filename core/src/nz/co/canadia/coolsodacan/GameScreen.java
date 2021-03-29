@@ -484,7 +484,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void setScoreLabel() {
-        scoreLabel.setText(game.bundle.get("gameUiScoreLabel") + ": " + game.formatter.printScore(score));
+        scoreLabel.setText(game.bundle.get("gameUiScoreLabel") + ": " + game.formatter.commaPrint(score));
     }
 
     private void updateTime(float delta) {

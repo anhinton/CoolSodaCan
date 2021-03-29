@@ -8,7 +8,7 @@ import nz.co.canadia.coolsodacan.Formatter;
 
 public class HtmlFormatter implements Formatter {
     @Override
-    public String printScore(int score) {
+    public String commaPrint(int score) {
         return NumberFormat.getDecimalFormat().format(score);
     }
 

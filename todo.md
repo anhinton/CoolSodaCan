@@ -1,9 +1,5 @@
 # todo.md
       
-  + Pretty print integers on Statistics page
-      - Sodas thrown
-      - Sodas drunk
-      
   + Does my font have weird spacing on Web?
   
   + Re-evaluate how much Y-offset there is from touch point on mobile
@@ -36,6 +32,10 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+      
+  + ~~Pretty print integers on Statistics page~~
+      - ~~Sodas thrown~~
+      - ~~Sodas drunk~~
       
   + ~~Add two new Animals~~
       - ~~Blue hedgehog~~

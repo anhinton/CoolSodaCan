@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -533,10 +532,11 @@ public class TitleScreen implements Screen, InputProcessor {
 
         String bp = game.bundle.get("bulletPoint") + " ";
         String nl = "\n";
-        String statisticsString = bp + game.bundle.get("statisticsThrown") + ": " + game.statistics.getTotalCansThrown() + nl +
-                bp + game.bundle.get("statisticsDrunk") + ": " + game.statistics.getTotalCansDelivered() + nl
-                + bp + game.bundle.get("statisticsHighScore") + ": " + game.formatter.printScore(game.statistics.getHighScore()) + nl
-                + bp + game.bundle.get("statisticsPoints") + ": " + game.formatter.printScore(game.statistics.getTotalPointsScored()) + nl
+        String statisticsString =
+                bp + game.bundle.get("statisticsThrown") + ": " + game.formatter.commaPrint(game.statistics.getTotalCansThrown()) + nl
+                + bp + game.bundle.get("statisticsDrunk") + ": " + game.formatter.commaPrint(game.statistics.getTotalCansDelivered()) + nl
+                + bp + game.bundle.get("statisticsHighScore") + ": " + game.formatter.commaPrint(game.statistics.getHighScore()) + nl
+                + bp + game.bundle.get("statisticsPoints") + ": " + game.formatter.commaPrint(game.statistics.getTotalPointsScored()) + nl
                 + bp + game.bundle.get("statisticsAnimalsQuenched") + ": " + game.statistics.getAnimalsSuperhit() + nl
                 + bp + game.bundle.get("statisticsPlantsDestroyed") + ": " + game.statistics.getPlantsSuperHit() + nl
                 + bp + game.bundle.get("statisticsLongestSession") + ": " + game.displayTime(game.statistics.getLongestSession()) + nl

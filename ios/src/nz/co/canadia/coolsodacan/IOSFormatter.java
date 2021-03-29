@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class IOSFormatter implements Formatter {
     @Override
-    public String printScore(int score) {
+    public String commaPrint(int score) {
         return NumberFormat.getIntegerInstance().format(score);
     }
 
