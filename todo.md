@@ -1,4 +1,7 @@
 # todo.md
+
+  + Add option of using spacebar to throw cans
+      - Pretty annoying to play using laptop trackpad otherwise
       
   + Investigate using pooling for
       - AnimatedCan
