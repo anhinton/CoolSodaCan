@@ -1,9 +1,5 @@
 # todo.md
       
-  + Add two new Animals
-      - ~~Blue hedgehog~~
-      - Yellow rat
-      
   + Pretty print integers on Statistics page
       - Sodas thrown
       - Sodas drunk
@@ -40,6 +36,10 @@
   + Do I care about buffer overflow for high scores?
 
 ## Done
+      
+  + ~~Add two new Animals~~
+      - ~~Blue hedgehog~~
+      - ~~Yellow rat~~
           
   + ~~Create a tutorial at start of game~~
 

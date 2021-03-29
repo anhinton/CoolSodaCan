@@ -16,6 +16,7 @@ public class Statistics {
     private int hedgehogsSuperhit;
     private int horsesSuperhit;
     private int plantsSuperHit;
+    private int ratsSuperhit;
 
     public Statistics() {
         statistics = Gdx.app.getPreferences(Constants.GAME_STATISTICS_PATH);
@@ -77,6 +78,12 @@ public class Statistics {
             horsesSuperhit = 0;
         }
         try {
+            ratsSuperhit = statistics.getInteger("ratsSuperhit", 0);
+        } catch (RuntimeException e) {
+            Gdx.app.error("Statistics", "ratsSuperhit value is invalid " + e.getLocalizedMessage());
+            ratsSuperhit = 0;
+        }
+        try {
             plantsSuperHit = statistics.getInteger("plantsSuperHit", 0);
         } catch (RuntimeException e) {
             Gdx.app.error("Statistics", "plantsSuperHit value is invalid " + e.getLocalizedMessage());
@@ -114,16 +121,8 @@ public class Statistics {
         return totalTimePlayed;
     }
 
-    public int getGuineapigsSuperhit() {
-        return guineapigsSuperhit;
-    }
-
-    public int getHorsesSuperhit() {
-        return horsesSuperhit;
-    }
-
     public int getAnimalsSuperhit() {
-        return guineapigsSuperhit + hedgehogsSuperhit + horsesSuperhit;
+        return guineapigsSuperhit + hedgehogsSuperhit + horsesSuperhit + ratsSuperhit;
     }
 
     public int getPlantsSuperHit() {
@@ -175,6 +174,10 @@ public class Statistics {
                 case "HORSE02":
                     horsesSuperhit++;
                     statistics.putInteger("horsesSuperhit", horsesSuperhit);
+                    break;
+                case "YELLOW_RAT":
+                    ratsSuperhit++;
+                    statistics.putInteger("ratsSuperhit", ratsSuperhit);
                     break;
                 case "FERN01":
                 case "FLOWER01":
