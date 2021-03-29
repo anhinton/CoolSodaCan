@@ -1,7 +1,4 @@
 # todo.md
-
-  + Add option of using spacebar to throw cans
-      - Pretty annoying to play using laptop trackpad otherwise
       
   + Investigate using pooling for
       - AnimatedCan
@@ -36,6 +33,9 @@
       - Ios
 
 ## Done
+
+  + ~~Add option of using spacebar to throw cans~~
+      - ~~Pretty annoying to play using laptop trackpad otherwise~~
 
   + ~~Do Animals need a smiling had-a-can state before exploding?~~
       - ~~They already have one! How did this task get left on here?~~

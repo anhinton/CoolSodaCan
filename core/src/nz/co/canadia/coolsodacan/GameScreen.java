@@ -696,13 +696,27 @@ public class GameScreen implements Screen, InputProcessor {
             case Input.Keys.C:
                 Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
                 break;
+            case Input.Keys.SPACE:
+                if (tutorialIsShown) {
+                    menuUiTable.clear();
+                    tutorialIsShown = false;
+                }
+                if (currentState == GameState.ACTIVE) {
+                    if (!playerIsFiring) playerIsFiring = true;
+                }
+                break;
         }
         return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        if (keycode == Input.Keys.SPACE) {
+            if (currentState == GameState.ACTIVE) {
+                playerIsFiring = false;
+            }
+        }
+        return true;
     }
 
     @Override
