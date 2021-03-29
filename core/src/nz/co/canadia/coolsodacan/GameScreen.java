@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -59,6 +60,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
+    private final Pool<AnimatedCan> animatedCanPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -151,6 +153,13 @@ public class GameScreen implements Screen, InputProcessor {
 
         // Create AnimatedCan array
         animatedCanArray = new Array<>();
+        // Create AnimatedCan Pool
+        animatedCanPool = new Pool<AnimatedCan>() {
+            @Override
+            protected AnimatedCan newObject() {
+                return new AnimatedCan(player, atlas);
+            }
+        };
         nextAnimatedCan = 0;
 
         // create the game viewport
@@ -501,7 +510,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void throwCan() {
-        player.throwCan(animatedCanArray, atlas);
+        player.throwCan(animatedCanArray, animatedCanPool, atlas);
         nextAnimatedCan = timeElapsed + player.getAnimatedCanInterval();
         cansThrown++;
         game.statistics.incrementTotalCansThrown();
@@ -541,7 +550,9 @@ public class GameScreen implements Screen, InputProcessor {
                         | animatedCanArray.get(i).getY() + animatedCanArray.get(i).getHeight() < 0
                         | animatedCanArray.get(i).getX() > Constants.GAME_WIDTH
                         | animatedCanArray.get(i).getX() + animatedCanArray.get(i).getWidth() < 0) {
+                    AnimatedCan ac = animatedCanArray.get(i);
                     animatedCanArray.removeIndex(i);
+                    animatedCanPool.free(ac);
                 }
             }
 
