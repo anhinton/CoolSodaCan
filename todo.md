@@ -1,19 +1,5 @@
 # todo.md
       
-  + Does my font have weird spacing on Web?
-  
-  + Re-evaluate how much Y-offset there is from touch point on mobile
-      - Currently it feels like it might be too much
-      - Now setting Player x/y to centre of sprite. Has this made a difference?
-
-  + Do Animals need a smiling had-a-can state before exploding?
-  
-  + Consider a more composed method for distributing plants/animals
-      - On a grid?
-      - Max number of items per grid square?
-      - Rules?
-      - Is this procgen?
-      
   + Investigate using pooling for
       - AnimatedCan
       - Animal
@@ -30,8 +16,38 @@
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
   + Do I care about buffer overflow for high scores?
+  
+  + Music
+  
+  + Sound
+      - Throw can
+      - Can hit
+      - Can explode
+      - Plant explode?
+      - Animal explode?
+      
+  + App icon
+      - Android
+      - Desktop
+      - Html
+      - Ios
 
 ## Done
+
+  + ~~Do Animals need a smiling had-a-can state before exploding?~~
+      - ~~They already have one! How did this task get left on here?~~
+      
+  
+  + ~~Consider a more composed method for distributing plants/animals~~
+      - ~~I might be overthinking this little toy goof of a game~~
+  
+  + ~~Re-evaluate how much Y-offset there is from touch point on mobile~~
+      - ~~Currently it feels like it might be too much~~
+      - ~~Now setting Player x/y to centre of sprite. Has this made a difference?~~
+      - ~~I'm actually happy with this right now so no changes to be mad~~
+      
+  + ~~Does my font have weird spacing on Web?~~
+      - ~~No~~
       
   + ~~Pretty print integers on Statistics page~~
       - ~~Sodas thrown~~
