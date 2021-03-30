@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
-public class Grass implements Comparable<GameObject>, Comparator<GameObject>, GameObject {
+public class Grass implements GameObject, Comparable<GameObject>, Comparator<GameObject> {
     private final Sprite sprite;
 
     Grass(int y, TextureAtlas atlas) {
@@ -58,5 +58,10 @@ public class Grass implements Comparable<GameObject>, Comparator<GameObject>, Ga
     @Override
     public int compareTo(GameObject o) {
         return compare(this, o);
+    }
+
+    @Override
+    public String getType() {
+        return "grass";
     }
 }

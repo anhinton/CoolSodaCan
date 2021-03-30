@@ -61,6 +61,10 @@ public class GameScreen implements Screen, InputProcessor {
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
     private final Pool<AnimatedCan> animatedCanPool;
+    private final Pool<Plant> fern01PlantPool;
+    private final Pool<Plant> flower01PlantPool;
+    private final Pool<Plant> tree01PlantPool;
+    private final Pool<Plant> tree02PlantPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -128,13 +132,36 @@ public class GameScreen implements Screen, InputProcessor {
         }
         nextGrass = MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
+
         // Create plants
+        fern01PlantPool = new Pool<Plant>() {
+            @Override
+            protected Plant newObject() {
+                return new Plant(Plant.PlantType.FERN01, atlas);
+            }
+        };
+        flower01PlantPool = new Pool<Plant>() {
+            @Override
+            protected Plant newObject() {
+                return new Plant(Plant.PlantType.FLOWER01, atlas);
+            }
+        };
+        tree01PlantPool = new Pool<Plant>() {
+            @Override
+            protected Plant newObject() {
+                return new Plant(Plant.PlantType.TREE01, atlas);
+            }
+        };
+        tree02PlantPool = new Pool<Plant>() {
+            @Override
+            protected Plant newObject() {
+                return new Plant(Plant.PlantType.TREE02, atlas);
+            }
+        };
         int nPlant = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_PLANT_START, Constants.MAX_PLANT_START));
         for (int i = 0; i < nPlant; i++) {
-            Plant plant = new Plant(MathUtils.random(0, game.getGameHeight()), atlas);
-            gameObjectArray.add(plant);
-            hittableArray.add(plant);
+            spawnPlant(MathUtils.random(0, game.getGameHeight()));
         }
         nextPlant = MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
@@ -409,6 +436,23 @@ public class GameScreen implements Screen, InputProcessor {
         setGameInputs();
     }
 
+    private void freeGameObject(GameObject gameObject) {
+        switch(gameObject.getType()) {
+            case "FERN01":
+                fern01PlantPool.free((Plant) gameObject);
+                break;
+            case "FLOWER01":
+                flower01PlantPool.free((Plant) gameObject);
+                break;
+            case "TREE01":
+                tree01PlantPool.free((Plant) gameObject);
+                break;
+            case "TREE02":
+                tree02PlantPool.free((Plant) gameObject);
+                break;
+        }
+    }
+
     private void spawnAnimal() {
         Animal animal = new Animal(game.getGameHeight(), atlas, player.getPlayerType().getExplosionColor());
         gameObjectArray.add(animal);
@@ -421,11 +465,32 @@ public class GameScreen implements Screen, InputProcessor {
         nextGrass = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
-    private void spawnPlant() {
-        Plant plant = new Plant(game.getGameHeight(), atlas);
-        gameObjectArray.add(plant);
-        hittableArray.add(plant);
-        nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
+    private void spawnPlant(int y) {
+        Plant.PlantType plantType = Plant.PlantType.values()[MathUtils.random(Plant.PlantType.values().length - 1)];
+        Plant plant;
+        try {
+            switch (plantType) {
+                case FERN01:
+                    plant = fern01PlantPool.obtain();
+                    break;
+                case FLOWER01:
+                    plant = flower01PlantPool.obtain();
+                    break;
+                case TREE01:
+                    plant = tree01PlantPool.obtain();
+                    break;
+                case TREE02:
+                    plant = tree02PlantPool.obtain();
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + plantType);
+            }
+            plant.init(y);
+            gameObjectArray.add(plant);
+            hittableArray.add(plant);
+        } catch (IllegalStateException e) {
+            Gdx.app.error("GameScreen", "Unknown PlantType in initial Plant creation");
+        }
     }
 
     private void addScoreEffect(int points, float x, float y) {
@@ -542,7 +607,9 @@ public class GameScreen implements Screen, InputProcessor {
             // Remove old objects
             for (int i = 0; i < gameObjectArray.size; i++) {
                 if (gameObjectArray.get(i).getTopY() < 0) {
+                    GameObject go = gameObjectArray.get(i);
                     gameObjectArray.removeIndex(i);
+                    freeGameObject(go);
                 }
             }
             for (int i = 0; i < animatedCanArray.size; i++) {
@@ -564,7 +631,8 @@ public class GameScreen implements Screen, InputProcessor {
                 spawnGrass();
             }
             if (timeElapsed > nextPlant) {
-                spawnPlant();
+                spawnPlant(game.getGameHeight());
+                nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
             }
 
             // Add new cans if player firing

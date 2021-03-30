@@ -8,11 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
-public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comparator<GameObject> {
+public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
     private final Sprite hitSprite;
     private final PlantType plantType;
     private Sprite currentSprite;
@@ -20,7 +21,7 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
     private Hittable.State hitState;
     private int hitCount;
 
-    private enum PlantType {
+    enum PlantType {
         FERN01      ("fern01",  "fern01_hit"),
         FLOWER01    ("flower01","flower01_hit"),
         TREE01      ("tree01",  "tree01_hit"),
@@ -35,12 +36,8 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
         }
     }
 
-    Plant(int y, TextureAtlas atlas) {
-        hitCount = 0;
-        hitState = State.NORMAL;
-
-        // Give us a random set of PlantTextures
-        plantType = PlantType.values()[MathUtils.random(PlantType.values().length - 1)];
+    Plant(PlantType plantType, TextureAtlas atlas) {
+        this.plantType = plantType;
         Sprite normalSprite = atlas.createSprite(plantType.normalTexture);
         hitSprite = atlas.createSprite(plantType.hitTexture);
 
@@ -49,8 +46,6 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
         hitSprite.flip(flipSprite, false);
 
         currentSprite = normalSprite;
-        currentSprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
-        currentSprite.setY(y);
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
@@ -60,6 +55,19 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
         // Increase scale of particle to match sprite (THIS IS SO BAD)
         explosion.getEmitters().first().getXScale().setHigh(
                 Math.min(currentSprite.getWidth(), currentSprite.getHeight()) * Constants.PLANT_PARTICLE_SCALE);
+    }
+
+    public void init(int y) {
+        hitCount = 0;
+        hitState = State.NORMAL;
+        currentSprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
+        currentSprite.setY(y);
+    }
+
+    @Override
+    public void reset() {
+        currentSprite.setX(0);
+        currentSprite.setY(0);
     }
 
     @Override

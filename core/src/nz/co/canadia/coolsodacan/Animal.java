@@ -13,7 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
-public class Animal implements GameObject, Hittable, Comparable<GameObject>, Comparator<GameObject> {
+public class Animal implements Hittable, Comparable<GameObject>, Comparator<GameObject> {
     private final Sprite hitSprite;
     private final ParticleEffect explosion;
     private final float x;

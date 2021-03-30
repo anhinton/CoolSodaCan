@@ -3,7 +3,7 @@ package nz.co.canadia.coolsodacan;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public interface Hittable {
+public interface Hittable extends GameObject {
 
     enum State { NORMAL, HIT, SUPER_HIT }
 
@@ -20,6 +20,4 @@ public interface Hittable {
     int getSodasDrunk();
 
     int getPoints();
-
-    String getType();
 }
