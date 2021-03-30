@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 
-import java.lang.management.PlatformLoggingMXBean;
-
 public class AnimatedCan implements Pool.Poolable {
 
     private final Animation<TextureRegion> animation;
@@ -28,6 +26,8 @@ public class AnimatedCan implements Pool.Poolable {
     private enum AnimatedCanState { ACTIVE, INACTIVE }
 
     public AnimatedCan(Player player, TextureAtlas atlas) {
+        x = 0;
+        y = 0;
         timeElapsed = 0;
         this.speed = 0;
         this.directionDegrees = 0;
@@ -39,8 +39,6 @@ public class AnimatedCan implements Pool.Poolable {
                 atlas.findRegions(animationName),
                 Animation.PlayMode.LOOP);
         currentFrame = animation.getKeyFrames()[0];
-        x = 0;
-        y = 0;
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
@@ -58,8 +56,6 @@ public class AnimatedCan implements Pool.Poolable {
         this.y = player.getAnimationY();
         this.directionDegrees = directionDegrees;
         this.speed = speed;
-        canState = AnimatedCanState.ACTIVE;
-        explosion.setPosition(getCenterX(), getY());
     }
 
     @Override
@@ -68,7 +64,10 @@ public class AnimatedCan implements Pool.Poolable {
         y = 0;
         directionDegrees = 0;
         speed = 0;
-        explosion.setPosition(getCenterX(), getY());
+        timeElapsed = 0;
+        canState = AnimatedCanState.ACTIVE;
+        currentFrame = animation.getKeyFrames()[0];
+        explosion.reset();
     }
 
     void update(float delta) {

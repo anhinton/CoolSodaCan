@@ -60,6 +60,11 @@ public class GameScreen implements Screen, InputProcessor {
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
+    private final Pool<Animal> cocoPool;
+    private final Pool<Animal> hedgehogPool;
+    private final Pool<Animal> horse01Pool;
+    private final Pool<Animal> horse02Pool;
+    private final Pool<Animal> yellowratPool;
     private final Pool<AnimatedCan> animatedCanPool;
     private final Pool<Plant> fern01PlantPool;
     private final Pool<Plant> flower01PlantPool;
@@ -85,7 +90,7 @@ public class GameScreen implements Screen, InputProcessor {
     private enum GameState { ACTIVE, PAUSED }
     private GameState currentState;
 
-    GameScreen(CoolSodaCan game, Player.PlayerType playerType) {
+    GameScreen(CoolSodaCan game, final Player.PlayerType playerType) {
         this.game = game;
         if (game.debugUnlocks) {
             timeElapsed = 55;
@@ -132,7 +137,6 @@ public class GameScreen implements Screen, InputProcessor {
         }
         nextGrass = MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
-
         // Create plants
         fern01PlantPool = new Pool<Plant>() {
             @Override
@@ -166,12 +170,40 @@ public class GameScreen implements Screen, InputProcessor {
         nextPlant = MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
         // Create animals
+        cocoPool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(Animal.AnimalType.COCO, atlas, playerType.getExplosionColor());
+            }
+        };
+        hedgehogPool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(Animal.AnimalType.HEDGEHOG, atlas, playerType.getExplosionColor());
+            }
+        };
+        horse01Pool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(Animal.AnimalType.HORSE01, atlas, playerType.getExplosionColor());
+            }
+        };
+        horse02Pool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(Animal.AnimalType.HORSE02, atlas, playerType.getExplosionColor());
+            }
+        };
+        yellowratPool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(Animal.AnimalType.YELLOW_RAT, atlas, playerType.getExplosionColor());
+            }
+        };
         int nAnimal = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_ANIMAL_START, Constants.MAX_ANIMAL_START));
         for (int i = 0; i < nAnimal; i++) {
-            Animal animal = new Animal(MathUtils.random(0, game.getGameHeight()), atlas, player.getPlayerType().getExplosionColor());
-            gameObjectArray.add(animal);
-            hittableArray.add(animal);
+            spawnAnimal(MathUtils.random(0, game.getGameHeight()));
         }
         nextAnimal = MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
@@ -436,8 +468,26 @@ public class GameScreen implements Screen, InputProcessor {
         setGameInputs();
     }
 
-    private void freeGameObject(GameObject gameObject) {
+    private void
+    freeGameObject(GameObject gameObject) {
         switch(gameObject.getType()) {
+            // Free Animal objects
+            case "COCO":
+                cocoPool.free((Animal) gameObject);
+                break;
+            case "HEDGEHOG":
+                hedgehogPool.free((Animal) gameObject);
+                break;
+            case "HORSE01":
+                horse01Pool.free((Animal) gameObject);
+                break;
+            case "HORSE02":
+                horse02Pool.free((Animal) gameObject);
+                break;
+            case "YELLOW_RAT":
+                yellowratPool.free((Animal) gameObject);
+                break;
+            // Free Plant objects
             case "FERN01":
                 fern01PlantPool.free((Plant) gameObject);
                 break;
@@ -453,11 +503,35 @@ public class GameScreen implements Screen, InputProcessor {
         }
     }
 
-    private void spawnAnimal() {
-        Animal animal = new Animal(game.getGameHeight(), atlas, player.getPlayerType().getExplosionColor());
-        gameObjectArray.add(animal);
-        hittableArray.add(animal);
-        nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
+    private void spawnAnimal(int y) {
+        Animal.AnimalType animalType = Animal.AnimalType.values()[MathUtils.random(Animal.AnimalType.values().length - 1)];
+        Animal animal;
+        try {
+            switch (animalType) {
+                case COCO:
+                    animal = cocoPool.obtain();
+                    break;
+                case HEDGEHOG:
+                    animal = hedgehogPool.obtain();
+                    break;
+                case HORSE01:
+                    animal = horse01Pool.obtain();
+                    break;
+                case HORSE02:
+                    animal = horse02Pool.obtain();
+                    break;
+                case YELLOW_RAT:
+                    animal = yellowratPool.obtain();
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + animalType);
+            }
+            animal.init(y);
+            gameObjectArray.add(animal);
+            hittableArray.add(animal);
+        } catch (IllegalStateException e) {
+            Gdx.app.error("GameScreen", "Unknown AnimalType in spawnAnimal" + e);
+        }
     }
 
     private void spawnGrass() {
@@ -489,7 +563,7 @@ public class GameScreen implements Screen, InputProcessor {
             gameObjectArray.add(plant);
             hittableArray.add(plant);
         } catch (IllegalStateException e) {
-            Gdx.app.error("GameScreen", "Unknown PlantType in initial Plant creation");
+            Gdx.app.error("GameScreen", "Unknown PlantType in spawnPlant" + e);
         }
     }
 
@@ -605,6 +679,11 @@ public class GameScreen implements Screen, InputProcessor {
             }
 
             // Remove old objects
+            for (int i = 0; i < hittableArray.size; i++) {
+                if (hittableArray.get(i).getTopY() < 0) {
+                    hittableArray.removeIndex(i);
+                }
+            }
             for (int i = 0; i < gameObjectArray.size; i++) {
                 if (gameObjectArray.get(i).getTopY() < 0) {
                     GameObject go = gameObjectArray.get(i);
@@ -625,7 +704,8 @@ public class GameScreen implements Screen, InputProcessor {
 
             // Add new objects to top of screen
             if (timeElapsed > nextAnimal) {
-                spawnAnimal();
+                spawnAnimal(game.getGameHeight());
+                nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
             }
             if (timeElapsed > nextGrass) {
                 spawnGrass();

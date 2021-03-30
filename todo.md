@@ -1,9 +1,15 @@
 # todo.md
       
   + Investigate using pooling for
-      - AnimatedCan
-      - Animal
-      - Plant
+      - ~~AnimatedCan~~
+      - ~~Animal~~
+      - ~~Plant~~
+      - Grass
+      
+  + **BUG**: Trees are exploding soon after Spawn, probably because of Pooling error
+      - This appears to be resolved by removing off-screen objects from 
+        GameScreen.hittableArray immediately before doing the same for GameScreen.gameObjectArray,
+        which also frees Poolable objects
       
   + Try to understand display cutouts
           

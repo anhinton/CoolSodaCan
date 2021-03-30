@@ -14,9 +14,10 @@ import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
 public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
+    private final Sprite normalSprite;
     private final Sprite hitSprite;
-    private final PlantType plantType;
     private Sprite currentSprite;
+    private final PlantType plantType;
     private final ParticleEffect explosion;
     private Hittable.State hitState;
     private int hitCount;
@@ -38,8 +39,16 @@ public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, C
 
     Plant(PlantType plantType, TextureAtlas atlas) {
         this.plantType = plantType;
-        currentSprite = atlas.createSprite(plantType.normalTexture);
+        hitCount = 0;
+        hitState = State.NORMAL;
+        normalSprite = atlas.createSprite(plantType.normalTexture);
         hitSprite = atlas.createSprite(plantType.hitTexture);
+
+        boolean flipSprite = MathUtils.randomBoolean();
+        normalSprite.setFlip(flipSprite, false);
+        hitSprite.setFlip(flipSprite, false);
+
+        currentSprite = normalSprite;
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
@@ -52,19 +61,21 @@ public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, C
     }
 
     public void init(int y) {
-        boolean flipSprite = MathUtils.randomBoolean();
-        currentSprite.flip(flipSprite, false);
-        hitSprite.flip(flipSprite, false);
-        hitCount = 0;
-        hitState = State.NORMAL;
         currentSprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
         currentSprite.setY(y);
     }
 
     @Override
     public void reset() {
+        hitCount = 0;
+        hitState = State.NORMAL;
+        boolean flipSprite = MathUtils.randomBoolean();
+        normalSprite.setFlip(flipSprite, false);
+        hitSprite.setFlip(flipSprite, false);
+        currentSprite = normalSprite;
         currentSprite.setX(0);
         currentSprite.setY(0);
+        explosion.reset();
     }
 
     @Override
