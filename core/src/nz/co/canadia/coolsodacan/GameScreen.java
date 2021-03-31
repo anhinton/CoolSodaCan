@@ -70,6 +70,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Pool<Plant> flower01PlantPool;
     private final Pool<Plant> tree01PlantPool;
     private final Pool<Plant> tree02PlantPool;
+    private final Pool<Grass> grassPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -130,10 +131,16 @@ public class GameScreen implements Screen, InputProcessor {
         hittableArray = new Array<>();
 
         // Create grass
+        grassPool = new Pool<Grass>() {
+            @Override
+            protected Grass newObject() {
+                return new Grass(atlas);
+            }
+        };
         int nGrass = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_GRASS_START, Constants.MAX_GRASS_START));
         for (int i = 0; i < nGrass; i++) {
-            gameObjectArray.add(new Grass(MathUtils.random(0, game.getGameHeight()), atlas));
+            spawnGrass(MathUtils.random(0, game.getGameHeight()));
         }
         nextGrass = MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
@@ -274,7 +281,8 @@ public class GameScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            Gdx.input.setCursorCatched(true);
+            // TODO: Catching cursor clashes with Android Studio debugging on Linux
+            Gdx.input.setCursorCatched(false);
         }
     }
 
@@ -487,6 +495,10 @@ public class GameScreen implements Screen, InputProcessor {
             case "YELLOW_RAT":
                 yellowratPool.free((Animal) gameObject);
                 break;
+            //Free Grass objects
+            case "grass":
+                grassPool.free((Grass) gameObject);
+                break;
             // Free Plant objects
             case "FERN01":
                 fern01PlantPool.free((Plant) gameObject);
@@ -534,8 +546,10 @@ public class GameScreen implements Screen, InputProcessor {
         }
     }
 
-    private void spawnGrass() {
-        gameObjectArray.add(new Grass(game.getGameHeight(), atlas));
+    private void spawnGrass(int y) {
+        Grass grass = grassPool.obtain();
+        grass.init(y);
+        gameObjectArray.add(grass);
         nextGrass = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
@@ -708,7 +722,7 @@ public class GameScreen implements Screen, InputProcessor {
                 nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
             }
             if (timeElapsed > nextGrass) {
-                spawnGrass();
+                spawnGrass(game.getGameHeight());
             }
             if (timeElapsed > nextPlant) {
                 spawnPlant(game.getGameHeight());

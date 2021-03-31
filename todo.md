@@ -4,7 +4,7 @@
       - ~~AnimatedCan~~
       - ~~Animal~~
       - ~~Plant~~
-      - Grass
+      - ~~Grass~~
       
   + **BUG**: Trees are exploding soon after Spawn, probably because of Pooling error
       - This appears to be resolved by removing off-screen objects from 
@@ -37,6 +37,9 @@
       - Desktop
       - Html
       - Ios
+      
+  + Catch cursor on Desktop before doing release build
+      - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
 

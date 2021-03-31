@@ -4,24 +4,46 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
-public class Grass implements GameObject, Comparable<GameObject>, Comparator<GameObject> {
-    private final Sprite sprite;
+public class Grass implements GameObject, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
+    private Sprite sprite;
+    private GrassType grassType;
+    private final TextureAtlas atlas;
 
-    Grass(int y, TextureAtlas atlas) {
-        Array<String> grassNameArray = new Array<>();
-        grassNameArray.add("grass01");
-        grassNameArray.add("grass02");
-        grassNameArray.add("grass03");
-        grassNameArray.add("grass04");
-        sprite = atlas.createSprite(grassNameArray.random());
-        sprite.flip(MathUtils.randomBoolean(), false);
+    enum GrassType {
+        GRASS01 ("grass01"),
+        GRASS02 ("grass02"),
+        GRASS03 ("grass03"),
+        GRASS04 ("grass04");
+
+        private final String texture;
+
+        GrassType (String texture) {
+            this.texture = texture;
+        }
+    }
+
+    Grass(TextureAtlas atlas) {
+        this.atlas = atlas;
+        grassType = GrassType.values()[MathUtils.random(GrassType.values().length - 1)];
+        sprite = atlas.createSprite(grassType.texture);
+        sprite.setFlip(MathUtils.randomBoolean(), false);
+    }
+
+    public void init(int y) {
         sprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
         sprite.setY(y);
+    }
+
+    @Override
+    public void reset() {
+        grassType = GrassType.values()[MathUtils.random(GrassType.values().length - 1)];
+        sprite = atlas.createSprite(grassType.texture);
+        sprite.setFlip(MathUtils.randomBoolean(), false);
     }
 
     @Override
