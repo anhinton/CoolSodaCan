@@ -20,8 +20,8 @@ android {
         applicationId "nz.co.canadia.coolsodacan"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 2
-        versionName "0.0.20210326"
+        versionCode 3
+        versionName "0.0.20200401"
     }
     buildTypes {
         release {
