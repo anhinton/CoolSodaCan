@@ -1,4 +1,9 @@
 # todo.md
+
+  + **BUG**: AnimatedCan objects which hit soon after being spawned appear to be "smearing"
+    their explosion position
+      - Looks like explosion position is updating after AnimatedCanState changes to INACTIVE
+        and explosion is initially drawn 
       
   + Try to understand display cutouts
           
