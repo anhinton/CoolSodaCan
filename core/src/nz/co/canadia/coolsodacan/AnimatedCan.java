@@ -26,11 +26,7 @@ public class AnimatedCan implements Pool.Poolable {
     private enum AnimatedCanState { ACTIVE, INACTIVE }
 
     public AnimatedCan(Player player, TextureAtlas atlas) {
-        x = 0;
-        y = 0;
         timeElapsed = 0;
-        this.speed = 0;
-        this.directionDegrees = 0;
         canState = AnimatedCanState.ACTIVE;
         String animationName = player.getPlayerType().getAnimTexture();
         Color particleColor = player.getPlayerType().getExplosionColor();
@@ -48,22 +44,18 @@ public class AnimatedCan implements Pool.Poolable {
         tint[1] = particleColor.g;
         tint[2] = particleColor.b;
         explosion.getEmitters().first().getTint().setColors(tint);
-        explosion.setPosition(getCenterX(), getY());
     }
 
     public void init(Player player, float directionDegrees, float speed) {
-        this.x = player.getAnimationX() - currentFrame.getRegionWidth() / 2f;
-        this.y = player.getAnimationY();
+        x = player.getAnimationX() - currentFrame.getRegionWidth() / 2f;
+        y = player.getAnimationY();
         this.directionDegrees = directionDegrees;
         this.speed = speed;
+        explosion.setPosition(getCenterX(), getY());
     }
 
     @Override
     public void reset() {
-        x = 0;
-        y = 0;
-        directionDegrees = 0;
-        speed = 0;
         timeElapsed = 0;
         canState = AnimatedCanState.ACTIVE;
         currentFrame = animation.getKeyFrames()[0];

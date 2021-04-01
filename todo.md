@@ -10,6 +10,12 @@
       - This appears to be resolved by removing off-screen objects from 
         GameScreen.hittableArray immediately before doing the same for GameScreen.gameObjectArray,
         which also frees Poolable objects
+        
+  + **BUG**: AnimatedCan objects which immediately hit and explode are starting their
+    explosion effect at position 0, 0
+      - This is probably due to explosion.setPosition not being called in AnimatedCan.init which
+        means the effect doesn't get a set to the proper position until AnimatedCan.update is
+        called
       
   + Try to understand display cutouts
           
