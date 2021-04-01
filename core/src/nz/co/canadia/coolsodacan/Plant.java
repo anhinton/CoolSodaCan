@@ -8,19 +8,21 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pool;
 
 import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
-public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comparator<GameObject> {
-    private final Sprite hitSprite;
-    private final PlantType plantType;
+public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
+    private Sprite hitSprite;
+    private final TextureAtlas atlas;
     private Sprite currentSprite;
+    private PlantType plantType;
     private final ParticleEffect explosion;
     private Hittable.State hitState;
     private int hitCount;
 
-    private enum PlantType {
+    enum PlantType {
         FERN01      ("fern01",  "fern01_hit"),
         FLOWER01    ("flower01","flower01_hit"),
         TREE01      ("tree01",  "tree01_hit"),
@@ -35,25 +37,36 @@ public class Plant implements GameObject, Hittable, Comparable<GameObject>, Comp
         }
     }
 
-    Plant(int y, TextureAtlas atlas) {
+    Plant(TextureAtlas atlas) {
+        this.atlas = atlas;
+
+        explosion = new ParticleEffect();
+        explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
+
+        reset();
+    }
+
+    public void init(int y) {
+        currentSprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
+        currentSprite.setY(y);
+    }
+
+    @Override
+    public void reset() {
         hitCount = 0;
         hitState = State.NORMAL;
+        explosion.reset();
 
-        // Give us a random set of PlantTextures
-        plantType = PlantType.values()[MathUtils.random(PlantType.values().length - 1)];
+        plantType = Plant.PlantType.values()[MathUtils.random(Plant.PlantType.values().length - 1)];
         Sprite normalSprite = atlas.createSprite(plantType.normalTexture);
         hitSprite = atlas.createSprite(plantType.hitTexture);
 
         boolean flipSprite = MathUtils.randomBoolean();
-        normalSprite.flip(flipSprite, false);
-        hitSprite.flip(flipSprite, false);
+        normalSprite.setFlip(flipSprite, false);
+        hitSprite.setFlip(flipSprite, false);
 
         currentSprite = normalSprite;
-        currentSprite.setCenterX(MathUtils.random(0, Constants.GAME_WIDTH));
-        currentSprite.setY(y);
 
-        explosion = new ParticleEffect();
-        explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
         // Set explosion dimensions to sprite size
         explosion.getEmitters().first().getSpawnWidth().setHigh(currentSprite.getWidth());
         explosion.getEmitters().first().getSpawnHeight().setHigh(currentSprite.getHeight());

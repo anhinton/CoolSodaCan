@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -59,6 +60,10 @@ public class GameScreen implements Screen, InputProcessor {
     private final Array<ParticleEffectPool.PooledEffect> effects;
     private final ParticleEffectPool pointsBaseEffectPool;
     private final ParticleEffectPool pointsHighEffectPool;
+    private final Pool<AnimatedCan> animatedCanPool;
+    private final Pool<Grass> grassPool;
+    private final Pool<Plant> plantPool;
+    private final Pool<Animal> animalPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -79,7 +84,7 @@ public class GameScreen implements Screen, InputProcessor {
     private enum GameState { ACTIVE, PAUSED }
     private GameState currentState;
 
-    GameScreen(CoolSodaCan game, Player.PlayerType playerType) {
+    GameScreen(CoolSodaCan game, final Player.PlayerType playerType) {
         this.game = game;
         if (game.debugUnlocks) {
             timeElapsed = 55;
@@ -119,30 +124,44 @@ public class GameScreen implements Screen, InputProcessor {
         hittableArray = new Array<>();
 
         // Create grass
+        grassPool = new Pool<Grass>() {
+            @Override
+            protected Grass newObject() {
+                return new Grass(atlas);
+            }
+        };
         int nGrass = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_GRASS_START, Constants.MAX_GRASS_START));
         for (int i = 0; i < nGrass; i++) {
-            gameObjectArray.add(new Grass(MathUtils.random(0, game.getGameHeight()), atlas));
+            spawnGrass(MathUtils.random(0, game.getGameHeight()));
         }
         nextGrass = MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
         // Create plants
+        plantPool = new Pool<Plant>() {
+            @Override
+            protected Plant newObject() {
+                return new Plant(atlas);
+            }
+        };
         int nPlant = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_PLANT_START, Constants.MAX_PLANT_START));
         for (int i = 0; i < nPlant; i++) {
-            Plant plant = new Plant(MathUtils.random(0, game.getGameHeight()), atlas);
-            gameObjectArray.add(plant);
-            hittableArray.add(plant);
+            spawnPlant(MathUtils.random(0, game.getGameHeight()));
         }
         nextPlant = MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
         // Create animals
+        animalPool = new Pool<Animal>() {
+            @Override
+            protected Animal newObject() {
+                return new Animal(atlas, playerType.getExplosionColor());
+            }
+        };
         int nAnimal = MathUtils.round(MathUtils.randomTriangular(
                 Constants.MIN_ANIMAL_START, Constants.MAX_ANIMAL_START));
         for (int i = 0; i < nAnimal; i++) {
-            Animal animal = new Animal(MathUtils.random(0, game.getGameHeight()), atlas, player.getPlayerType().getExplosionColor());
-            gameObjectArray.add(animal);
-            hittableArray.add(animal);
+            spawnAnimal(MathUtils.random(0, game.getGameHeight()));
         }
         nextAnimal = MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
@@ -151,6 +170,13 @@ public class GameScreen implements Screen, InputProcessor {
 
         // Create AnimatedCan array
         animatedCanArray = new Array<>();
+        // Create AnimatedCan Pool
+        animatedCanPool = new Pool<AnimatedCan>() {
+            @Override
+            protected AnimatedCan newObject() {
+                return new AnimatedCan(player, atlas);
+            }
+        };
         nextAnimatedCan = 0;
 
         // create the game viewport
@@ -206,7 +232,8 @@ public class GameScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            Gdx.input.setCursorCatched(true);
+            // TODO: Catching cursor clashes with Android Studio debugging on Linux
+            Gdx.input.setCursorCatched(false);
         }
     }
 
@@ -400,23 +427,50 @@ public class GameScreen implements Screen, InputProcessor {
         setGameInputs();
     }
 
-    private void spawnAnimal() {
-        Animal animal = new Animal(game.getGameHeight(), atlas, player.getPlayerType().getExplosionColor());
-        gameObjectArray.add(animal);
-        hittableArray.add(animal);
-        nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
+    private void
+    freeGameObject(GameObject gameObject) {
+        switch(gameObject.getType()) {
+            // Free Animal objects
+            case "COCO":
+            case "HEDGEHOG":
+            case "HORSE01":
+            case "HORSE02":
+            case "YELLOW_RAT":
+                animalPool.free((Animal) gameObject);
+                break;
+            // Free Grass objects
+            case "grass":
+                grassPool.free((Grass) gameObject);
+                break;
+            // Free Plant objects
+            case "FERN01":
+            case "FLOWER01":
+            case "TREE01":
+            case "TREE02":
+                plantPool.free((Plant) gameObject);
+                break;
+        }
     }
 
-    private void spawnGrass() {
-        gameObjectArray.add(new Grass(game.getGameHeight(), atlas));
+    private void spawnAnimal(int y) {
+        Animal animal = animalPool.obtain();
+        animal.init(y);
+        gameObjectArray.add(animal);
+        hittableArray.add(animal);
+    }
+
+    private void spawnGrass(int y) {
+        Grass grass = grassPool.obtain();
+        grass.init(y);
+        gameObjectArray.add(grass);
         nextGrass = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
-    private void spawnPlant() {
-        Plant plant = new Plant(game.getGameHeight(), atlas);
+    private void spawnPlant(int y) {
+        Plant plant = plantPool.obtain();
+        plant.init(y);
         gameObjectArray.add(plant);
         hittableArray.add(plant);
-        nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
     }
 
     private void addScoreEffect(int points, float x, float y) {
@@ -501,7 +555,7 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void throwCan() {
-        player.throwCan(animatedCanArray, atlas);
+        player.throwCan(animatedCanArray, animatedCanPool, atlas);
         nextAnimatedCan = timeElapsed + player.getAnimatedCanInterval();
         cansThrown++;
         game.statistics.incrementTotalCansThrown();
@@ -531,9 +585,16 @@ public class GameScreen implements Screen, InputProcessor {
             }
 
             // Remove old objects
+            for (int i = 0; i < hittableArray.size; i++) {
+                if (hittableArray.get(i).getTopY() < 0) {
+                    hittableArray.removeIndex(i);
+                }
+            }
             for (int i = 0; i < gameObjectArray.size; i++) {
                 if (gameObjectArray.get(i).getTopY() < 0) {
+                    GameObject go = gameObjectArray.get(i);
                     gameObjectArray.removeIndex(i);
+                    freeGameObject(go);
                 }
             }
             for (int i = 0; i < animatedCanArray.size; i++) {
@@ -541,19 +602,23 @@ public class GameScreen implements Screen, InputProcessor {
                         | animatedCanArray.get(i).getY() + animatedCanArray.get(i).getHeight() < 0
                         | animatedCanArray.get(i).getX() > Constants.GAME_WIDTH
                         | animatedCanArray.get(i).getX() + animatedCanArray.get(i).getWidth() < 0) {
+                    AnimatedCan ac = animatedCanArray.get(i);
                     animatedCanArray.removeIndex(i);
+                    animatedCanPool.free(ac);
                 }
             }
 
             // Add new objects to top of screen
             if (timeElapsed > nextAnimal) {
-                spawnAnimal();
+                spawnAnimal(game.getGameHeight());
+                nextAnimal = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_ANIMAL_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
             }
             if (timeElapsed > nextGrass) {
-                spawnGrass();
+                spawnGrass(game.getGameHeight());
             }
             if (timeElapsed > nextPlant) {
-                spawnPlant();
+                spawnPlant(game.getGameHeight());
+                nextPlant = timeElapsed + MathUtils.randomTriangular(0, Constants.MAX_PLANT_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
             }
 
             // Add new cans if player firing

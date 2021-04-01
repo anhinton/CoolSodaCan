@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -147,27 +148,40 @@ class Player {
         }
     }
 
-    public void throwCan(Array<AnimatedCan> animatedCanArray, TextureAtlas atlas) {
+    public void throwCan(Array<AnimatedCan> animatedCanArray, Pool<AnimatedCan> animatedCanPool, TextureAtlas atlas) {
+        AnimatedCan ac;
         switch (this.playerType) {
             case ORANGE:
-                animatedCanArray.add(new AnimatedCan(this, atlas, 315, Constants.ANIMATED_CAN_SPEED));
-                animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
-                animatedCanArray.add(new AnimatedCan(this, atlas, 45, Constants.ANIMATED_CAN_SPEED));
+                ac = animatedCanPool.obtain();
+                ac.init(this, 315, Constants.ANIMATED_CAN_SPEED);
+                animatedCanArray.add(ac);
+                ac = animatedCanPool.obtain();
+                ac.init(this, 0, Constants.ANIMATED_CAN_SPEED);
+                animatedCanArray.add(ac);
+                ac = animatedCanPool.obtain();
+                ac.init(this, 45, Constants.ANIMATED_CAN_SPEED);
+                animatedCanArray.add(ac);
                 break;
             case PURPLE:
                 for (int i = 0; i < 8; i++) {
-                    animatedCanArray.add(new AnimatedCan(this, atlas, i * 45, Constants.ANIMATED_CAN_SPEED));
+                    ac = animatedCanPool.obtain();
+                    ac.init(this, i * 45, Constants.ANIMATED_CAN_SPEED);
+                    animatedCanArray.add(ac);
                 }
                 break;
             case YELLOW:
                 float directionDegrees = (lastDirectionDegrees + 45) % 360;
-                animatedCanArray.add(new AnimatedCan(this, atlas, directionDegrees, Constants.ANIMATED_CAN_SPEED));
+                ac = animatedCanPool.obtain();
+                ac.init(this, directionDegrees, Constants.ANIMATED_CAN_SPEED);
+                animatedCanArray.add(ac);
                 lastDirectionDegrees = directionDegrees;
                 break;
             case BLUE:
             case SILVER:
             default:
-                animatedCanArray.add(new AnimatedCan(this, atlas, 0, Constants.ANIMATED_CAN_SPEED));
+                ac = animatedCanPool.obtain();
+                ac.init(this, 0, Constants.ANIMATED_CAN_SPEED);
+                animatedCanArray.add(ac);
                 break;
         }
     }

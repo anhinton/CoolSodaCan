@@ -14,4 +14,6 @@ public interface GameObject{
     int compare(GameObject o1, GameObject o2);
 
     int compareTo(GameObject o);
+
+    String getType();
 }

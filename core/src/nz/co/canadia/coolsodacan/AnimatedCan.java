@@ -9,13 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Pool;
 
-public class AnimatedCan {
+public class AnimatedCan implements Pool.Poolable {
 
     private final Animation<TextureRegion> animation;
     private final ParticleEffect explosion;
-    private final float speed;
-    private final float directionDegrees;
+    private float speed;
+    private float directionDegrees;
     private float timeElapsed;
     private AnimatedCanState canState;
     private TextureRegion currentFrame;
@@ -24,10 +25,8 @@ public class AnimatedCan {
 
     private enum AnimatedCanState { ACTIVE, INACTIVE }
 
-    public AnimatedCan(Player player, TextureAtlas atlas, float directionDegrees, float speed) {
+    public AnimatedCan(Player player, TextureAtlas atlas) {
         timeElapsed = 0;
-        this.speed = speed;
-        this.directionDegrees = directionDegrees;
         canState = AnimatedCanState.ACTIVE;
         String animationName = player.getPlayerType().getAnimTexture();
         Color particleColor = player.getPlayerType().getExplosionColor();
@@ -36,8 +35,6 @@ public class AnimatedCan {
                 atlas.findRegions(animationName),
                 Animation.PlayMode.LOOP);
         currentFrame = animation.getKeyFrames()[0];
-        x = player.getAnimationX() - currentFrame.getRegionWidth() / 2f;
-        y = player.getAnimationY();
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
@@ -47,7 +44,22 @@ public class AnimatedCan {
         tint[1] = particleColor.g;
         tint[2] = particleColor.b;
         explosion.getEmitters().first().getTint().setColors(tint);
+    }
+
+    public void init(Player player, float directionDegrees, float speed) {
+        x = player.getAnimationX() - currentFrame.getRegionWidth() / 2f;
+        y = player.getAnimationY();
+        this.directionDegrees = directionDegrees;
+        this.speed = speed;
         explosion.setPosition(getCenterX(), getY());
+    }
+
+    @Override
+    public void reset() {
+        timeElapsed = 0;
+        canState = AnimatedCanState.ACTIVE;
+        currentFrame = animation.getKeyFrames()[0];
+        explosion.reset();
     }
 
     void update(float delta) {
