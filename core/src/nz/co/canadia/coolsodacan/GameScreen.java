@@ -66,11 +66,8 @@ public class GameScreen implements Screen, InputProcessor {
     private final Pool<Animal> horse02Pool;
     private final Pool<Animal> yellowratPool;
     private final Pool<AnimatedCan> animatedCanPool;
-    private final Pool<Plant> fern01PlantPool;
-    private final Pool<Plant> flower01PlantPool;
-    private final Pool<Plant> tree01PlantPool;
-    private final Pool<Plant> tree02PlantPool;
     private final Pool<Grass> grassPool;
+    private final Pool<Plant> plantPool;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -145,28 +142,10 @@ public class GameScreen implements Screen, InputProcessor {
         nextGrass = MathUtils.randomTriangular(0, Constants.MAX_GRASS_DISTANCE) / Constants.WORLD_MOVEMENT_SPEED;
 
         // Create plants
-        fern01PlantPool = new Pool<Plant>() {
+        plantPool = new Pool<Plant>() {
             @Override
             protected Plant newObject() {
-                return new Plant(Plant.PlantType.FERN01, atlas);
-            }
-        };
-        flower01PlantPool = new Pool<Plant>() {
-            @Override
-            protected Plant newObject() {
-                return new Plant(Plant.PlantType.FLOWER01, atlas);
-            }
-        };
-        tree01PlantPool = new Pool<Plant>() {
-            @Override
-            protected Plant newObject() {
-                return new Plant(Plant.PlantType.TREE01, atlas);
-            }
-        };
-        tree02PlantPool = new Pool<Plant>() {
-            @Override
-            protected Plant newObject() {
-                return new Plant(Plant.PlantType.TREE02, atlas);
+                return new Plant(atlas);
             }
         };
         int nPlant = MathUtils.round(MathUtils.randomTriangular(
@@ -495,22 +474,16 @@ public class GameScreen implements Screen, InputProcessor {
             case "YELLOW_RAT":
                 yellowratPool.free((Animal) gameObject);
                 break;
-            //Free Grass objects
+            // Free Grass objects
             case "grass":
                 grassPool.free((Grass) gameObject);
                 break;
             // Free Plant objects
             case "FERN01":
-                fern01PlantPool.free((Plant) gameObject);
-                break;
             case "FLOWER01":
-                flower01PlantPool.free((Plant) gameObject);
-                break;
             case "TREE01":
-                tree01PlantPool.free((Plant) gameObject);
-                break;
             case "TREE02":
-                tree02PlantPool.free((Plant) gameObject);
+                plantPool.free((Plant) gameObject);
                 break;
         }
     }
@@ -554,31 +527,10 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void spawnPlant(int y) {
-        Plant.PlantType plantType = Plant.PlantType.values()[MathUtils.random(Plant.PlantType.values().length - 1)];
-        Plant plant;
-        try {
-            switch (plantType) {
-                case FERN01:
-                    plant = fern01PlantPool.obtain();
-                    break;
-                case FLOWER01:
-                    plant = flower01PlantPool.obtain();
-                    break;
-                case TREE01:
-                    plant = tree01PlantPool.obtain();
-                    break;
-                case TREE02:
-                    plant = tree02PlantPool.obtain();
-                    break;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + plantType);
-            }
-            plant.init(y);
-            gameObjectArray.add(plant);
-            hittableArray.add(plant);
-        } catch (IllegalStateException e) {
-            Gdx.app.error("GameScreen", "Unknown PlantType in spawnPlant" + e);
-        }
+        Plant plant = plantPool.obtain();
+        plant.init(y);
+        gameObjectArray.add(plant);
+        hittableArray.add(plant);
     }
 
     private void addScoreEffect(int points, float x, float y) {

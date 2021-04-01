@@ -14,10 +14,10 @@ import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
 public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
-    private final Sprite normalSprite;
-    private final Sprite hitSprite;
+    private Sprite hitSprite;
+    private final TextureAtlas atlas;
     private Sprite currentSprite;
-    private final PlantType plantType;
+    private PlantType plantType;
     private final ParticleEffect explosion;
     private Hittable.State hitState;
     private int hitCount;
@@ -37,27 +37,13 @@ public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, C
         }
     }
 
-    Plant(PlantType plantType, TextureAtlas atlas) {
-        this.plantType = plantType;
-        hitCount = 0;
-        hitState = State.NORMAL;
-        normalSprite = atlas.createSprite(plantType.normalTexture);
-        hitSprite = atlas.createSprite(plantType.hitTexture);
-
-        boolean flipSprite = MathUtils.randomBoolean();
-        normalSprite.setFlip(flipSprite, false);
-        hitSprite.setFlip(flipSprite, false);
-
-        currentSprite = normalSprite;
+    Plant(TextureAtlas atlas) {
+        this.atlas = atlas;
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
-        // Set explosion dimensions to sprite size
-        explosion.getEmitters().first().getSpawnWidth().setHigh(currentSprite.getWidth());
-        explosion.getEmitters().first().getSpawnHeight().setHigh(currentSprite.getHeight());
-        // Increase scale of particle to match sprite (THIS IS SO BAD)
-        explosion.getEmitters().first().getXScale().setHigh(
-                Math.min(currentSprite.getWidth(), currentSprite.getHeight()) * Constants.PLANT_PARTICLE_SCALE);
+
+        reset();
     }
 
     public void init(int y) {
@@ -69,13 +55,24 @@ public class Plant implements Hittable, Pool.Poolable, Comparable<GameObject>, C
     public void reset() {
         hitCount = 0;
         hitState = State.NORMAL;
+        explosion.reset();
+
+        plantType = Plant.PlantType.values()[MathUtils.random(Plant.PlantType.values().length - 1)];
+        Sprite normalSprite = atlas.createSprite(plantType.normalTexture);
+        hitSprite = atlas.createSprite(plantType.hitTexture);
+
         boolean flipSprite = MathUtils.randomBoolean();
         normalSprite.setFlip(flipSprite, false);
         hitSprite.setFlip(flipSprite, false);
+
         currentSprite = normalSprite;
-        currentSprite.setX(0);
-        currentSprite.setY(0);
-        explosion.reset();
+
+        // Set explosion dimensions to sprite size
+        explosion.getEmitters().first().getSpawnWidth().setHigh(currentSprite.getWidth());
+        explosion.getEmitters().first().getSpawnHeight().setHigh(currentSprite.getHeight());
+        // Increase scale of particle to match sprite (THIS IS SO BAD)
+        explosion.getEmitters().first().getXScale().setHigh(
+                Math.min(currentSprite.getWidth(), currentSprite.getHeight()) * Constants.PLANT_PARTICLE_SCALE);
     }
 
     @Override
