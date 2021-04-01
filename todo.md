@@ -1,22 +1,5 @@
 # todo.md
       
-  + Investigate using pooling for
-      - ~~AnimatedCan~~
-      - ~~Animal~~
-      - ~~Plant~~
-      - ~~Grass~~
-      
-  + **BUG**: Trees are exploding soon after Spawn, probably because of Pooling error
-      - This appears to be resolved by removing off-screen objects from 
-        GameScreen.hittableArray immediately before doing the same for GameScreen.gameObjectArray,
-        which also frees Poolable objects
-        
-  + **BUG**: AnimatedCan objects which immediately hit and explode are starting their
-    explosion effect at position 0, 0
-      - This is probably due to explosion.setPosition not being called in AnimatedCan.init which
-        means the effect doesn't get a set to the proper position until AnimatedCan.update is
-        called
-      
   + Try to understand display cutouts
           
   + **BUG**: There is a 1 (?) pixel gap between the side banners and the game area in GameScreen
@@ -48,6 +31,24 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+        
+  + ~~**FIXED**: AnimatedCan objects which immediately hit and explode are starting their
+    explosion effect at position 0, 0~~
+      - ~~This is probably due to explosion.setPosition not being called in AnimatedCan.init which
+        means the effect doesn't get a set to the proper position until AnimatedCan.update is
+        called~~
+      
+  + ~~**FIXED**: Trees are exploding soon after Spawn, probably because of Pooling error~~
+      - ~~This appears to be resolved by removing off-screen objects from 
+        GameScreen.hittableArray immediately before doing the same for GameScreen.gameObjectArray,
+        which also frees Poolable objects~~
+      
+  + ~~Use object pooling~~
+      - ~~<https://github.com/libgdx/libgdx/wiki/Memory-management#object-pooling>~~
+      - ~~AnimatedCan~~
+      - ~~Animal~~
+      - ~~Plant~~
+      - ~~Grass~~
 
   + ~~Add option of using spacebar to throw cans~~
       - ~~Pretty annoying to play using laptop trackpad otherwise~~
