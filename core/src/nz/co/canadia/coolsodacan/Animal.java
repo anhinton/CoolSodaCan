@@ -15,13 +15,13 @@ import java.util.Comparator;
 
 @SuppressWarnings("NullableProblems")
 public class Animal implements Hittable, Pool.Poolable, Comparable<GameObject>, Comparator<GameObject> {
-    private final Sprite hitSprite;
+    private Sprite hitSprite;
     private final ParticleEffect explosion;
-    private final Sprite normalSprite;
+    private final TextureAtlas atlas;
     private float x;
     private float y;
 
-    private final AnimalType animalType;
+    private AnimalType animalType;
     private float rot;
     private int hitCount;
 
@@ -47,37 +47,19 @@ public class Animal implements Hittable, Pool.Poolable, Comparable<GameObject>, 
         }
     }
 
-    Animal(AnimalType animalType, TextureAtlas atlas, Color explosionColor) {
-        hitCount = 0;
-        hitState = State.NORMAL;
-        isWiggling = true;
-        isShaking = false;
-        shakeElapsed = 0;
-        rot = MathUtils.random(0, 360f);
-        this.animalType = animalType;
-
-        normalSprite = atlas.createSprite(animalType.textureName);
-        hitSprite = atlas.createSprite(animalType.hitTextureName);
-        currentSprite = normalSprite;
-
-        boolean flipSprite = MathUtils.randomBoolean();
-        normalSprite.setFlip(flipSprite, false);
-        hitSprite.setFlip(flipSprite, false);
+    Animal(TextureAtlas atlas, Color explosionColor) {
+        this.atlas = atlas;
 
         explosion = new ParticleEffect();
         explosion.load(Gdx.files.internal("particleEffects/explosion.p"), atlas);
-        // Set explosion dimensions to sprite size
-        explosion.getEmitters().first().getSpawnWidth().setHigh(normalSprite.getWidth());
-        explosion.getEmitters().first().getSpawnHeight().setHigh(normalSprite.getHeight());
-        // Increase scale of particle to match half sprite size (not so big as Plants)
-        explosion.getEmitters().first().getXScale().setHigh(
-                Math.min(normalSprite.getWidth(), normalSprite.getHeight()) * Constants.ANIMAL_PARTICLE_SCALE);
         // Set explosion to can colour
         float[] tint = new float[3];
         tint[0] = explosionColor.r;
         tint[1] = explosionColor.g;
         tint[2] = explosionColor.b;
         explosion.getEmitters().first().getTint().setColors(tint);
+
+        reset();
     }
 
     public void init(int y) {
@@ -95,11 +77,25 @@ public class Animal implements Hittable, Pool.Poolable, Comparable<GameObject>, 
         isShaking = false;
         shakeElapsed = 0;
         rot = MathUtils.random(0, 360f);
+        explosion.reset();
+
+        animalType = Animal.AnimalType.values()[MathUtils.random(Animal.AnimalType.values().length - 1)];
+        Sprite normalSprite = atlas.createSprite(animalType.textureName);
+        hitSprite = atlas.createSprite(animalType.hitTextureName);
+        currentSprite = normalSprite;
+
         boolean flipSprite = MathUtils.randomBoolean();
         normalSprite.setFlip(flipSprite, false);
         hitSprite.setFlip(flipSprite, false);
+
         currentSprite = normalSprite;
-        explosion.reset();
+
+        // Set explosion dimensions to sprite size
+        explosion.getEmitters().first().getSpawnWidth().setHigh(normalSprite.getWidth());
+        explosion.getEmitters().first().getSpawnHeight().setHigh(normalSprite.getHeight());
+        // Increase scale of particle to match half sprite size (not so big as Plants)
+        explosion.getEmitters().first().getXScale().setHigh(
+                Math.min(normalSprite.getWidth(), normalSprite.getHeight()) * Constants.ANIMAL_PARTICLE_SCALE);
     }
 
     // Wiggle!
