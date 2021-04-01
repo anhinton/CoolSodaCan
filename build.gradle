@@ -24,7 +24,7 @@ allprojects {
     version = '0.0.20210401'
     ext {
         appName = "Cool Soda Can"
-        gdxVersion = '1.9.14'
+        gdxVersion = '1.9.13'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'
         ashleyVersion = '1.7.3'
