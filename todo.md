@@ -11,8 +11,6 @@
       - Do I care enough to fix?
       - The easy fix is probably just going back to and ExtendViewport
       
-  + **BUG**: What happens if player unlocks two new sodas at the same time? Something messy
-      
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
   + Do I care about buffer overflow for high scores?
@@ -36,6 +34,10 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+      
+  + ~~**FIXED**: What happens if player unlocks two new sodas at the same time? Something messy~~
+      - ~~Adding `menuUiTable.clear` to `GameScreen.showSodaUnlocked` appears to have been a fix for
+        the weird table alignent issue I has when I stumbled across this bug~~
         
   + ~~**FIXED**: AnimatedCan objects which immediately hit and explode are starting their
     explosion effect at position 0, 0~~
