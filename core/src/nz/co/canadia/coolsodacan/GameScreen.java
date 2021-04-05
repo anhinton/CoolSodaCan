@@ -587,6 +587,15 @@ public class GameScreen implements Screen, InputProcessor {
                 lastSaved = 0;
             }
 
+            // update objects
+            for (GameObject g : gameObjectArray) {
+                g.update(delta);
+            }
+            for (AnimatedCan ac : animatedCanArray) {
+                ac.update(delta);
+            }
+            player.update(delta);
+
             // Remove old objects
             for (int i = 0; i < hittableArray.size; i++) {
                 if (hittableArray.get(i).getTopY() < 0) {
@@ -663,15 +672,6 @@ public class GameScreen implements Screen, InputProcessor {
                     }
                 }
             }
-
-            // update objects
-            for (GameObject g : gameObjectArray) {
-                g.update(delta);
-            }
-            for (AnimatedCan ac : animatedCanArray) {
-                ac.update(delta);
-            }
-            player.update(delta);
         } else if (currentState == GameState.PAUSED) {
             menuStage.act(delta);
         }

@@ -73,8 +73,8 @@ public class AnimatedCan implements Pool.Poolable {
             y -= Constants.WORLD_MOVEMENT_SPEED * delta;
         }
         currentFrame = animation.getKeyFrame(timeElapsed, true);
-        explosion.update(delta);
         explosion.setPosition(getCenterX(), getY());
+        explosion.update(delta);
     }
 
     void draw(SpriteBatch batch) {
