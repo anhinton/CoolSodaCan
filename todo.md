@@ -6,10 +6,6 @@
         and explosion is initially drawn 
       
   + Try to understand display cutouts
-          
-  + **BUG**: There is a 1 (?) pixel gap between the side banners and the game area in GameScreen
-      - Do I care enough to fix?
-      - The easy fix is probably just going back to and ExtendViewport
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
@@ -34,6 +30,10 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+          
+  + ~~**FIXED**: There is a 1 (?) pixel gap between the side banners and the game area in GameScreen~~
+      - ~~Do I care enough to fix?~~
+      - ~~Make GameScreen.gameViewport an ExtendViewport so it doesn't cut off abruptly~~
       
   + ~~**FIXED**: What happens if player unlocks two new sodas at the same time? Something messy~~
       - ~~Adding `menuUiTable.clear` to `GameScreen.showSodaUnlocked` appears to have been a fix for

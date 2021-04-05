@@ -30,7 +30,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -43,7 +43,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     private final CoolSodaCan game;
     private final Player player;
-    private final Viewport viewport;
+    private final Viewport gameViewport;
     private final Stage bannerStage;
     private final Stage uiStage;
     private final Stage menuStage;
@@ -183,7 +183,7 @@ public class GameScreen implements Screen, InputProcessor {
         // create the game viewport
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, game.getGameHeight());
-        viewport = new FitViewport(Constants.GAME_WIDTH,
+        gameViewport = new ExtendViewport(Constants.GAME_WIDTH,
                 game.getGameHeight(), camera);
 
         // Create the side banners.
@@ -577,7 +577,7 @@ public class GameScreen implements Screen, InputProcessor {
 //        ScreenUtils.clear(Constants.BACKGROUND_COLOUR);
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOUR.r, Constants.BACKGROUND_COLOUR.g, Constants.BACKGROUND_COLOUR.b, Constants.BACKGROUND_COLOUR.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        viewport.getCamera().update();
+        gameViewport.getCamera().update();
 
         if (currentState == GameState.ACTIVE) {
             updateTime(delta);
@@ -677,8 +677,8 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         // draw sprites
-        viewport.apply();
-        game.batch.setProjectionMatrix(viewport.getCamera().combined);
+        gameViewport.apply();
+        game.batch.setProjectionMatrix(gameViewport.getCamera().combined);
         game.batch.begin();
         // Game objects
         for (int i = gameObjectArray.size - 1; i >= 0; i--) {
@@ -716,7 +716,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameViewport.update(width, height);
         bannerStage.getViewport().update(width, height);
         uiStage.getViewport().update(width, height);
         menuStage.getViewport().update(width, height);
@@ -800,7 +800,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
         if (currentState == GameState.ACTIVE) {
             if (!playerIsFiring) playerIsFiring = true;
-            player.setTargetXY(screenX, screenY, viewport);
+            player.setTargetXY(screenX, screenY, gameViewport);
         }
         return true;
     }
@@ -816,14 +816,14 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (currentState == GameState.ACTIVE) {
-            player.setTargetXY(screenX, screenY, viewport);
+            player.setTargetXY(screenX, screenY, gameViewport);
         }
         return true;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        player.setTargetXY(screenX, screenY, viewport);
+        player.setTargetXY(screenX, screenY, gameViewport);
         return true;
     }
 
