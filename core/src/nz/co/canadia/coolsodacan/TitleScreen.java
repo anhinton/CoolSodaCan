@@ -31,7 +31,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -655,7 +654,6 @@ public class TitleScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-//        ScreenUtils.clear(Constants.BACKGROUND_COLOUR);
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOUR.r, Constants.BACKGROUND_COLOUR.g, Constants.BACKGROUND_COLOUR.b, Constants.BACKGROUND_COLOUR.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

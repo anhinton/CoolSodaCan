@@ -576,7 +576,6 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-//        ScreenUtils.clear(Constants.BACKGROUND_COLOUR);
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOUR.r, Constants.BACKGROUND_COLOUR.g, Constants.BACKGROUND_COLOUR.b, Constants.BACKGROUND_COLOUR.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameViewport.getCamera().update();
