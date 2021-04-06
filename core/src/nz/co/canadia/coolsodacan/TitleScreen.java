@@ -86,7 +86,7 @@ public class TitleScreen implements Screen, InputProcessor {
         table = new Table();
         table.setFillParent(true);
         table.pad(padding);
-        table.padTop(Math.max(0, Gdx.graphics.getSafeInsetTop()));
+        table.padTop(Gdx.graphics.getSafeInsetTop());
         stage.addActor(table);
 
         showMainMenu();
