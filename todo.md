@@ -4,8 +4,6 @@
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
-  + Do I care about buffer overflow for high scores?
-  
   + Music
   
   + Sound
@@ -25,6 +23,9 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+  
+  + ~~Do I care about buffer overflow for high scores?~~
+      - ~~I have decided not to care~~
 
   + ~~**FIXED**: AnimatedCan objects which hit soon after being spawned appear to be "smearing"
     their explosion position~~
