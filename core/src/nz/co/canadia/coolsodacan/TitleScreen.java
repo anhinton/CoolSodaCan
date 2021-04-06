@@ -86,6 +86,8 @@ public class TitleScreen implements Screen, InputProcessor {
         stage = new Stage(uiViewport);
         table = new Table();
         table.setFillParent(true);
+        table.pad(padding);
+        table.padTop(Math.max(0, Gdx.graphics.getSafeInsetTop()));
         stage.addActor(table);
 
         showMainMenu();
@@ -100,7 +102,6 @@ public class TitleScreen implements Screen, InputProcessor {
         currentMenu = CurrentMenu.MAIN;
         table.clear();
         table.center();
-        table.pad(padding);
 
         Image titleImage = new Image(game.manager.get("textures_large/title.png", Texture.class));
 
@@ -166,7 +167,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showSodaSelection() {
         currentMenu = CurrentMenu.SELECT_SODA;
         table.clear();
-        table.pad(padding);
 
         Label sodaSelectLabel = new Label(game.bundle.get("sodaSelectLabel"), game.skin, "titlemenu");
 
@@ -277,7 +277,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showStartGame(final Player.PlayerType playerType) {
         currentMenu = CurrentMenu.START_GAME;
         table.clear();
-        table.pad(padding);
 
         // Get large soda can Texture and calculate dimensions in UI scale
         Texture sodaCanTexture = game.manager.get(playerType.getLargeTextureName(), Texture.class);
@@ -311,7 +310,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showUnlockDialog(Player.PlayerType playerType) {
         currentMenu = CurrentMenu.UNLOCK_DIALOG;
         table.clear();
-        table.pad(padding);
 
         currentSprite = new Sprite(game.manager.get(playerType.getLargeTextureName(), Texture.class));
         currentSprite.setCenter(Constants.GAME_WIDTH / 2f, game.getGameHeight() / 2f);
@@ -353,7 +351,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showSettingsMenu() {
         currentMenu = CurrentMenu.SETTINGS;
         table.clear();
-        table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("titlescreenSettingsButton"), game.skin, "titlemenu");
 
@@ -489,7 +486,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showCredits() {
         currentMenu = CurrentMenu.CREDITS;
         table.clear();
-        table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("settingsCreditsButton"), game.skin, "titlemenu");
 
@@ -516,18 +512,9 @@ public class TitleScreen implements Screen, InputProcessor {
                 .space(padding);
     }
 
-    private void updateMusicVolumeLabel() {
-        musicVolumeLabel.setText(game.bundle.get("settingsMusicVolumeLabel") + ": " + (int) (game.getMusicVolume() * 10));
-    }
-
-    private void updateSoundVolumeLabel() {
-        soundVolumeLabel.setText(game.bundle.get("settingsSoundVolumeLabel") + ": " + (int) (game.getSoundVolume() * 10));
-    }
-
     private void showStatistics() {
         currentMenu = CurrentMenu.STATISTICS;
         table.clear();
-        table.pad(padding);
 
         Label headingLabel = new Label(game.bundle.get("titlescreenStatisticsButton"), game.skin, "titlemenu");
 
@@ -583,7 +570,6 @@ public class TitleScreen implements Screen, InputProcessor {
     private void showResetStatistics() {
         currentMenu = CurrentMenu.RESET_STATISTICS;
         table.clear();
-        table.pad(padding);
 
         Label resetHeadingLabel = new Label(game.bundle.get("statisticsResetLabel"), game.skin, "titlemenu");
 
@@ -623,6 +609,14 @@ public class TitleScreen implements Screen, InputProcessor {
         table.add(resetYesButton)
                 .prefSize(buttonWidth, buttonHeight)
                 .space(padding);
+    }
+
+    private void updateMusicVolumeLabel() {
+        musicVolumeLabel.setText(game.bundle.get("settingsMusicVolumeLabel") + ": " + (int) (game.getMusicVolume() * 10));
+    }
+
+    private void updateSoundVolumeLabel() {
+        soundVolumeLabel.setText(game.bundle.get("settingsSoundVolumeLabel") + ": " + (int) (game.getSoundVolume() * 10));
     }
 
     private void goBack() {
