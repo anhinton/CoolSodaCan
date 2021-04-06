@@ -3,7 +3,7 @@
   + Display game in phone cutout areas
       - ~~But don't display UI here~~
       - ~~Set padding at top of Scene2d.ui tables to size of Gdx.graphics.getSafeInsetTop~~
-      - Test Android
+      - ~~Test Android~~
       - Test iOS
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
