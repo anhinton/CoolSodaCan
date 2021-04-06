@@ -207,6 +207,7 @@ public class GameScreen implements Screen, InputProcessor {
         gameUiTable = new Table();
         gameUiTable.setFillParent(true);
         gameUiTable.pad(game.getGameUiPadding());
+        gameUiTable.padTop(Math.max(game.getGameUiPadding(), Gdx.graphics.getSafeInsetTop()));
         uiStage.addActor(gameUiTable);
         sodaImage = new Image();
 
@@ -214,6 +215,7 @@ public class GameScreen implements Screen, InputProcessor {
         menuStage = new Stage(uiViewport);
         menuUiTable = new Table();
         menuUiTable.setFillParent(true);
+        menuUiTable.padTop(Math.max(0, Gdx.graphics.getSafeInsetTop()));
         menuStage.addActor(menuUiTable);
 
         showGameUi();
