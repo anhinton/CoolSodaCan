@@ -1,4 +1,8 @@
 # todo.md
+
+  + **BUG**: Right banner displaying over game area on iOS in Simulator iPhone 12 Pro Max
+      - Also on iPad Pro (12.9-inch) (4th generation)
+      - Appears to be due to incorrect placement of bannerViewport
       
   + Display game in phone cutout areas
       - ~~But don't display UI here~~
