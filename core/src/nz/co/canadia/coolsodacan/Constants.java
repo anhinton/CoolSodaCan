@@ -17,8 +17,7 @@ public class Constants {
     public static final Color BACKGROUND_COLOUR = new Color(0f / 255, 205f / 255, 111f / 255, 1);
     public static final int GAME_WIDTH = 720;
     public static final int GAME_HEIGHT = 1280;
-    public static final int BANNER_WIDTH = 1280;
-    public static final int BANNER_HEIGHT = 720;
+    public static final int BANNER_WIDTH = 778;
 
     // app dimensions for Desktop
     public static final int DESKTOP_WIDTH = 1280;

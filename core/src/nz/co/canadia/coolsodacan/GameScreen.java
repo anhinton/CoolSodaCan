@@ -31,7 +31,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -44,7 +43,6 @@ public class GameScreen implements Screen, InputProcessor {
     private final CoolSodaCan game;
     private final Player player;
     private final Viewport gameViewport;
-    private final Stage bannerStage;
     private final Stage uiStage;
     private final Stage menuStage;
     private final TextureAtlas atlas;
@@ -65,6 +63,8 @@ public class GameScreen implements Screen, InputProcessor {
     private final Pool<Grass> grassPool;
     private final Pool<Plant> plantPool;
     private final Pool<Animal> animalPool;
+    private final Sprite bannerLeftSprite;
+    private final Sprite bannerRightSprite;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -188,16 +188,12 @@ public class GameScreen implements Screen, InputProcessor {
 
         // Create the side banners.
         // These are in a different Viewport to game objects so they can be wholly or partially "off-screen"
-        Viewport bannerViewport = new FillViewport(Constants.BANNER_WIDTH, Constants.BANNER_HEIGHT);
-        bannerStage = new Stage(bannerViewport);
-        Texture bannerLeftTexture = game.manager.get("textures_large/banner_left.jpg", Texture.class);
-        Texture bannerRightTexture = game.manager.get("textures_large/banner_right.jpg", Texture.class);
-        Image bannerLeftImage = new Image(bannerLeftTexture);
-        bannerLeftImage.setPosition(0, 0);
-        bannerStage.addActor(bannerLeftImage);
-        Image bannerRightImage = new Image(bannerRightTexture);
-        bannerRightImage.setPosition(bannerStage.getWidth() - bannerRightTexture.getWidth(), 0);
-        bannerStage.addActor(bannerRightImage);
+        bannerLeftSprite = new Sprite(game.manager.get("textures_large/banner_left.jpg", Texture.class));
+        bannerLeftSprite.setSize(Constants.BANNER_WIDTH, game.getGameHeight());
+        bannerLeftSprite.setPosition(-bannerLeftSprite.getWidth(), 0);
+        bannerRightSprite = new Sprite(game.manager.get("textures_large/banner_right.jpg", Texture.class));
+        bannerRightSprite.setSize(Constants.BANNER_WIDTH, game.getGameHeight());
+        bannerRightSprite.setPosition(Constants.GAME_WIDTH, 0);
 
         // Create the Game UI
         Viewport uiViewport = new FitViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight());
@@ -700,11 +696,10 @@ public class GameScreen implements Screen, InputProcessor {
         }
         // Player
         player.draw(game.batch);
+        // Banners
+        bannerLeftSprite.draw(game.batch);
+        bannerRightSprite.draw(game.batch);
         game.batch.end();
-
-        // Draw side banners
-        bannerStage.getViewport().apply();
-        bannerStage.draw();
 
         // Draw game UI
         uiStage.getViewport().apply();
@@ -718,7 +713,6 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public void resize(int width, int height) {
         gameViewport.update(width, height);
-        bannerStage.getViewport().update(width, height);
         uiStage.getViewport().update(width, height);
         menuStage.getViewport().update(width, height);
     }
@@ -741,7 +735,6 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public void dispose() {
         Gdx.input.setCursorCatched(false);
-        bannerStage.dispose();
         uiStage.dispose();
         for (int i = effects.size - 1; i >= 0; i--)
             effects.get(i).free();

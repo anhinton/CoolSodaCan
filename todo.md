@@ -1,14 +1,12 @@
 # todo.md
-
-  + **BUG**: Right banner displaying over game area on iOS in Simulator iPhone 12 Pro Max
-      - Also on iPad Pro (12.9-inch) (4th generation)
-      - Appears to be due to incorrect placement of bannerViewport
       
   + Display game in phone cutout areas
       - ~~But don't display UI here~~
       - ~~Set padding at top of Scene2d.ui tables to size of Gdx.graphics.getSafeInsetTop~~
       - ~~Test Android~~
       - Test iOS
+          - Offet seems fine on iPhone 11 but not on iPhone 12 Pro Max. Do I care as long as I
+            can get my screenshots?
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
@@ -31,6 +29,15 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+
+  + ~~**FIXED**: Right banner displaying over game area on iOS in Simulator iPhone 12 Pro Max~~
+      - ~~Also on iPad Pro (12.9-inch) (4th generation)~~
+      - ~~Appears to be due to incorrect placement of bannerViewport (which is a FillViewport)
+        on these devices, but not others~~
+      - ~~Drop using FillViewport and draw banners in gameViewport, using game-scale dimension~~
+      - ~~Hard code banner width in Constants as this should never change~~
+      - ~~Adjust banner height using CoolSodaCan.getGameHeight (even though in cases where
+        this is different to Constants.GAME_HEIGHT the banners would not show...)~~
   
   + ~~Do I care about buffer overflow for high scores?~~
       - ~~I have decided not to care~~
