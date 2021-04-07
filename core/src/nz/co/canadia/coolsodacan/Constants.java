@@ -18,7 +18,6 @@ public class Constants {
     public static final int GAME_WIDTH = 720;
     public static final int GAME_HEIGHT = 1280;
     public static final int BANNER_WIDTH = 778;
-    public static final int BANNER_HEIGHT = 1280;
 
     // app dimensions for Desktop
     public static final int DESKTOP_WIDTH = 1280;
