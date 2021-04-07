@@ -115,8 +115,8 @@ public class CoolSodaCan extends Game {
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);
 		// DEBUG hitboxes
 		shapeRenderer = new ShapeRenderer();
-		this.setScreen(new GameScreen(this, Player.PlayerType.BLUE));
-//		this.setScreen(new TitleScreen(this));
+//		this.setScreen(new GameScreen(this, Player.PlayerType.BLUE));
+		this.setScreen(new TitleScreen(this));
 	}
 
 	// Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
