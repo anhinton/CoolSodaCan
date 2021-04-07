@@ -27,7 +27,7 @@
       - ~~Set padding at top of Scene2d.ui tables to size of Gdx.graphics.getSafeInsetTop~~
       - ~~Test Android~~
       - ~~Test iOS~~
-          - ~~Offet seems fine on iPhone 11 but not on iPhone 12 Pro Max. Do I care as long as I
+          - ~~Offset seems fine on iPhone 11 but not on iPhone 12 Pro Max. Do I care as long as I
             can get my screenshots?~~
           - ~~I'll look up if there's anything I need to know, but as I can get the screenshots I 
             need for 6.5-inch iPhone using iPhone 11 I won't pull my hair out. Crossing my
