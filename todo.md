@@ -1,13 +1,5 @@
 # todo.md
       
-  + Display game in phone cutout areas
-      - ~~But don't display UI here~~
-      - ~~Set padding at top of Scene2d.ui tables to size of Gdx.graphics.getSafeInsetTop~~
-      - ~~Test Android~~
-      - Test iOS
-          - Offet seems fine on iPhone 11 but not on iPhone 12 Pro Max. Do I care as long as I
-            can get my screenshots?
-      
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
   + Music
@@ -29,6 +21,17 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+      
+  + ~~Display game in phone cutout areas~~
+      - ~~But don't display UI here~~
+      - ~~Set padding at top of Scene2d.ui tables to size of Gdx.graphics.getSafeInsetTop~~
+      - ~~Test Android~~
+      - ~~Test iOS~~
+          - ~~Offet seems fine on iPhone 11 but not on iPhone 12 Pro Max. Do I care as long as I
+            can get my screenshots?~~
+          - ~~I'll look up if there's anything I need to know, but as I can get the screenshots I 
+            need for 6.5-inch iPhone using iPhone 11 I won't pull my hair out. Crossing my
+            fingers that this doesn't come up in App Store review~~
 
   + ~~**FIXED**: Right banner displaying over game area on iOS in Simulator iPhone 12 Pro Max~~
       - ~~Also on iPad Pro (12.9-inch) (4th generation)~~
