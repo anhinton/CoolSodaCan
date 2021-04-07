@@ -13,7 +13,7 @@
       
   + App icon
       - Android
-      - Desktop
+      - ~~Desktop~~
       - Html
       - Ios
       

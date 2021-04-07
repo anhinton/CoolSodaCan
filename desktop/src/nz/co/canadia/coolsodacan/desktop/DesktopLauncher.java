@@ -10,6 +10,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle(Constants.GAME_NAME);
+		config.setWindowIcon("desktopIcons/icon_128.png",
+				"desktopIcons/icon_32.png",
+				"desktopIcons/icon_16.png");
 		config.setWindowedMode(Constants.DESKTOP_WIDTH, Constants.DESKTOP_HEIGHT);
 
 		new Lwjgl3Application(new CoolSodaCan(new DesktopFontLoader(), new DesktopFormatter()), config);
