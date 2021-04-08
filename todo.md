@@ -11,16 +11,16 @@
       - Plant explode?
       - Animal explode?
       
-  + App icon
-      - Android
-      - ~~Desktop~~
-      - ~~Html~~
-      - Ios
-      
   + Catch cursor on Desktop before doing release build
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+      
+  + ~~App icon~~
+      - ~~Android~~
+      - ~~Desktop~~
+      - ~~Html~~
+      - ~~Ios~~
       
   + ~~Display game in phone cutout areas~~
       - ~~But don't display UI here~~
