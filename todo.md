@@ -1,4 +1,7 @@
 # todo.md
+
+  + Remove option to fire with SPACE on Web
+      - Space is owned by the browser and I don't want to deal with this
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
