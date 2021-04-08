@@ -14,7 +14,7 @@
   + App icon
       - Android
       - ~~Desktop~~
-      - Html
+      - ~~Html~~
       - Ios
       
   + Catch cursor on Desktop before doing release build
