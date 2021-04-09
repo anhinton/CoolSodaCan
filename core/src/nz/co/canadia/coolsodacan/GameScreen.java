@@ -277,13 +277,13 @@ public class GameScreen implements Screen, InputProcessor {
         Table rightColumn = new Table().right();
         switch (Gdx.app.getType()) {
             case Desktop:
-            case WebGL:
                 // Menu label Desktop
                 Label menuLabel = new Label(game.bundle.get("gameUiMenuLabelDesktop"), game.skin.get("game", Label.LabelStyle.class));
                 rightColumn.add(menuLabel).right();
                 break;
             case Android:
             case iOS:
+            case WebGL:
                 // Menu button mobile
                 TextButton menuButton = new TextButton(game.bundle.get("gameUiMenuButton"),
                         game.skin.get("game", TextButton.TextButtonStyle.class));

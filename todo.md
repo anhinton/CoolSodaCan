@@ -1,9 +1,4 @@
 # todo.md
-
-  + Quality of life fixes for Html
-      - ~~Capture SPACE so it doesn't get captured by the browser~~
-      - Show "MENU" button on GameScreen like on mobile as web users are likely using their
-        mouse primarily
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
@@ -20,6 +15,11 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+
+  + ~~Quality of life fixes for Html~~
+      - ~~Capture SPACE so it doesn't get captured by the browser~~
+      - ~~Show "MENU" button on GameScreen like on mobile as web users are likely using their
+        mouse primarily~~
       
   + ~~App icon~~
       - ~~Android~~
