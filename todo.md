@@ -1,7 +1,9 @@
 # todo.md
 
-  + Remove option to fire with SPACE on Web
-      - Space is owned by the browser and I don't want to deal with this
+  + Quality of life fixes for Html
+      - ~~Capture SPACE so it doesn't get captured by the browser~~
+      - Show "MENU" button on GameScreen like on mobile as web users are likely using their
+        mouse primarily
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   

@@ -51,7 +51,11 @@ public class CoolSodaCan extends Game {
 		soundVolume = settings.getFloat("soundVolume", Constants.DEFAULT_SOUND_VOLUME);
 
 		I18NBundle.setSimpleFormatter(true);
+		// Catch BACK on Android devices
 		Gdx.input.setCatchKey(Input.Keys.BACK, true);
+		// Catch back in Web browser
+		Gdx.input.setCatchKey(Input.Keys.SPACE, true);
+
 		statistics = new Statistics();
 		statistics.load();
 		if (debugUnlocks) {
