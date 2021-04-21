@@ -67,6 +67,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Sprite bannerLeftSprite;
     private final Sprite bannerRightSprite;
     private final Sound throwSound;
+    private final Sound hitSound;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -110,6 +111,7 @@ public class GameScreen implements Screen, InputProcessor {
             sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
         }
 
+        hitSound = game.manager.get("sounds/hit.mp3", Sound.class);
         throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
@@ -558,12 +560,12 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     private void throwCan() {
+        throwSound.play(game.getSoundVolume());
         player.throwCan(animatedCanArray, animatedCanPool, atlas);
         nextAnimatedCan = timeElapsed + player.getAnimatedCanInterval();
         cansThrown++;
         game.statistics.incrementTotalCansThrown();
         setCansThrownLabel();
-        throwSound.play(game.getSoundVolume());
     }
 
     private void setCansThrownLabel() {
@@ -647,6 +649,8 @@ public class GameScreen implements Screen, InputProcessor {
                 if (ac.isActive()) {
                     for (Hittable h : hittableArray) {
                         if (ac.getHitBox().overlaps(h.getHitBox()) & h.isHittable()) {
+                            // Play sound
+                            hitSound.play(game.getSoundVolume());
                             // Hit the hittable
                             h.hit();
                             updateCansDelivered(h.getSodasDrunk());

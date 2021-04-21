@@ -4,7 +4,7 @@
   
   + Sound
       - ~~Throw can~~
-      - Can hit
+      - ~~Can hit~~
       - Plant explode
       - Animal explode
       - Unlock can
