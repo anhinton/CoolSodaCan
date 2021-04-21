@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -65,6 +66,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Pool<Animal> animalPool;
     private final Sprite bannerLeftSprite;
     private final Sprite bannerRightSprite;
+    private final Sound throwSound;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -107,6 +109,8 @@ public class GameScreen implements Screen, InputProcessor {
         for (Player.PlayerType pt : Player.PlayerType.values()) {
             sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
         }
+
+        throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
@@ -559,6 +563,7 @@ public class GameScreen implements Screen, InputProcessor {
         cansThrown++;
         game.statistics.incrementTotalCansThrown();
         setCansThrownLabel();
+        throwSound.play(game.getSoundVolume());
     }
 
     private void setCansThrownLabel() {

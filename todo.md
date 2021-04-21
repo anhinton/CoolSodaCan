@@ -3,7 +3,7 @@
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
   
   + Sound
-      - Throw can
+      - ~~Throw can~~
       - Can hit
       - Plant explode
       - Animal explode
