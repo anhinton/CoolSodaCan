@@ -95,6 +95,10 @@ public class TitleScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(stage);
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
+
+        if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
+            game.playMusic();
+        }
     }
 
     private void showMainMenu() {
@@ -108,6 +112,7 @@ public class TitleScreen implements Screen, InputProcessor {
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.playMusic();
                 showSodaSelection();
             }
         });
@@ -116,6 +121,7 @@ public class TitleScreen implements Screen, InputProcessor {
         statsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.playMusic();
                 showStatistics();
             }
         });
@@ -124,6 +130,7 @@ public class TitleScreen implements Screen, InputProcessor {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                game.playMusic();
                 showSettingsMenu();
             }
         });

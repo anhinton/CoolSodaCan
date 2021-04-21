@@ -1,11 +1,13 @@
 package nz.co.canadia.coolsodacan;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +37,7 @@ public class CoolSodaCan extends Game {
 	boolean debugUnlocks;
 	private float musicVolume;
 	private float soundVolume;
+	private Music soundtrack;
 
 	public CoolSodaCan(FontLoader fontLoader, Formatter formatter) {
 		this.formatter = formatter;
@@ -79,6 +82,7 @@ public class CoolSodaCan extends Game {
 		// Load assets
 		manager = new AssetManager();
 		manager.load("il8n/Bundle", I18NBundle.class);
+		manager.load("music/soundtrack.mp3", Music.class);
 		manager.load("graphics/graphics.atlas", TextureAtlas.class);
 		TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
 		param.minFilter = Texture.TextureFilter.Linear;
@@ -114,6 +118,11 @@ public class CoolSodaCan extends Game {
 		ScrollPane.ScrollPaneStyle creditsScrollPaneStyle = new ScrollPane.ScrollPaneStyle(skin.get("default", ScrollPane.ScrollPaneStyle.class));
 		creditsScrollPaneStyle.background = null;
 		skin.add("credits", creditsScrollPaneStyle);
+
+		// Play music
+		soundtrack = manager.get("music/soundtrack.mp3", Music.class);
+		soundtrack.setLooping(true);
+		soundtrack.setVolume(musicVolume);
 
 		batch = new SpriteBatch();
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);
@@ -165,6 +174,7 @@ public class CoolSodaCan extends Game {
 
 	public void setMusicVolume(float volume) {
 		musicVolume = MathUtils.clamp(volume, 0, 1);
+		soundtrack.setVolume(musicVolume);
 		settings.putFloat("musicVolume", musicVolume);
 	}
 
@@ -174,6 +184,10 @@ public class CoolSodaCan extends Game {
 
 	public void increaseMusicVolume() {
 		setMusicVolume(musicVolume + Constants.VOLUME_STEP_SIZE);
+	}
+
+	public void playMusic() {
+		soundtrack.play();
 	}
 
 	public float getSoundVolume() {
