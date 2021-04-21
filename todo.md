@@ -8,7 +8,8 @@
       - Plant explode
       - Animal explode
       - Unlock can
-      - Game start
+      - ~~Game start~~
+      - ~~Adjust sound volume~~
       
   + Loading screen
       

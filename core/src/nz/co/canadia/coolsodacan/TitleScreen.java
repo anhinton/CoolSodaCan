@@ -48,6 +48,7 @@ public class TitleScreen implements Screen, InputProcessor {
     private final TextButton backButton;
     private final TextureAtlas atlas;
     private final Sound startSound;
+    private final Sound volumeSound;
     private Sprite currentSprite;
     private final Viewport viewport;
     private CurrentMenu currentMenu;
@@ -64,7 +65,9 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+
         startSound = game.manager.get("sounds/start.mp3", Sound.class);
+        volumeSound = game.manager.get("sounds/hit.mp3", Sound.class);
 
         currentSprite = new Sprite();
 
@@ -408,6 +411,7 @@ public class TitleScreen implements Screen, InputProcessor {
                 game.decreaseSoundVolume();
                 updateSoundVolumeLabel();
                 soundVolumeSlider.setValue(game.getSoundVolume());
+                volumeSound.play(game.getSoundVolume());
             }
         });
 
@@ -418,6 +422,7 @@ public class TitleScreen implements Screen, InputProcessor {
             public void changed(ChangeEvent event, Actor actor) {
                 game.setSoundVolume(soundVolumeSlider.getValue());
                 updateSoundVolumeLabel();
+                volumeSound.play(game.getSoundVolume());
             }
         });
 
@@ -428,6 +433,7 @@ public class TitleScreen implements Screen, InputProcessor {
                 game.increaseSoundVolume();
                 updateSoundVolumeLabel();
                 soundVolumeSlider.setValue(game.getSoundVolume());
+                volumeSound.play(game.getSoundVolume());
             }
         });
 
