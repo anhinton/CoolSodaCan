@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -46,6 +47,7 @@ public class TitleScreen implements Screen, InputProcessor {
     private final float buttonWidth;
     private final TextButton backButton;
     private final TextureAtlas atlas;
+    private final Sound startSound;
     private Sprite currentSprite;
     private final Viewport viewport;
     private CurrentMenu currentMenu;
@@ -62,6 +64,7 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonWidth = game.getUiWidth() * Constants.TITLEMENU_BUTTON_WIDTH;
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
+        startSound = game.manager.get("sounds/start.mp3", Sound.class);
 
         currentSprite = new Sprite();
 
@@ -311,6 +314,8 @@ public class TitleScreen implements Screen, InputProcessor {
         sodaCanImage.addAction(sequenceAction);
 
         table.add(sodaCanImage).prefSize(imageWidth, imageHeight);
+
+        startSound.play(game.getSoundVolume());
     }
 
     private void showUnlockDialog(Player.PlayerType playerType) {
