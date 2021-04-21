@@ -5,9 +5,10 @@
   + Sound
       - Throw can
       - Can hit
-      - Can explode
-      - Plant explode?
-      - Animal explode?
+      - Plant explode
+      - Animal explode
+      - Unlock can
+      - Game start
       
   + Loading screen
       
