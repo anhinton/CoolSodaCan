@@ -66,8 +66,6 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
-        game.loadMusic();
-
         startSound = game.manager.get("sounds/start.mp3", Sound.class);
         volumeSound = game.manager.get("sounds/hit.mp3", Sound.class);
 
@@ -105,6 +103,7 @@ public class TitleScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
 
+        game.loadMusic();
         if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
             game.playMusic();
         }
