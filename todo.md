@@ -2,12 +2,12 @@
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
       
-  + Loading screen
-      
   + Catch cursor on Desktop before doing release build
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+      
+  + ~~Loading screen~~
   
   + ~~Sound~~
       - ~~Throw can~~
