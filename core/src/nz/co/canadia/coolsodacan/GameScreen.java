@@ -114,11 +114,11 @@ public class GameScreen implements Screen, InputProcessor {
             sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
         }
 
-        animalSuperhitSound = game.manager.get("sounds/animal_superhit.mp3", Sound.class);
-        hitSound = game.manager.get("sounds/hit.mp3", Sound.class);
-        plantSuperhitSound = game.manager.get("sounds/plant_superhit.mp3", Sound.class);
-        throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
-        unlockSound = game.manager.get("sounds/unlock.mp3", Sound.class);
+        animalSuperhitSound = game.manager.get("sounds/animal_superhit.wav", Sound.class);
+        hitSound = game.manager.get("sounds/hit.wav", Sound.class);
+        plantSuperhitSound = game.manager.get("sounds/plant_superhit.wav", Sound.class);
+        throwSound = game.manager.get("sounds/throw.wav", Sound.class);
+        unlockSound = game.manager.get("sounds/unlock.wav", Sound.class);
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 

@@ -66,8 +66,8 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
-        startSound = game.manager.get("sounds/start.mp3", Sound.class);
-        volumeSound = game.manager.get("sounds/hit.mp3", Sound.class);
+        startSound = game.manager.get("sounds/start.wav", Sound.class);
+        volumeSound = game.manager.get("sounds/hit.wav", Sound.class);
 
         currentSprite = new Sprite();
 

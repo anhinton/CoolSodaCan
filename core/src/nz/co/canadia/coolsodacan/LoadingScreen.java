@@ -28,12 +28,12 @@ public class LoadingScreen implements Screen {
         // Music
         game.manager.load("music/soundtrack.mp3", Music.class);
         // Sounds
-        game.manager.load("sounds/animal_superhit.mp3", Sound.class);
-        game.manager.load("sounds/hit.mp3", Sound.class);
-        game.manager.load("sounds/plant_superhit.mp3", Sound.class);
-        game.manager.load("sounds/start.mp3", Sound.class);
-        game.manager.load("sounds/throw.mp3", Sound.class);
-        game.manager.load("sounds/unlock.mp3", Sound.class);
+        game.manager.load("sounds/animal_superhit.wav", Sound.class);
+        game.manager.load("sounds/hit.wav", Sound.class);
+        game.manager.load("sounds/plant_superhit.wav", Sound.class);
+        game.manager.load("sounds/start.wav", Sound.class);
+        game.manager.load("sounds/throw.wav", Sound.class);
+        game.manager.load("sounds/unlock.wav", Sound.class);
         // Images
         game.manager.load("graphics/graphics.atlas", TextureAtlas.class);
         TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
