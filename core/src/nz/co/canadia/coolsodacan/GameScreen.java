@@ -70,6 +70,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Sound hitSound;
     private final Sound plantSuperhitSound;
     private final Sound animalSuperhitSound;
+    private final Sound unlockSound;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -117,6 +118,7 @@ public class GameScreen implements Screen, InputProcessor {
         hitSound = game.manager.get("sounds/hit.mp3", Sound.class);
         plantSuperhitSound = game.manager.get("sounds/plant_superhit.mp3", Sound.class);
         throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
+        unlockSound = game.manager.get("sounds/unlock.mp3", Sound.class);
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
@@ -388,6 +390,8 @@ public class GameScreen implements Screen, InputProcessor {
         playerIsFiring = false;
         setMenuInputs();
         currentState = GameState.PAUSED;
+
+        unlockSound.play(game.getSoundVolume());
 
         Table menuBox = new Table();
         menuBox.pad(game.getMenuUiPadding());

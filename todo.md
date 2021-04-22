@@ -1,15 +1,6 @@
 # todo.md
       
   + Can I work out how to resize screen elements and fonts for fullscreen toggling on desktop?
-  
-  + Sound
-      - ~~Throw can~~
-      - ~~Can hit~~
-      - ~~Plant superhit~~
-      - Animal superhit
-      - Unlock can
-      - ~~Game start~~
-      - ~~Adjust sound volume~~
       
   + Loading screen
       
@@ -17,6 +8,15 @@
       - Catching cursor clashes with Android Studio debugging on Linux
 
 ## Done
+  
+  + ~~Sound~~
+      - ~~Throw can~~
+      - ~~Can hit~~
+      - ~~Plant superhit~~
+      - ~~Animal superhit~~
+      - ~~Unlock can~~
+      - ~~Game start~~
+      - ~~Adjust sound volume~~
   
   + ~~Music~~
 
