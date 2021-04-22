@@ -5,14 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -31,7 +26,6 @@ public class CoolSodaCan extends Game {
 	Formatter formatter;
 	AssetManager manager;
 	Skin skin;
-	ShapeRenderer shapeRenderer;
 	Statistics statistics;
 	private Preferences settings;
 	boolean debugUnlocks;
@@ -82,28 +76,6 @@ public class CoolSodaCan extends Game {
 		// Load assets
 		manager = new AssetManager();
 		manager.load("il8n/Bundle", I18NBundle.class);
-		// Music
-		manager.load("music/soundtrack.mp3", Music.class);
-		// Sounds
-		manager.load("sounds/animal_superhit.mp3", Sound.class);
-		manager.load("sounds/hit.mp3", Sound.class);
-		manager.load("sounds/plant_superhit.mp3", Sound.class);
-		manager.load("sounds/start.mp3", Sound.class);
-		manager.load("sounds/throw.mp3", Sound.class);
-		manager.load("sounds/unlock.mp3", Sound.class);
-		// Images
-		manager.load("graphics/graphics.atlas", TextureAtlas.class);
-		TextureLoader.TextureParameter param = new TextureLoader.TextureParameter();
-		param.minFilter = Texture.TextureFilter.Linear;
-		param.magFilter = Texture.TextureFilter.Linear;
-		manager.load("textures_large/banner_left.jpg", Texture.class, param);
-		manager.load("textures_large/banner_right.jpg", Texture.class, param);
-		manager.load("textures_large/title.png", Texture.class, param);
-		manager.load("textures_large/blue_soda.png", Texture.class, param);
-		manager.load("textures_large/orange_soda.png", Texture.class, param);
-		manager.load("textures_large/purple_soda.png", Texture.class, param);
-		manager.load("textures_large/silver_soda.png", Texture.class, param);
-		manager.load("textures_large/yellow_soda.png", Texture.class, param);
 		//Fonts
 		fontLoader.loadGameUiFont(manager);
 		fontLoader.loadTitleMenuFont(manager);
@@ -129,17 +101,9 @@ public class CoolSodaCan extends Game {
 		creditsScrollPaneStyle.background = null;
 		skin.add("credits", creditsScrollPaneStyle);
 
-		// Play music
-		soundtrack = manager.get("music/soundtrack.mp3", Music.class);
-		soundtrack.setLooping(true);
-		soundtrack.setVolume(musicVolume);
-
 		batch = new SpriteBatch();
 		bundle = manager.get("il8n/Bundle", I18NBundle.class);
-		// DEBUG hitboxes
-		shapeRenderer = new ShapeRenderer();
-//		this.setScreen(new GameScreen(this, Player.PlayerType.BLUE));
-		this.setScreen(new TitleScreen(this));
+		this.setScreen(new LoadingScreen(this));
 	}
 
 	// Calculate the width of a Game-size Sprite/Texture in uiViewport coordinates
@@ -176,6 +140,13 @@ public class CoolSodaCan extends Game {
 		int minutes = (int) (timeElapsed / 60);
 		int seconds = (int) (timeElapsed % 60);
 		return formatter.zeroPadTime(minutes, bundle.getLocale()) + ":" + formatter.zeroPadTime(seconds, bundle.getLocale());
+	}
+
+	public void loadMusic() {
+		// Load music
+		soundtrack = manager.get("music/soundtrack.mp3", Music.class);
+		soundtrack.setLooping(true);
+		soundtrack.setVolume(musicVolume);
 	}
 
 	public float getMusicVolume() {
