@@ -69,6 +69,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Sound throwSound;
     private final Sound hitSound;
     private final Sound plantSuperhitSound;
+    private final Sound animalSuperhitSound;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -112,6 +113,7 @@ public class GameScreen implements Screen, InputProcessor {
             sodaIsUnlocked.put(pt, game.statistics.isSodaUnlocked(pt));
         }
 
+        animalSuperhitSound = game.manager.get("sounds/animal_superhit.mp3", Sound.class);
         hitSound = game.manager.get("sounds/hit.mp3", Sound.class);
         plantSuperhitSound = game.manager.get("sounds/plant_superhit.mp3", Sound.class);
         throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
@@ -663,8 +665,12 @@ public class GameScreen implements Screen, InputProcessor {
                             }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
                                 switch(h.getClass().getSimpleName()) {
+                                    case "Animal":
+                                        animalSuperhitSound.play(game.getSoundVolume());
+                                        break;
                                     case "Plant":
                                         plantSuperhitSound.play(game.getSoundVolume());
+                                        break;
                                 }
                                 game.statistics.incrementSuperHit(h.getType());
                             }
