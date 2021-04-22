@@ -215,10 +215,3 @@ white
   orig: 3, 3
   offset: 0, 0
   index: -1
-white
-  rotate: false
-  xy: 84, 161
-  size: 3, 3
-  orig: 3, 3
-  offset: 0, 0
-  index: -1

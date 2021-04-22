@@ -66,8 +66,8 @@ public class TitleScreen implements Screen, InputProcessor {
         buttonHeight = buttonWidth * Constants.TITLEMENU_BUTTON_RELATIVE_HEIGHT;
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
 
-        startSound = game.manager.get("sounds/start.mp3", Sound.class);
-        volumeSound = game.manager.get("sounds/hit.mp3", Sound.class);
+        startSound = game.manager.get("sounds/start.wav", Sound.class);
+        volumeSound = game.manager.get("sounds/hit.wav", Sound.class);
 
         currentSprite = new Sprite();
 
@@ -79,12 +79,13 @@ public class TitleScreen implements Screen, InputProcessor {
             }
         });
 
-        // create the game viewport
+        // create the "game" viewport used to display can sprites
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, Constants.GAME_WIDTH, game.getGameHeight());
         viewport = new FitViewport(Constants.GAME_WIDTH,
                 game.getGameHeight(), camera);
 
+        // Create the menu UI viewport
         OrthographicCamera uiCamera = new OrthographicCamera();
         Viewport uiViewport = new ExtendViewport(game.getUiWidth(), Gdx.graphics.getBackBufferHeight(),
                 uiCamera);
@@ -102,6 +103,7 @@ public class TitleScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
 
+        game.loadMusic();
         if (Gdx.app.getType() != Application.ApplicationType.WebGL) {
             game.playMusic();
         }
