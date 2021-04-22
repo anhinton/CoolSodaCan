@@ -61,7 +61,7 @@ public class LoadingScreen implements Screen {
 
         // create ProgressBarStyle
         ProgressBar.ProgressBarStyle progressBarStyle =
-                game.skin.get("default-horizontal",
+                game.skin.get("loading",
                         ProgressBar.ProgressBarStyle.class);
         // ProgressBar
         progressBar = new ProgressBar(0, 1, .01f,
