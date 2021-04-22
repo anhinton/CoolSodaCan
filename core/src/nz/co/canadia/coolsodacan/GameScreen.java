@@ -68,6 +68,7 @@ public class GameScreen implements Screen, InputProcessor {
     private final Sprite bannerRightSprite;
     private final Sound throwSound;
     private final Sound hitSound;
+    private final Sound plantSuperhitSound;
     private float nextAnimatedCan;
     private float timeElapsed;
     private float lastSaved;
@@ -112,6 +113,7 @@ public class GameScreen implements Screen, InputProcessor {
         }
 
         hitSound = game.manager.get("sounds/hit.mp3", Sound.class);
+        plantSuperhitSound = game.manager.get("sounds/plant_superhit.mp3", Sound.class);
         throwSound = game.manager.get("sounds/throw.mp3", Sound.class);
 
         atlas = game.manager.get("graphics/graphics.atlas", TextureAtlas.class);
@@ -660,6 +662,10 @@ public class GameScreen implements Screen, InputProcessor {
                                 addScoreEffect(points, ac.getCenterX(), ac.getY());
                             }
                             if (h.getHitState() == Hittable.State.SUPER_HIT) {
+                                switch(h.getClass().getSimpleName()) {
+                                    case "Plant":
+                                        plantSuperhitSound.play(game.getSoundVolume());
+                                }
                                 game.statistics.incrementSuperHit(h.getType());
                             }
                             // Hit the can

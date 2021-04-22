@@ -5,8 +5,8 @@
   + Sound
       - ~~Throw can~~
       - ~~Can hit~~
-      - Plant explode
-      - Animal explode
+      - ~~Plant superhit~~
+      - Animal superhit
       - Unlock can
       - ~~Game start~~
       - ~~Adjust sound volume~~
