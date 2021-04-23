@@ -7,7 +7,7 @@
           - Description
       - Apple App Store
           - Graphics
-          - Screenshots
+          - ~~Screenshots~~
           - Description
       - Google Play Store
           - Graphics
