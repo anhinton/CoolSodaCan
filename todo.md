@@ -1,18 +1,4 @@
 # todo.md
-
-  + Release
-      - ~~Bump version~~
-      - Build
-          - Desktop
-              - ~~JAR file~~
-              - ~~Windows packed~~
-              - ~~Linux packed~~
-              - MacOS packed
-          - Android
-              - ~~APK for itch.io~~
-              - ~~AAB for Google Play~~
-          - ~~Web~~
-          - iOS
           
   + Store pages
       - itch.io
@@ -29,6 +15,19 @@
           - Description
 
 ## Done
+
+  + ~~Build for release~~
+      - ~~Bump version~~
+      - ~~Desktop~~
+          - ~~JAR file~~
+          - ~~Windows packed~~
+          - ~~Linux packed~~
+          - ~~MacOS packed~~
+      - ~~Android~~
+          - ~~APK for itch.io~~
+          - ~~AAB for Google Play~~
+      - ~~Web~~
+      - ~~iOS~~
       
   + ~~**NOT IMPLEMENTED** Can I work out how to resize screen elements and fonts for fullscreen
     toggling on desktop?~~
