@@ -243,8 +243,7 @@ public class GameScreen implements Screen, InputProcessor {
         multiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(multiplexer);
         if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-            // TODO: Catching cursor clashes with Android Studio debugging on Linux
-            Gdx.input.setCursorCatched(false);
+            Gdx.input.setCursorCatched(true);
         }
     }
 
@@ -780,9 +779,6 @@ public class GameScreen implements Screen, InputProcessor {
 //                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 //                }
 //                break;
-            case Input.Keys.C:
-                Gdx.input.setCursorCatched(!Gdx.input.isCursorCatched());
-                break;
             case Input.Keys.SPACE:
                 if (tutorialIsShown) {
                     menuUiTable.clear();
