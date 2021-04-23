@@ -9,10 +9,13 @@
           - Graphics
           - ~~Screenshots~~
           - Description
+          - Privacy policy
       - Google Play Store
           - Graphics
           - Screenshots
           - Description
+      - https://coolsodacan.canadia.co.nz/
+          - Privacy policy
 
 ## Done
 
