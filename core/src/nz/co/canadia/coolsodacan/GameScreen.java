@@ -93,8 +93,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     GameScreen(CoolSodaCan game, final Player.PlayerType playerType) {
         this.game = game;
-        if (game.debugUnlocks) {
-            timeElapsed = 55;
+        if (game.screenshotMode) {
+            timeElapsed = Constants.UNLOCK_SESSION_THRESHOLD + 1;
         } else {
             timeElapsed = 0;
         }

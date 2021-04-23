@@ -1,5 +1,32 @@
 # todo.md
 
+  + Release
+      - Bump version
+      - Build
+          - Desktop
+              - Windows packed
+              - Linux packed
+              - MacOS packed
+          - Android
+              - APK for itch.io
+              - AAB for Google Play
+          - Web
+          - iOS
+          
+  + Store pages
+      - itch.io
+          - Graphics
+          - Screenshots
+          - Description
+      - Apple App Store
+          - Graphics
+          - Screenshots
+          - Description
+      - Google Play Store
+          - Graphics
+          - Screenshots
+          - Description
+
 ## Done
       
   + ~~**NOT IMPLEMENTED** Can I work out how to resize screen elements and fonts for fullscreen

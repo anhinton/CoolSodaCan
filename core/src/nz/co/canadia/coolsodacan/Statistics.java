@@ -218,11 +218,11 @@ public class Statistics {
         return unlocked;
     }
 
-    public void testUnlocks() {
-        totalPointsScored = Constants.UNLOCK_POINTS_THRESHOLD - 1;
+    public void screenshotMode() {
+        totalPointsScored = Constants.UNLOCK_POINTS_THRESHOLD + 1;
         guineapigsSuperhit = Constants.UNLOCK_GUINEAPIGS_THRESHOLD - 1;
-        plantsSuperHit = Constants.UNLOCK_PLANTS_THRESHOLD - 1;
-        longestSession = 55;
-        totalTimePlayed = 55;
+        plantsSuperHit = Constants.UNLOCK_PLANTS_THRESHOLD + 1;
+        longestSession = Constants.UNLOCK_SESSION_THRESHOLD + 1;
+        totalTimePlayed = Constants.UNLOCK_SESSION_THRESHOLD + 1;
     }
 }

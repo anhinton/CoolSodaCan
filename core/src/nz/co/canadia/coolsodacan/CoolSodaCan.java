@@ -28,7 +28,7 @@ public class CoolSodaCan extends Game {
 	Skin skin;
 	Statistics statistics;
 	private Preferences settings;
-	boolean debugUnlocks;
+	boolean screenshotMode;
 	private float musicVolume;
 	private float soundVolume;
 	private Music soundtrack;
@@ -40,8 +40,8 @@ public class CoolSodaCan extends Game {
 
 	@Override
 	public void create () {
-		// Set to true to prepare statistic for testing unlocks
-		debugUnlocks = false;
+		// Set to true to prepare for storefront screenshots
+		screenshotMode = false;
 
 		settings = Gdx.app.getPreferences(Constants.SETTINGS_PATH);
 		musicVolume = settings.getFloat("musicVolume", Constants.DEFAULT_MUSIC_VOLUME);
@@ -55,8 +55,8 @@ public class CoolSodaCan extends Game {
 
 		statistics = new Statistics();
 		statistics.load();
-		if (debugUnlocks) {
-			statistics.testUnlocks();
+		if (screenshotMode) {
+			statistics.screenshotMode();
 		}
 
 		int gameWidth = Constants.GAME_WIDTH;
