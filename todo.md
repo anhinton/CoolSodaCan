@@ -6,7 +6,7 @@
           - Desktop
               - ~~JAR file~~
               - ~~Windows packed~~
-              - Linux packed
+              - ~~Linux packed~~
               - MacOS packed
           - Android
               - ~~APK for itch.io~~
