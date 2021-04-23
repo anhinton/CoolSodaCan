@@ -5,13 +5,13 @@
       - Build
           - Desktop
               - ~~JAR file~~
-              - Windows packed
+              - ~~Windows packed~~
               - Linux packed
               - MacOS packed
           - Android
-              - APK for itch.io
-              - AAB for Google Play
-          - Web
+              - ~~APK for itch.io~~
+              - ~~AAB for Google Play~~
+          - ~~Web~~
           - iOS
           
   + Store pages
