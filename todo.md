@@ -1,7 +1,7 @@
 # todo.md
 
   + Release
-      - Bump version
+      - ~~Bump version~~
       - Build
           - Desktop
               - Windows packed
