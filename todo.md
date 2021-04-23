@@ -4,6 +4,7 @@
       - ~~Bump version~~
       - Build
           - Desktop
+              - ~~JAR file~~
               - Windows packed
               - Linux packed
               - MacOS packed
