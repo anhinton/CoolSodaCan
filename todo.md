@@ -2,8 +2,9 @@
           
   + Store pages
       - itch.io
-          - Graphics
-          - Screenshots
+          - Short description or tagline
+          - Cover image (630x500)
+          - ~~Screenshots~~
           - Description
       - Apple App Store
           - Graphics
@@ -11,9 +12,10 @@
           - Description
           - Privacy policy
       - Google Play Store
-          - Graphics
+          - Short description
+          - Full description
+          - Feature graphic (1,024 px by 500 px)
           - Screenshots
-          - Description
       - https://coolsodacan.canadia.co.nz/
           - Privacy policy
 
