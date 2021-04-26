@@ -43,3 +43,9 @@ licensed under the SIL Open Font License, Version 1.1.
 "[Mangalarga Marchador.jpg](https://commons.wikimedia.org/wiki/File:Mangalarga_Marchador.jpg)"
 by Fábio Vidigal is licensed under
 [CC BY-SA](https://creativecommons.org/licenses/by-sa/2.5/deed.en).
+
+`graphics/blue_anim`, `graphics/orange_anim`, `graphics/purple_anim`, `graphics/silver_anim`,
+`graphics/yellow_anim` "[Soda can](https://poly.google.com/view/4kj0P496sYF)"
+by [Poly by Google](https://poly.google.com/user/4aEd8rQgKu2) is
+licensed under
+[CC-BY](https://creativecommons.org/licenses/by/3.0/legalcode).
