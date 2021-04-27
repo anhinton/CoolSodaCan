@@ -1,25 +1,37 @@
 # todo.md
-          
-  + Store pages
-      - itch.io
-          - Short description or tagline
-          - Cover image (630x500)
-          - ~~Screenshots~~
-          - Description
-      - Apple App Store
-          - Graphics
-          - ~~Screenshots~~
-          - Description
-          - Privacy policy
-      - Google Play Store
-          - Short description
-          - Full description
-          - Feature graphic (1,024 px by 500 px)
-          - Screenshots
-      - https://coolsodacan.canadia.co.nz/
-          - Privacy policy
+
+  + Release!
+      - Publish on App Store
+      - Publish on Google Play Store
+      - Publish on itch.io
+      - Link to on https://canadia.co.nz/
+      - Write a launch post
+          - https://canadia.co.nz/
+          - Patreon
+          - Ko-fi.com
+      - Launch tweet
+          - Link to launch post
+          - Link to patreon and ko-fi.com
 
 ## Done
+          
+  + ~~Store pages~~
+      - ~~itch.io~~
+          - ~~Short description or tagline~~
+          - ~~Cover image (630x500)~~
+          - ~~Screenshots~~
+          - ~~Description~~
+      - ~~Apple App Store~~
+          - ~~Screenshots~~
+          - ~~Description~~
+          - ~~Privacy policy~~
+      - ~~Google Play Store~~
+          - ~~Short description~~
+          - ~~Full description~~
+          - ~~Feature graphic (1,024 px by 500 px)~~
+          - ~~Screenshots~~
+      - ~~https://coolsodacan.canadia.co.nz/~~
+          - ~~Privacy policy~~
 
   + ~~Build for release~~
       - ~~Bump Android version and iOS build~~
