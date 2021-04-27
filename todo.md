@@ -22,7 +22,7 @@
 ## Done
 
   + ~~Build for release~~
-      - ~~Bump version~~
+      - ~~Bump Android version and iOS build~~
       - ~~Desktop~~
           - ~~JAR file~~
           - ~~Windows packed~~
