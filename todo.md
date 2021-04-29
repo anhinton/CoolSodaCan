@@ -1,6 +1,10 @@
 # todo.md
 
-  + Release!
+It's finished! 
+
+## Done
+
+  + ~~Release!~~
       - ~~Publish on App Store~~
       - ~~Publish on Google Play Store~~
       - ~~Publish on itch.io~~
@@ -10,11 +14,9 @@
           - ~~itch.io~~
           - ~~Patreon~~
           - ~~Ko-fi.com~~
-      - Launch tweet
-          - Link to launch post
-          - Link to patreon and ko-fi.com
-
-## Done
+      - ~~Launch tweet~~
+          - ~~Link to launch post~~
+          - ~~Link to patreon and ko-fi.com~~
           
   + ~~Store pages~~
       - ~~itch.io~~
