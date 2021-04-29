@@ -18,6 +18,7 @@
   + ~~Store pages~~
       - ~~itch.io~~
           - ~~Short description or tagline~~
+          - ~~Banner image~~
           - ~~Cover image (630x500)~~
           - ~~Screenshots~~
           - ~~Description~~
