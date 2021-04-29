@@ -1,14 +1,15 @@
 # todo.md
 
   + Release!
-      - Publish on App Store
-      - Publish on Google Play Store
-      - Publish on itch.io
-      - Link to on https://canadia.co.nz/
-      - Write a launch post
-          - https://canadia.co.nz/
-          - Patreon
-          - Ko-fi.com
+      - ~~Publish on App Store~~
+      - ~~Publish on Google Play Store~~
+      - ~~Publish on itch.io~~
+      - ~~Link to on https://canadia.co.nz/~~
+      - ~~Write a launch post~~
+          - ~~https://canadia.co.nz/~~
+          - ~~itch.io~~
+          - ~~Patreon~~
+          - ~~Ko-fi.com~~
       - Launch tweet
           - Link to launch post
           - Link to patreon and ko-fi.com
