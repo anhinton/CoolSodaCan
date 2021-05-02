@@ -14,6 +14,7 @@ public class DesktopLauncher {
 				"desktopIcons/icon_32.png",
 				"desktopIcons/icon_16.png");
 		config.setWindowedMode(Constants.DESKTOP_WIDTH, Constants.DESKTOP_HEIGHT);
+		config.setResizable(false);
 
 		new Lwjgl3Application(new CoolSodaCan(new DesktopFontLoader(), new DesktopFormatter()), config);
 	}
