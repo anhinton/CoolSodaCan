@@ -30,6 +30,8 @@ task dist(type: Jar) {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+    // exclude duplicate files
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     with jar
 }
 
