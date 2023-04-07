@@ -1,4 +1,4 @@
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../android/assets"]
 
@@ -30,6 +30,8 @@ task dist(type: Jar) {
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
+    // exclude duplicate files
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     with jar
 }
 
