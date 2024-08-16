@@ -822,6 +822,11 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (currentState == GameState.ACTIVE) {
             player.setTargetXY(screenX, screenY, gameViewport);
